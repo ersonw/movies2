@@ -43,7 +43,7 @@ target 'movies2' do
             target.remove_from_project
           end
        end
-       
+
     react_native_post_install(
       installer,
       # Set `mac_catalyst_enabled` to `true` in order to apply patches
@@ -55,3 +55,4 @@ target 'movies2' do
 end
 pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 pod 'CodePush', :path => '../node_modules/react-native-code-push'
+pod 'openinstall-react-native', :path => '../node_modules/openinstall-react-native'

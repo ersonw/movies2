@@ -132,5 +132,21 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 }
 
 #endif
-
+//iOS9以上，会优先走这个方法
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+ //openURL1
+ [RCTOpenInstall handLinkURL:url];
+ return YES;
+}
+//适用目前所有iOS版本
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+ //openURL2
+ [RCTOpenInstall handLinkURL:url];
+ return YES;
+}
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler{
+ //univeral link
+ [RCTOpenInstall continueUserActivity:userActivity];
+ return YES;
+}
 @end

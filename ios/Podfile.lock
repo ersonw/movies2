@@ -2,7 +2,7 @@ PODS:
   - Base64 (1.1.2)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
-  - CodePush (7.0.1):
+  - CodePush (1000.0.0):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.12)
     - React-Core
@@ -80,9 +80,12 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.70.2)
+  - JitsiWebRTC (106.0.0)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
   - libevent (2.1.12)
+  - openinstall-react-native (1.6.4):
+    - React
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -316,6 +319,9 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
+  - react-native-webrtc (106.0.0-beta.3):
+    - JitsiWebRTC (~> 106.0.0)
+    - React-Core
   - React-perflogger (0.70.2)
   - React-RCTActionSheet (0.70.2):
     - React-Core/RCTActionSheetHeaders (= 0.70.2)
@@ -427,6 +433,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
+  - openinstall-react-native (from `../node_modules/openinstall-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -446,6 +453,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-webrtc (from `../node_modules/react-native-webrtc`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -478,6 +486,7 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - fmt
+    - JitsiWebRTC
     - JWT
     - libevent
     - OpenSSL-Universal
@@ -500,6 +509,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
+  openinstall-react-native:
+    :path: "../node_modules/openinstall-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -532,6 +543,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-webrtc:
+    :path: "../node_modules/react-native-webrtc"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -571,7 +584,7 @@ SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  CodePush: 9bb93f52a44ee80b72739d89dead9c7e86c3bd3a
+  CodePush: 21b97b0a7dee101bfb5fb8882a9e1f51a5a3fc84
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 0507edc21c06f1650c591f0981c846445469373b
   FBReactNativeSpec: 698ef8604615cfa7ae2119e9ca4ed7687a6ae62e
@@ -587,8 +600,10 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: f9312a2ea8036d03b63568ebf392314f4fa8b474
+  JitsiWebRTC: f441eb0e2d67f0588bf24e21c5162e97342714fb
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  openinstall-react-native: 445754f835b01d8765e02828442dd4d8280b4808
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: d4033a367d0bfd1f23f67b501f8cdabf9afe617e
@@ -606,6 +621,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 26c42646ab0bb69e29e837e23754fe7121eeaf94
   React-logger: 1bfd109a0ffa4c0989bbfac0c2d8c4abe4637faa
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
+  react-native-webrtc: 791266737d4af19fad19cbc11d1d795a52ee21d2
   React-perflogger: 6009895616a455781293950bbd63d53cfc7ffbc5
   React-RCTActionSheet: 5e90aa5712af18bfc86c2c6d97d4dbe0e5451c1d
   React-RCTAnimation: 50c44d6501f8bfb2fe885e544501f8798b4ff3d6
@@ -627,6 +643,6 @@ SPEC CHECKSUMS:
   Yoga: 043f8eb97345d0171f27fead4d1849cacf0472a5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 27527473f855b9b53967fe974f691c24f69e3ab2
+PODFILE CHECKSUM: febe20cf1b60cdb913c7a0e5aab5a6f2aca97bc4
 
 COCOAPODS: 1.11.2

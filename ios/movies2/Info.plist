@@ -55,5 +55,20 @@
     <string>TaoQJ2TIANUJ2Z02TMsNZPUQVVxA4ksvOXqog</string>
 	<key>CodePushServerURL</key>
     <string>https://api.obsi.cc</string>
+    <key>com.openinstall.APP_KEY</key>
+    <string>gnsz6pbx</string>
+    <key>CFBundleURLTypes</key>
+     <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>openinstall</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>gnsz6pbx</string>
+        </array>
+      </dict>
+     </array>
 </dict>
 </plist>

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Alert } from 'react-native';
 
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
+import OpeninstallModule from 'openinstall-react-native';
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
-var {width,height} = Dimensions.get('window');
+var { width, height } = Dimensions.get('window');
 class App extends Component<{}> {
   constructor() {
     super();
-    this.state = { restartAllowed: true, updateState: true };
+    this.state = { restartAllowed: true, updateState: false };
   }
 
   codePushStatusDidChange(syncStatus) {
@@ -18,25 +19,25 @@ class App extends Component<{}> {
         this.setState({ syncMessage: '正在获取更新版本.' });
         break;
       case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
-        this.setState({ syncMessage: '正在下载升级补丁.' });
+        this.setState({ syncMessage: '正在下载升级补丁.', updateState: true });
         break;
       case CodePush.SyncStatus.AWAITING_USER_ACTION:
-        this.setState({ syncMessage: '等待用户操作.' });
+        this.setState({ syncMessage: '等待用户操作.', updateState: true });
         break;
       case CodePush.SyncStatus.INSTALLING_UPDATE:
-        this.setState({ syncMessage: '正在安装更新补丁.' });
+        this.setState({ syncMessage: '正在安装更新补丁.', updateState: true });
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
         this.setState({ syncMessage: '已经是最新版本.', progress: false, updateState: false });
         break;
       case CodePush.SyncStatus.UPDATE_IGNORED:
-        this.setState({ syncMessage: '用户取消更新.', progress: false });
+        this.setState({ syncMessage: '用户取消更新.', progress: false, updateState: true });
         break;
       case CodePush.SyncStatus.UPDATE_INSTALLED:
-        this.setState({ syncMessage: '更新安装成功，等待重启生效.', progress: false });
+        this.setState({ syncMessage: '更新安装成功，等待重启生效.', progress: false, updateState: true });
         break;
       case CodePush.SyncStatus.UNKNOWN_ERROR:
-        this.setState({ syncMessage: '未知错误.', progress: false });
+        this.setState({ syncMessage: '未知错误.', progress: false, updateState: true });
         break;
     }
   }
@@ -79,9 +80,23 @@ class App extends Component<{}> {
       this.codePushDownloadDidProgress.bind(this),
     );
   }
+  componentDidMount() {
+    //该方法用于监听app通过univeral link或scheme拉起后获取唤醒参数
+    this.receiveWakeupListener = map => {
+      if (map) {
+        //do your work here
+      }
+      Alert.alert('唤醒参数', JSON.stringify(map));
+    };
+    OpeninstallModule.addWakeUpListener(this.receiveWakeupListener);
+  }
 
+  componentWillUnMount() {
+    OpeninstallModule.removeWakeUpListener(this.receiveWakeupListener); //移除监听
+  }
   render() {
     this.sync();
+    OpeninstallModule.init();
     // return this.update();
     return this.state.updateState ? this.update() : RootStackScreen();
     // let progressView;
