@@ -100,18 +100,18 @@ class App extends Component<{}> {
   render() {
     this.sync();
     OpeninstallModule.init();
-    OpeninstallModule.getInstall(10, map => {
-      if (map) {
-        //do your work here
-      }
-      // Alert.alert('安装参数', JSON.stringify(map));
-    });
-    OpeninstallModule.getWakeUpAlwaysCallback(map => {
-      if (map) {
-        //do your work here
-      }
-      // Alert.alert('唤醒参数', JSON.stringify(map));
-    });
+    // OpeninstallModule.getInstall(10, map => {
+    //   if (map) {
+    //     //do your work here
+    //   }
+    //   // Alert.alert('安装参数', JSON.stringify(map));
+    // });
+    // OpeninstallModule.getWakeUpAlwaysCallback(map => {
+    //   if (map) {
+    //     //do your work here
+    //   }
+    //   // Alert.alert('唤醒参数', JSON.stringify(map));
+    // });
     // return this.update();
     return this.state.updateState ? this.update() : RootStackScreen();
     // let progressView;
