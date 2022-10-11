@@ -144,6 +144,7 @@ android {
         manifestPlaceholders = [
                 OPENINSTALL_APPKEY : "gnsz6pbx",
 //                applicationName: "android.app.Application",
+//                applicationId: "com.telebott.movie_fix",
         ]
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.

@@ -29,11 +29,12 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
-//          @SuppressWarnings("UnnecessaryLocalVariable")
-//          List<ReactPackage> packages = new PackageList(this).getPackages();
+          @SuppressWarnings("UnnecessaryLocalVariable")
+          List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
-//          return packages;
+//           packages.add(new OpeninstallReactPackage());
+          return packages;
 //            return Arrays.<ReactPackage>asList(
 //                    new MainReactPackage(),
 //                    new CodePushBuilder(R.string.CodePushDeploymentKey,getApplicationContext())
@@ -42,14 +43,14 @@ public class MainApplication extends Application implements ReactApplication {
 //                            .setServerUrl(R.string.CodePushServerUrl)
 //                            .build() //return configured CodePush instance
 //            );
-            return Arrays.<ReactPackage>asList(
-                    new MainReactPackage(),
-                    new CodePush(
-                            getResources().getString(R.string.CodePushDeploymentKey),
-                            getApplicationContext(), BuildConfig.DEBUG
-                    ),
-                    new OpeninstallReactPackage()
-            );
+//            return Arrays.<ReactPackage>asList(
+//                    new MainReactPackage(),
+//                    new CodePush(
+//                            getResources().getString(R.string.CodePushDeploymentKey),
+//                            getApplicationContext(), BuildConfig.DEBUG
+//                    ),
+//                    new OpeninstallReactPackage()
+//            );
         }
 
         @Override

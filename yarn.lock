@@ -5487,7 +5487,7 @@ open@^6.2.0:
 
 "openinstall-react-native@git+https://github.com/ersonw/openinstall-react-native.git":
   version "1.6.4"
-  resolved "git+https://github.com/ersonw/openinstall-react-native.git#c96f535ea63211a22e0dc5443885318aa5685938"
+  resolved "git+https://github.com/ersonw/openinstall-react-native.git#b81899fb13316a7ff173c63655fd1114522d58b5"
 
 optionator@^0.8.1:
   version "0.8.3"

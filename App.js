@@ -81,12 +81,15 @@ class App extends Component<{}> {
     );
   }
   componentDidMount() {
+    console.log('componentDidMount');
     //该方法用于监听app通过univeral link或scheme拉起后获取唤醒参数
     this.receiveWakeupListener = map => {
       if (map) {
         //do your work here
+        // console.log(JSON.stringify(map));
       }
-      Alert.alert('唤醒参数', JSON.stringify(map));
+      // console.log(JSON.stringify(map));
+      // Alert.alert('唤醒参数', JSON.stringify(map));
     };
     OpeninstallModule.addWakeUpListener(this.receiveWakeupListener);
   }
@@ -97,6 +100,18 @@ class App extends Component<{}> {
   render() {
     this.sync();
     OpeninstallModule.init();
+    OpeninstallModule.getInstall(10, map => {
+      if (map) {
+        //do your work here
+      }
+      // Alert.alert('安装参数', JSON.stringify(map));
+    });
+    OpeninstallModule.getWakeUpAlwaysCallback(map => {
+      if (map) {
+        //do your work here
+      }
+      // Alert.alert('唤醒参数', JSON.stringify(map));
+    });
     // return this.update();
     return this.state.updateState ? this.update() : RootStackScreen();
     // let progressView;

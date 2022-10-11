@@ -36,12 +36,21 @@ target 'movies2' do
          config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
        end
        installer.pods_project.targets.each do |target|
+#         if target.name == "JitsiWebRTC"
+##           or target.name == "react-native-webrtc"
+#           target.build_configurations.each do |config|
+#             config.build_settings['ENABLE_BITCODE'] = 'NO'
+#           end
+#         end
 #         if target.name == "React-Core-60309c9c-AccessibilityResources"
 #              target.remove_from_project
 #         end
-          if target.name == "React-Core-AccessibilityResources"
+          if target.name == "React-Core-AccessibilityResources" or target.name == "React-Core.common-AccessibilityResources"
             target.remove_from_project
           end
+#          if target.name == "React-Core.common-AccessibilityResources"
+#            target.remove_from_project
+#          end
        end
 
     react_native_post_install(
