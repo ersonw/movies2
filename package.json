@@ -1,5 +1,5 @@
 {
-  "name": "movies2",
+  "name": "movie_fix",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,7 +12,8 @@
     "push-ios": "code-push release-react Movies2Ios ios -d Production",
     "pod-ios": "cd ios && pod deintegrate && pod install && cd ..",
     "push-android": "code-push release-react Movies2Android android -d Production",
-    "build-android": "cd android && ./gradlew assembleRelease && cd .."
+    "build-android": "cd android && ./gradlew assembleRelease",
+    "adb-android": "adb logcat | grep -E com.telebott.movie_fix"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",

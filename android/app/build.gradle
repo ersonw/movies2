@@ -135,7 +135,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.movies2"
+        applicationId "com.telebott.movie_fix"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -216,10 +216,20 @@ android {
     }
     signingConfigs {
         debug {
+//            storeFile file('key.keystore')
+//            storePassword 'movies123'
+//            keyAlias 'key'
+//            keyPassword 'movies123'
             storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
+        }
+        release {
+            storeFile file('key.keystore')
+            storePassword 'movies123'
+            keyAlias 'key'
+            keyPassword 'movies123'
         }
     }
     buildTypes {
