@@ -136,13 +136,14 @@ android {
 
     defaultConfig {
         applicationId "com.movies2"
+//        applicationId "com.telebott.movie_fix"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         manifestPlaceholders = [
-                OPENINSTALL_APPKEY : "gnsz6pbx",
+                OPENINSTALL_APPKEY : "bn0uf16q",
 //                applicationName: "android.app.Application",
         ]
         if (isNewArchitectureEnabled()) {

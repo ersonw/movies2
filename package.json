@@ -13,7 +13,7 @@
     "pod-ios": "cd ios && pod deintegrate && pod install && cd ..",
     "push-android": "code-push release-react Movies2Android android -d Production",
     "build-android": "cd android && ./gradlew assembleRelease",
-    "adb-android": "adb logcat | grep -E com.telebott.movie_fix"
+    "adb-android": "adb logcat | grep -E com.movies2"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
@@ -27,6 +27,7 @@
     "react-native-fs": "^2.20.0",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.0",
+    "react-native-svg": "^13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webrtc": "^106.0.0-beta.3"
   },

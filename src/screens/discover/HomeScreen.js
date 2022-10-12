@@ -9,13 +9,96 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from 'react-native';
+import {
+  ScreenCapturePickerView,
+  RTCPeerConnection,
+  RTCIceCandidate,
+  RTCSessionDescription,
+  RTCView,
+  MediaStream,
+  MediaStreamTrack,
+  mediaDevices,
+  registerGlobals,
+} from 'react-native-webrtc';
+
 import useFetchData from '../../hooks/useFetchData';
 import Loading from '../../components/shared/Loading';
 import NetworkError from '../../components/shared/NetworkError';
 import Colors from '../../constants/Colors';
 import storageUtil from '../../utils/StorageUtil';
+import { async } from '@babel/runtime/helpers/regeneratorRuntime';
 const url = '/api/v2/home.json';
 
+const callRTC = async () => {
+  let cameraCount = 0;
+
+  try {
+    const devices = await mediaDevices.enumerateDevices();
+
+    devices.map(device => {
+      if (device.kind != 'videoinput') {
+        return;
+      }
+
+      cameraCount = cameraCount + 1;
+    });
+  } catch (err) {
+    // Handle Error
+  }
+  let mediaConstraints = {
+    audio: true,
+    video: {
+      frameRate: 30,
+      facingMode: 'user',
+    },
+  };
+  let localMediaStream;
+  let isVoiceOnly = false;
+
+  try {
+    const mediaStream = await mediaDevices.getUserMedia(mediaConstraints);
+
+    if (isVoiceOnly) {
+      let videoTrack = await mediaStream.getVideoTracks()[0];
+      videoTrack.enabled = false;
+    }
+
+    localMediaStream = mediaStream;
+  } catch (err) {
+    // Handle Error
+  }
+  try {
+    const mediaStream = await mediaDevices.getDisplayMedia();
+
+    localMediaStream = mediaStream;
+  } catch (err) {
+    // Handle Error
+  }
+  localMediaStream.getTracks().map(track => track.stop());
+
+  localMediaStream = null;
+  let peerConstraints = {
+    iceServers: [
+      {
+        urls: 'stun:stun.l.google.com:19302',
+      },
+    ],
+  };
+  let peerConnection = new RTCPeerConnection(peerConstraints);
+
+  peerConnection.addEventListener('connectionstatechange', event => {});
+  peerConnection.addEventListener('icecandidate', event => {});
+  peerConnection.addEventListener('icecandidateerror', event => {});
+  peerConnection.addEventListener('iceconnectionstatechange', event => {});
+  peerConnection.addEventListener('icegatheringstatechange', event => {});
+  peerConnection.addEventListener('negotiationneeded', event => {});
+  peerConnection.addEventListener('signalingstatechange', event => {});
+  peerConnection.addEventListener('addstream', event => {});
+  peerConnection.addEventListener('removestream', event => {});
+  peerConnection._unregisterEvents();
+  peerConnection.close();
+  peerConnection = null;
+};
 const HomeScreen = ({ navigation }) => {
   const { data, loading, error, onReload, refreshing, onRefresh } = useFetchData(url, {
     recommended_courses: [],
@@ -27,6 +110,7 @@ const HomeScreen = ({ navigation }) => {
   if (loading) {
     return <Loading />;
   }
+
   // storageUtil.test = '123';
   console.log((storageUtil.test = { ssss: '5453156' }));
   // console.log(storageUtil.test);

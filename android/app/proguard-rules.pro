@@ -9,3 +9,4 @@
 
 # Add any project specific keep options here:
 -keep class org.webrtc.** { *; }
+-keep public class com.horcrux.svg.** {*;}
