@@ -14,7 +14,7 @@ import {
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
 import OpeninstallModule from 'openinstall-react-native';
-import {registerGlobals, RTCPeerConnection} from 'react-native-webrtc';
+import { RTCPeerConnection } from 'react-native-webrtc';
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
@@ -92,16 +92,15 @@ class App extends Component<{}> {
     );
   }
   componentDidMount() {
-    registerGlobals();
-    // let peerConstraints = {
-    //   iceServers: [
-    //     {
-    //       urls: 'stun:stun.l.google.com:19302',
-    //     },
-    //   ],
-    // };
-    // let peerConnection = new RTCPeerConnection(peerConstraints);
-    // console.log(peerConnection.connectionState);
+    let peerConstraints = {
+      iceServers: [
+        {
+          urls: 'stun:stun.l.google.com:19302',
+        },
+      ],
+    };
+    let peerConnection = new RTCPeerConnection(peerConstraints);
+    console.log(peerConnection.signalingState);
     this.sync();
     OpeninstallModule.init();
     if (Platform.OS === 'android') {
