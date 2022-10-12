@@ -144,7 +144,6 @@ android {
         manifestPlaceholders = [
                 OPENINSTALL_APPKEY : "gnsz6pbx",
 //                applicationName: "android.app.Application",
-//                applicationId: "com.telebott.movie_fix",
         ]
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
@@ -216,14 +215,14 @@ android {
     }
     signingConfigs {
         debug {
-//            storeFile file('key.keystore')
-//            storePassword 'movies123'
-//            keyAlias 'key'
-//            keyPassword 'movies123'
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+//            storeFile file('debug.keystore')
+//            storePassword 'android'
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'android'
+            storeFile file('key.keystore')
+            storePassword 'movies123'
+            keyAlias 'key'
+            keyPassword 'movies123'
         }
         release {
             storeFile file('key.keystore')
@@ -279,7 +278,6 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':openinstall-react-native')
-    implementation 'com.facebook.soloader:soloader:0.9.0+'
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

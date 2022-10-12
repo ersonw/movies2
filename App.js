@@ -89,7 +89,8 @@ class App extends Component<{}> {
         // console.log(JSON.stringify(map));
       }
       // console.log(JSON.stringify(map));
-      // Alert.alert('唤醒参数', JSON.stringify(map));
+      Alert.alert('唤醒参数', JSON.stringify(map));
+      Alert.alert('唤醒参数', 'componentDidMount');
     };
     OpeninstallModule.addWakeUpListener(this.receiveWakeupListener);
   }
