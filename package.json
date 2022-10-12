@@ -29,7 +29,7 @@
     "react-native-screens": "^3.18.0",
     "react-native-svg": "^13.4.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-webrtc": "^106.0.0-beta.3"
+    "react-native-webrtc": "git+https://github.com/ersonw/react-native-webrtc.git"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

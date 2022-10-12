@@ -10,3 +10,5 @@ react-core-6 signal
 code-push release-react Movies2Ios ios -d Production
 
 code-push release-react Movies2Android android -d Production
+
+"react-native-webrtc": "^106.0.0-beta.3"
