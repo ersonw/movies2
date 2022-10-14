@@ -453,11 +453,13 @@ PODS:
     - React-perflogger (= 0.70.2)
   - RNCAsyncStorage (1.12.1):
     - React-Core
+  - RNDeviceInfo (10.2.1):
+    - React-Core
   - RNFS (2.20.0):
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNScreens (3.18.1):
+  - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
   - RNSVG (13.4.0):
@@ -565,6 +567,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -727,6 +730,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNPermissions:
@@ -743,7 +748,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  aliyun-oss-react-native: dfcf527949b80bb7feeecac43407e5168b2c0ae2
+  aliyun-oss-react-native: 931dcb887fd826873289d2223742b73729206a42
   AliyunOSSiOS: 5d7c50ce7b39b2b0b10f603a5971cccb0f25eee2
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost: a7c83b31436843459a1961bfd74b96033dc77234
@@ -826,9 +831,10 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 80065f60af4f4b05603661070c8622bb3740bf16
   ReactCommon: 1209130f460e4aa9d255ddc75fa0a827ebf93dfb
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNDeviceInfo: c31137f22ee779fe3931d1a8d60cc1af80ef4077
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNScreens: 1b7bb502dac62cc4cf01b94bea591c8da275132f
+  RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNVideoEditorSDK: 9c2192037fe78b4d6f865f3f517260e27aebdf5a

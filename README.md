@@ -15,3 +15,6 @@ code-push release-react Movies2Android android -d Production
 "react-native-webrtc": "git+https://github.com/ersonw/react-native-webrtc.git"
  "react-native-webrtc": "git+https://github.com/ant-media/WebRTC-React-Native-SDK.git"
 "react-native-ffmpeg": "^0.5.2",
+
+netstat -tunlp |grep 8081
+lsof -i:8081

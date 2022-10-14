@@ -11,13 +11,9 @@ import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.movies2.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
-import com.facebook.react.shell.MainReactPackage;
 
 import java.util.List;
-import java.util.Arrays;
 import com.microsoft.codepush.react.CodePush;
-import com.openinstall.openinstallLibrary.OpeninstallReactPackage;
-
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -32,24 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
+           packages.add(new RNToolsPackage());
           return packages;
-//            return Arrays.<ReactPackage>asList(
-//                    new MainReactPackage(),
-//                    new CodePushBuilder(R.string.CodePushDeploymentKey,getApplicationContext())
-//                            .setIsDebugMode(BuildConfig.DEBUG)
-//                            .setPublicKeyResourceDescriptor(R.string.CodePushPublicKey)
-//                            .setServerUrl(R.string.CodePushServerUrl)
-//                            .build() //return configured CodePush instance
-//            );
-//            return Arrays.<ReactPackage>asList(
-//                    new MainReactPackage(),
-//                    new CodePush(
-//                            getResources().getString(R.string.CodePushDeploymentKey),
-//                            getApplicationContext(), BuildConfig.DEBUG
-//                    ),
-//                    new OpeninstallReactPackage()
-//            );
         }
 
         @Override

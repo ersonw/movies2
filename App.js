@@ -9,8 +9,9 @@ import {
   ImageBackground,
   Alert,
   Platform,
+  NativeModules,
 } from 'react-native';
-
+import DeviceInfo from 'react-native-device-info';
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
 import OpeninstallModule from 'openinstall-react-native';
@@ -95,6 +96,15 @@ class App extends Component<{}> {
     );
   }
   componentDidMount() {
+    NativeModules.RNToolsManager.getAppVersionUUID(event => {
+      console.log(event);
+      if (Platform.OS === 'ios') {
+      } else if (Platform === 'android') {
+      }
+    });
+    DeviceInfo.getMacAddress().then(mac => {
+      console.log(mac);
+    });
     let peerConstraints = {
       iceServers: [
         {

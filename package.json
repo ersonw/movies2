@@ -26,6 +26,7 @@
     "react-native": "0.70.2",
     "react-native-aes-crypto": "^2.1.1",
     "react-native-code-push": "git+https://github.com/ersonw/react-native-code-push.git",
+    "react-native-device-info": "^10.2.1",
     "react-native-fs": "^2.20.0",
     "react-native-permissions": "^3.6.1",
     "react-native-rtmp-publisher": "^0.3.0",
