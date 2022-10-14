@@ -231,6 +231,8 @@ android {
             keyPassword 'movies123'
         }
         release {
+            v1SigningEnabled true
+            v2SigningEnabled false
             storeFile file('key.keystore')
             storePassword 'movies123'
             keyAlias 'key'
@@ -247,7 +249,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

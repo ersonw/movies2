@@ -9,11 +9,9 @@
     "test": "jest",
     "lint": "eslint .",
     "bundle-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/bundle/main.jsbundle --assets-dest ios/bundle",
-    "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "push-ios": "code-push release-react Movies2Ios ios -d Production",
     "pod-ios": "cd ios && pod deintegrate && pod install && cd ..",
     "push-android": "code-push release-react Movies2Android android -d Production",
-    "build-android": "cd android && ./gradlew assembleRelease",
     "adb-android": "adb logcat | grep -E com.movies2"
   },
   "dependencies": {
