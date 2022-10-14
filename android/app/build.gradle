@@ -135,6 +135,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.movies2"
 //        applicationId "com.telebott.movie_fix"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -279,6 +280,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':openinstall-react-native')
+    implementation 'androidx.multidex:multidex:2.0.1'
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
@@ -341,4 +343,41 @@ def isNewArchitectureEnabled() {
     // - Invoke gradle with `-newArchEnabled=true`
     // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
     return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+apply plugin: 'ly.img.android.sdk'
+apply plugin: 'kotlin-android'
+
+// Comment out the modules you don't need, to save size.
+imglyConfig {
+    modules {
+        include 'ui:text'
+        include 'ui:focus'
+        include 'ui:frame'
+        include 'ui:brush'
+        include 'ui:filter'
+        include 'ui:sticker'
+        include 'ui:overlay'
+        include 'ui:transform'
+        include 'ui:adjustment'
+        include 'ui:text-design'
+        include 'ui:video-trim'
+        include 'ui:video-library'
+        include 'ui:video-composition'
+        include 'ui:audio-composition'
+
+        // This module is big, remove the serializer if you don't need that feature.
+        include 'backend:serializer'
+
+        // Remove the asset packs you don't need, these are also big in size.
+        include 'assets:font-basic'
+        include 'assets:frame-basic'
+        include 'assets:filter-basic'
+        include 'assets:overlay-basic'
+        include 'assets:sticker-shapes'
+        include 'assets:sticker-emoticons'
+        include 'assets:sticker-animated'
+
+        include 'backend:sticker-animated'
+        include 'backend:sticker-smart'
+    }
 }
