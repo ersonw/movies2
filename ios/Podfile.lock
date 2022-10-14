@@ -16,6 +16,13 @@ PODS:
     - React-Core (= 0.70.2)
     - React-jsi (= 0.70.2)
     - ReactCommon/turbomodule/core (= 0.70.2)
+  - ffmpeg-kit-ios-https (4.5.1)
+  - ffmpeg-kit-react-native (4.5.2):
+    - ffmpeg-kit-react-native/https (= 4.5.2)
+    - React-Core
+  - ffmpeg-kit-react-native/https (4.5.2):
+    - ffmpeg-kit-ios-https (= 4.5.1)
+    - React-Core
   - Flipper (0.125.0):
     - Flipper-Folly (~> 2.6)
     - Flipper-RSocket (~> 1.4)
@@ -79,10 +86,15 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
+  - HaishinKit (1.2.7):
+    - Logboard (~> 2.2.2)
   - hermes-engine (0.70.2)
+  - imglyKit (10.30.1)
+  - JimiVideoPlayer (1.5.4)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
   - libevent (2.1.12)
+  - Logboard (2.2.2)
   - openinstall-react-native (1.6.4):
     - React
   - OpenSSL-Universal (1.1.1100)
@@ -312,14 +324,29 @@ PODS:
   - React-jsinspector (0.70.2)
   - React-logger (0.70.2):
     - glog
+  - react-native-aes (2.0.0):
+    - React-Core
+  - react-native-rtmp-player-jm (1.2.3):
+    - JimiVideoPlayer
+    - React
+  - react-native-rtmp-publisher (0.3.0):
+    - HaishinKit (~> 1.2.3)
+    - React-Core
   - react-native-safe-area-context (4.4.1):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
+  - react-native-video (5.2.1):
+    - React-Core
+    - react-native-video/Video (= 5.2.1)
+  - react-native-video/Video (5.2.1):
+    - React-Core
   - react-native-webrtc (1.75.0):
     - React
+  - react-native-webview (11.23.1):
+    - React-Core
   - React-perflogger (0.70.2)
   - React-RCTActionSheet (0.70.2):
     - React-Core/RCTActionSheetHeaders (= 0.70.2)
@@ -390,6 +417,8 @@ PODS:
     - React-Core
   - RNFS (2.20.0):
     - React-Core
+  - RNPermissions (3.6.1):
+    - React-Core
   - RNScreens (3.18.1):
     - React-Core
     - React-RCTImage
@@ -397,8 +426,14 @@ PODS:
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
+  - RNVideoEditorSDK (2.12.0):
+    - React
+    - React-RCTImage
+    - VideoEditorSDK (~> 10.29)
   - SocketRocket (0.6.0)
   - SSZipArchive (2.2.3)
+  - VideoEditorSDK (10.30.1):
+    - imglyKit (= 10.30.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -409,6 +444,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
+  - ffmpeg-kit-react-native (from `../node_modules/ffmpeg-kit-react-native`)
   - Flipper (= 0.125.0)
   - Flipper-Boost-iOSX (= 1.76.0.1.11)
   - Flipper-DoubleConversion (= 3.2.0.1)
@@ -452,8 +488,13 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-aes (from `../node_modules/react-native-aes-crypto`)
+  - react-native-rtmp-player-jm (from `../node_modules/react-native-rtmp-player-jm`)
+  - react-native-rtmp-publisher (from `../node_modules/react-native-rtmp-publisher`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webrtc (from `../node_modules/react-native-webrtc`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -468,15 +509,18 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNFS (from `../node_modules/react-native-fs`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - RNVideoEditorSDK (from `../node_modules/react-native-videoeditorsdk`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - Base64
     - CocoaAsyncSocket
+    - ffmpeg-kit-ios-https
     - Flipper
     - Flipper-Boost-iOSX
     - Flipper-DoubleConversion
@@ -487,11 +531,16 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - fmt
+    - HaishinKit
+    - imglyKit
+    - JimiVideoPlayer
     - JWT
     - libevent
+    - Logboard
     - OpenSSL-Universal
     - SocketRocket
     - SSZipArchive
+    - VideoEditorSDK
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -505,6 +554,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
+  ffmpeg-kit-react-native:
+    :path: "../node_modules/ffmpeg-kit-react-native"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
@@ -541,10 +592,20 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-aes:
+    :path: "../node_modules/react-native-aes-crypto"
+  react-native-rtmp-player-jm:
+    :path: "../node_modules/react-native-rtmp-player-jm"
+  react-native-rtmp-publisher:
+    :path: "../node_modules/react-native-rtmp-publisher"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-video:
+    :path: "../node_modules/react-native-video"
   react-native-webrtc:
     :path: "../node_modules/react-native-webrtc"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -573,12 +634,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNFS:
     :path: "../node_modules/react-native-fs"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  RNVideoEditorSDK:
+    :path: "../node_modules/react-native-videoeditorsdk"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -590,6 +655,8 @@ SPEC CHECKSUMS:
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 0507edc21c06f1650c591f0981c846445469373b
   FBReactNativeSpec: 698ef8604615cfa7ae2119e9ca4ed7687a6ae62e
+  ffmpeg-kit-ios-https: cec24d405b511e4f274980d8a9c751d384f89558
+  ffmpeg-kit-react-native: bc3c900af9f761b6fe30906ee1bd98000c79f9c9
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
   Flipper-DoubleConversion: 2dc99b02f658daf147069aad9dbd29d8feb06d30
@@ -601,9 +668,13 @@ SPEC CHECKSUMS:
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  HaishinKit: 5463efd52fa4de2018db95547a5b09ce50495444
   hermes-engine: f9312a2ea8036d03b63568ebf392314f4fa8b474
+  imglyKit: bb83829ba5d1af548772d61660556473f0391d1c
+  JimiVideoPlayer: 15b63a59bd857416f6013d0e168c07b987897366
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
   openinstall-react-native: 6e3f39553e39210111609ecff76803cffb9504f8
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
@@ -621,8 +692,13 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 53bd208e5c27939c6e6365528393445a596a9a2b
   React-jsinspector: 26c42646ab0bb69e29e837e23754fe7121eeaf94
   React-logger: 1bfd109a0ffa4c0989bbfac0c2d8c4abe4637faa
+  react-native-aes: c75c46aa744bef7c2415fdf7f5b2dcb75ca4364d
+  react-native-rtmp-player-jm: 51adcd7c5e39e5755efd1910345740e488c8f84d
+  react-native-rtmp-publisher: 347fab66825ec479b7b320238b096b3f331b9fd8
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
-  react-native-webrtc: d6da57392d6a7d0255e1fc1736377cf77d298d78
+  react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
+  react-native-webrtc: 560d287d101cb2f68bda3947bbdef9ffd3df91d5
+  react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
   React-perflogger: 6009895616a455781293950bbd63d53cfc7ffbc5
   React-RCTActionSheet: 5e90aa5712af18bfc86c2c6d97d4dbe0e5451c1d
   React-RCTAnimation: 50c44d6501f8bfb2fe885e544501f8798b4ff3d6
@@ -637,14 +713,17 @@ SPEC CHECKSUMS:
   ReactCommon: 1209130f460e4aa9d255ddc75fa0a827ebf93dfb
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
+  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNScreens: 1b7bb502dac62cc4cf01b94bea591c8da275132f
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
+  RNVideoEditorSDK: 9c2192037fe78b4d6f865f3f517260e27aebdf5a
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
+  VideoEditorSDK: 8248852e4288a996119a099ad985e36fdcb58d87
   Yoga: 043f8eb97345d0171f27fead4d1849cacf0472a5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 9a0b87875f1692858f2ce47e2d79cbf7311f31f2
+PODFILE CHECKSUM: 8e60b2e6740418e5100e07ab526755402da878d0
 
 COCOAPODS: 1.11.2
