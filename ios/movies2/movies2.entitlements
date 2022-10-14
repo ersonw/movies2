@@ -5,6 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:bn0uf16q.appopenvip.com</string>
+		<string>https://bn0uf16q.appopenvip.com/ulink_wx/</string>
 	</array>
 </dict>
 </plist>

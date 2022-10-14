@@ -175,10 +175,9 @@ class App extends Component<{}> {
   }
   update() {
     let progressView;
+    let progres;
     if (this.state.progress) {
-      let progres = `M5 8 l${
-        (this.state.progress.receivedBytes / this.state.progress.totalBytes) * 100 * (215 / 100)
-      } 0`;
+      progres = `M5 8 l${(this.state.progress.receivedBytes / this.state.progress.totalBytes) * 100 * (215 / 100)} 0`;
       progressView = (
         <Svg height="24" width="225">
           <G fill="none" stroke="#3d5875">
@@ -193,15 +192,16 @@ class App extends Component<{}> {
         // </Text>
       );
     }
+
     return (
       <ImageBackground source={require('./images/SplashBKImages.png')} style={styles.container}>
         <View style={styles.iconview}>
-          <VideoPlayer
-            video={{ uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' }}
-            videoWidth={1600}
-            videoHeight={900}
-            thumbnail={{ uri: 'https://i.picsum.photos/id/866/1600/900.jpg' }}
-          />
+          {/*<VideoPlayer*/}
+          {/*  video={{ uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' }}*/}
+          {/*  videoWidth={1600}*/}
+          {/*  videoHeight={900}*/}
+          {/*  thumbnail={{ uri: 'https://i.picsum.photos/id/866/1600/900.jpg' }}*/}
+          {/*/>*/}
           {/*<WS*/}
           {/*  ref={ref => {*/}
           {/*    this.ws = ref;*/}
