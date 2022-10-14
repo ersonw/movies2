@@ -20,6 +20,7 @@
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
+    "aliyun-oss-react-native": "git+https://github.com/ersonw/aliyun-oss-react-native.git",
     "ffmpeg-kit-react-native": "^4.5.1",
     "openinstall-react-native": "git+https://github.com/ersonw/openinstall-react-native.git",
     "react": "18.1.0",
