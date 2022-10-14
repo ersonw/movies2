@@ -90,7 +90,6 @@ PODS:
     - Logboard (~> 2.2.2)
   - hermes-engine (0.70.2)
   - imglyKit (10.30.1)
-  - JimiVideoPlayer (1.5.4)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
   - libevent (2.1.12)
@@ -326,9 +325,6 @@ PODS:
     - glog
   - react-native-aes (2.0.0):
     - React-Core
-  - react-native-rtmp-player-jm (1.2.3):
-    - JimiVideoPlayer
-    - React
   - react-native-rtmp-publisher (0.3.0):
     - HaishinKit (~> 1.2.3)
     - React-Core
@@ -489,7 +485,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-aes (from `../node_modules/react-native-aes-crypto`)
-  - react-native-rtmp-player-jm (from `../node_modules/react-native-rtmp-player-jm`)
   - react-native-rtmp-publisher (from `../node_modules/react-native-rtmp-publisher`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
@@ -533,7 +528,6 @@ SPEC REPOS:
     - fmt
     - HaishinKit
     - imglyKit
-    - JimiVideoPlayer
     - JWT
     - libevent
     - Logboard
@@ -594,8 +588,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-aes:
     :path: "../node_modules/react-native-aes-crypto"
-  react-native-rtmp-player-jm:
-    :path: "../node_modules/react-native-rtmp-player-jm"
   react-native-rtmp-publisher:
     :path: "../node_modules/react-native-rtmp-publisher"
   react-native-safe-area-context:
@@ -671,7 +663,6 @@ SPEC CHECKSUMS:
   HaishinKit: 5463efd52fa4de2018db95547a5b09ce50495444
   hermes-engine: f9312a2ea8036d03b63568ebf392314f4fa8b474
   imglyKit: bb83829ba5d1af548772d61660556473f0391d1c
-  JimiVideoPlayer: 15b63a59bd857416f6013d0e168c07b987897366
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
@@ -693,7 +684,6 @@ SPEC CHECKSUMS:
   React-jsinspector: 26c42646ab0bb69e29e837e23754fe7121eeaf94
   React-logger: 1bfd109a0ffa4c0989bbfac0c2d8c4abe4637faa
   react-native-aes: c75c46aa744bef7c2415fdf7f5b2dcb75ca4364d
-  react-native-rtmp-player-jm: 51adcd7c5e39e5755efd1910345740e488c8f84d
   react-native-rtmp-publisher: 347fab66825ec479b7b320238b096b3f331b9fd8
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
