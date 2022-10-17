@@ -1,6 +1,6 @@
 #import "RNToolsManager.h"
+#import <sys/utsname.h>
 @implementation RNToolsManager
-
 @synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE(RNToolsManager);
@@ -19,12 +19,120 @@ RCT_EXPORT_METHOD(getAppVersionNumber:(RCTResponseSenderBlock)callback)
 
 RCT_EXPORT_METHOD(getAppVersionPackage:(RCTResponseSenderBlock)callback)
 {
-  NSString *bundleIdentifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];//获取项目版本号
-  callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
+  UIDevice* device = [UIDevice currentDevice];
+  struct utsname un;
+  uname(&un);
+  NSArray *array = [@{
+    @"name" : [device name],
+    @"systemName" : [device systemName],
+    @"systemVersion" : [device systemVersion],
+    @"model" : [device model],
+    @"localizedModel" : [device localizedModel],
+    @"identifierForVendor" : [[device identifierForVendor] UUIDString],
+    @"isPhysicalDevice" : [self isDevicePhysical],
+    @"utsname" : @{
+      @"sysname" : @(un.sysname),
+      @"nodename" : @(un.nodename),
+      @"release" : @(un.release),
+      @"version" : @(un.version),
+      @"machine" : @(un.machine),
+    }
+  } copy];
+//  for (int i = 0; i < array.count; i++)
+//          {
+//              NSString * str = array[i];
+//              NSLog(@"array[%d] = %@",i,str);
+//          }
+//  callback(@[[array copy]]);
+  callback(@[array]);
 }
 RCT_EXPORT_METHOD(getAppVersionUUID:(RCTResponseSenderBlock)callback)
 {
-  NSString *bundleIdentifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];//获取项目版本号
+  UIDevice* device = [UIDevice currentDevice];
+  NSString *bundleIdentifier = [[device identifierForVendor] UUIDString];
   callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
+//  NSString *bundleIdentifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];//获取项目版本号
+//  callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
+}
+- (NSString*)isDevicePhysical {
+#if TARGET_OS_SIMULATOR
+  NSString* isPhysicalDevice = @"false";
+#else
+  NSString* isPhysicalDevice = @"true";
+#endif
+
+  return isPhysicalDevice;
+}
+- (NSArray *)arrayWithdictionary:(NSDictionary *)dictionary {
+    if (dictionary == nil) {
+        return nil;
+    }
+  NSString *jsonString = [self jsonWithDictionary:dictionary];
+  return @[[self arrayWithJson:jsonString]];
+}
+- (NSDictionary *)dictionaryWithArray:(NSArray *)array {
+  if (array == nil) {
+      return nil;
+  }
+  NSString *jsonString = [self jsonWithArray:array];
+  return [self dictionaryWithJson:jsonString];
+}
+- (NSArray *)arrayWithJson:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+  NSArray *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+- (NSString*)jsonWithArray:(NSArray *)dic
+{
+    NSString *jsonString = nil;
+    if ([NSJSONSerialization isValidJSONObject:dic])
+    {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&error];
+        jsonString =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        if (error) {
+            NSLog(@"Error:%@" , error);
+        }
+    }
+    return jsonString;
+}
+- (NSDictionary *)dictionaryWithJson:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+- (NSString*)jsonWithDictionary:(NSDictionary *)dic
+{
+    NSString *jsonString = nil;
+    if ([NSJSONSerialization isValidJSONObject:dic])
+    {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&error];
+        jsonString =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        if (error) {
+            NSLog(@"Error:%@" , error);
+        }
+    }
+    return jsonString;
 }
 @end
+
+

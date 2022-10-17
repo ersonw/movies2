@@ -96,15 +96,18 @@ class App extends Component<{}> {
     );
   }
   componentDidMount() {
-    NativeModules.RNToolsManager.getAppVersionUUID(event => {
-      console.log(event);
+    NativeModules.RNToolsManager.getAppVersionPackage(event => {
+      // var json = JSON.parse(event);
+      // console.log(typeof event);
       if (Platform.OS === 'ios') {
-      } else if (Platform === 'android') {
+        console.log(event.identifierForVendor);
+      } else if (Platform.OS === 'android') {
+        console.log(event.androidId);
       }
     });
-    DeviceInfo.getMacAddress().then(mac => {
-      console.log(mac);
-    });
+    // DeviceInfo.getMacAddress().then(mac => {
+    //   console.log(mac);
+    // });
     let peerConstraints = {
       iceServers: [
         {
