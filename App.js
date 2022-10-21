@@ -26,6 +26,7 @@ class App extends Component<{}> {
   constructor() {
     super();
     this.state = { restartAllowed: true, updateState: false };
+    CodePush.allowRestart();
   }
 
   codePushStatusDidChange(syncStatus) {
@@ -97,64 +98,47 @@ class App extends Component<{}> {
   }
   componentDidMount() {
     NativeModules.RNToolsManager.getAppVersionPackage(event => {
-      // var json = JSON.parse(event);
-      // console.log(typeof event);
       if (Platform.OS === 'ios') {
         console.log(event.identifierForVendor);
       } else if (Platform.OS === 'android') {
         console.log(event.androidId);
       }
     });
-    // DeviceInfo.getMacAddress().then(mac => {
-    //   console.log(mac);
-    // });
-    let peerConstraints = {
-      iceServers: [
-        {
-          urls: 'stun:stun.l.google.com:19302',
-        },
-      ],
-    };
-    let peerConnection = new RTCPeerConnection(peerConstraints);
-    // Alert.alert(peerConnection.signalingState);
     this.sync();
     OpeninstallModule.init();
     if (Platform.OS === 'android') {
       //Android平台需要运行的代码
       OpeninstallModule.getWakeUpAlwaysCallback(map => {
         if (map) {
-          //do your work here
+          console.log(map);
         }
-        // Alert.alert('唤醒参数', JSON.stringify(map));
       });
     } else if (Platform.OS === 'ios') {
       //iOS平台需要运行的代码
       //该方法用于监听app通过univeral link或scheme拉起后获取唤醒参数
       this.receiveWakeupListener = map => {
         if (map) {
-          //do your work here
-          // console.log(JSON.stringify(map));
+          console.log(map);
         }
-        // console.log(JSON.stringify(map));
-        // Alert.alert('唤醒参数', JSON.stringify(map));
-        // Alert.alert('唤醒参数', 'componentDidMount');
       };
       OpeninstallModule.addWakeUpListener(this.receiveWakeupListener);
     }
     OpeninstallModule.getInstall(15, map => {
       if (map) {
-        //do your work here
+        console.log(map);
       }
-      // Alert.alert('安装参数', JSON.stringify(map));
     });
   }
 
   componentWillUnMount() {
-    OpeninstallModule.removeWakeUpListener(this.receiveWakeupListener); //移除监听
+    if (Platform.OS === 'ios') {
+      OpeninstallModule.removeWakeUpListener(this.receiveWakeupListener); //移除监听
+    }
   }
   render() {
-    return this.update();
-    return this.state.updateState ? this.update() : RootStackScreen();
+    // return this.update();
+    return RootStackScreen();
+    // return this.state.updateState ? this.update() : RootStackScreen();
     // let progressView;
     //
     // if (this.state.progress) {
