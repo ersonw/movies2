@@ -18,3 +18,6 @@ code-push release-react Movies2Android android -d Production
 
 netstat -tunlp |grep 8081
 lsof -i:8081
+
+code-push deployment ls  Movies2Ios -k
+code-push deployment ls  Movies2Android -k 
