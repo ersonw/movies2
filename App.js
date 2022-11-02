@@ -15,10 +15,8 @@ import DeviceInfo from 'react-native-device-info';
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
 import OpeninstallModule from 'openinstall-react-native';
-import { RTCPeerConnection } from 'react-native-webrtc';
 import { G, Path, Svg } from 'react-native-svg';
-import WS from 'react-native-websocket';
-import VideoPlayer from 'react-native-video-player';
+
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');

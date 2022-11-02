@@ -94,6 +94,7 @@ PODS:
     - Logboard (~> 2.2.2)
   - hermes-engine (0.70.2)
   - imglyKit (10.30.1)
+  - JitsiWebRTC (106.0.0)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
   - libevent (2.1.12)
@@ -381,8 +382,9 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-webrtc (1.75.0):
-    - React
+  - react-native-webrtc (106.0.0-beta.6):
+    - JitsiWebRTC (~> 106.0.0)
+    - React-Core
   - react-native-webview (11.23.1):
     - React-Core
   - React-perflogger (0.70.2)
@@ -453,7 +455,7 @@ PODS:
     - React-perflogger (= 0.70.2)
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNDeviceInfo (10.2.1):
+  - RNDeviceInfo (10.3.0):
     - React-Core
   - RNFS (2.20.0):
     - React-Core
@@ -594,6 +596,7 @@ SPEC REPOS:
     - fmt
     - HaishinKit
     - imglyKit
+    - JitsiWebRTC
     - JWT
     - libevent
     - Logboard
@@ -773,6 +776,7 @@ SPEC CHECKSUMS:
   HaishinKit: 5463efd52fa4de2018db95547a5b09ce50495444
   hermes-engine: f9312a2ea8036d03b63568ebf392314f4fa8b474
   imglyKit: bb83829ba5d1af548772d61660556473f0391d1c
+  JitsiWebRTC: f441eb0e2d67f0588bf24e21c5162e97342714fb
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
@@ -816,7 +820,7 @@ SPEC CHECKSUMS:
   react-native-rtmp-publisher: 347fab66825ec479b7b320238b096b3f331b9fd8
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-webrtc: 560d287d101cb2f68bda3947bbdef9ffd3df91d5
+  react-native-webrtc: 7fa7ce024a684215693fddc880ad3983dd824f93
   react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
   React-perflogger: 6009895616a455781293950bbd63d53cfc7ffbc5
   React-RCTActionSheet: 5e90aa5712af18bfc86c2c6d97d4dbe0e5451c1d
@@ -831,7 +835,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 80065f60af4f4b05603661070c8622bb3740bf16
   ReactCommon: 1209130f460e4aa9d255ddc75fa0a827ebf93dfb
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
-  RNDeviceInfo: c31137f22ee779fe3931d1a8d60cc1af80ef4077
+  RNDeviceInfo: 4701f0bf2a06b34654745053db0ce4cb0c53ada7
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
