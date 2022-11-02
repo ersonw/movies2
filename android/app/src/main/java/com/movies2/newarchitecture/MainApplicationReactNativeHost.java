@@ -20,11 +20,10 @@ import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
 import com.movies2.BuildConfig;
-import com.movies2.newarchitecture.components.MainComponentsRegistry;
-import com.movies2.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.movies2.newarchitecture.components.MainComponentsRegistry;
+import com.movies2.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 /**
  * A {@link ReactNativeHost} that helps you load everything needed for the New Architecture, both
  * TurboModule delegates and the Fabric Renderer.

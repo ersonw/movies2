@@ -168,6 +168,7 @@ android {
     configurations.all {
         resolutionStrategy {
             force 'androidx.core:core-ktx:1.6.0'
+//            force "com.facebook.soloader:soloader:0.8.2"
         }
     }
     if (isNewArchitectureEnabled()) {
