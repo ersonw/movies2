@@ -29,6 +29,8 @@ buildscript {
 //        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
         classpath 'ly.img.android.sdk:plugin:9.2.0'
+        classpath 'androidx.appcompat:appcompat:1.0.2'
+//        classpath "androidx.localbroadcastmanager:localbroadcastmanager:1.1.0"
 //        classpath 'androidx.core:core-ktx:1.6.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -53,6 +55,7 @@ allprojects {
             }
         }
         google()
+        maven { url 'https://maven.google.com' }
         maven { url 'https://www.jitpack.io' }
         flatDir {
             dirs 'libs'

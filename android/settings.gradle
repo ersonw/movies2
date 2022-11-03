@@ -6,7 +6,8 @@ include ':app', ':react-native-code-push'
 project(':react-native-code-push').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-code-push/android/app')
 project(':openinstall-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/openinstall-react-native/android')
 include ':app', ':openinstall-react-native'
-
+//include ':react-native-mmeiqia'
+//project(':react-native-mmeiqia').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-mmeiqia/android')
 if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true") {
     include(":ReactAndroid")
     project(":ReactAndroid").projectDir = file('../node_modules/react-native/ReactAndroid')

@@ -464,7 +464,7 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.4.0):
+  - RNSVG (13.5.0):
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
@@ -839,7 +839,7 @@ SPEC CHECKSUMS:
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
+  RNSVG: 38ca962c970dbce1ca38991a5aebf26d163f9efb
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNVideoEditorSDK: 9c2192037fe78b4d6f865f3f517260e27aebdf5a
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
@@ -848,6 +848,6 @@ SPEC CHECKSUMS:
   Yoga: 043f8eb97345d0171f27fead4d1849cacf0472a5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: d475e79bf412c65b3066e81af2a88b7ef1e260e7
+PODFILE CHECKSUM: bc8a839acfe31c49e7ec056f75c6a39017d42a39
 
 COCOAPODS: 1.11.2

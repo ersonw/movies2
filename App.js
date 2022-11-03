@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ImageBackground,
-  Alert,
-  Platform,
-  NativeModules,
-} from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { Dimensions, StyleSheet, Text, View, ImageBackground, Platform, NativeModules } from 'react-native';
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
 import OpeninstallModule from 'openinstall-react-native';
 import { G, Path, Svg } from 'react-native-svg';
+import { Alert, Button } from 'react-native';
 
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
@@ -23,7 +12,7 @@ var { width, height } = Dimensions.get('window');
 class App extends Component<{}> {
   constructor() {
     super();
-    this.state = { restartAllowed: true, updateState: false };
+    this.state = { restartAllowed: true, updateState: false, meiQiaClientId: '' };
     CodePush.allowRestart();
   }
 
@@ -59,24 +48,6 @@ class App extends Component<{}> {
   codePushDownloadDidProgress(progress) {
     this.setState({ progress });
   }
-
-  toggleAllowRestart() {
-    this.state.restartAllowed ? CodePush.disallowRestart() : CodePush.allowRestart();
-
-    this.setState({ restartAllowed: !this.state.restartAllowed });
-  }
-
-  getUpdateMetadata() {
-    CodePush.getUpdateMetadata(CodePush.UpdateState.RUNNING).then(
-      (metadata: LocalPackage) => {
-        this.setState({ syncMessage: metadata ? JSON.stringify(metadata) : 'Running binary version', progress: false });
-      },
-      (error: any) => {
-        this.setState({ syncMessage: 'Error: ' + error, progress: false });
-      },
-    );
-  }
-
   /** Update is downloaded silently, and applied on restart (recommended) */
   sync() {
     CodePush.sync(
@@ -85,23 +56,24 @@ class App extends Component<{}> {
       this.codePushDownloadDidProgress.bind(this),
     );
   }
-
-  /** Update pops a confirmation dialog, and then immediately reboots the app */
-  syncImmediate() {
-    CodePush.sync(
-      { installMode: CodePush.InstallMode.IMMEDIATE, updateDialog: true },
-      this.codePushStatusDidChange.bind(this),
-      this.codePushDownloadDidProgress.bind(this),
-    );
-  }
   componentDidMount() {
     NativeModules.RNToolsManager.getAppVersionPackage(event => {
       if (Platform.OS === 'ios') {
-        console.log(event.identifierForVendor);
+        console.log(`IOS IFV:${event.identifierForVendor}`);
       } else if (Platform.OS === 'android') {
-        console.log(event.androidId);
+        console.log(`androidId:${event.androidId}`);
       }
     });
+    NativeModules.RNToolsManager.initMeiQia(
+      '55584b4e99ced1153307db4d80b19c97',
+      '$2a$04$XIszp1eXvt2w9.3J9x0.Q.YLyIg5c7z3/n3E5/9ICK2LGPP4jYBfy',
+      event => {
+        // console.log(event);
+        if (event.code === 0 && event.clientId !== undefined) {
+          this.setState({ clientId: event.clientId });
+        }
+      },
+    );
     this.sync();
     OpeninstallModule.init();
     if (Platform.OS === 'android') {
@@ -134,39 +106,22 @@ class App extends Component<{}> {
     }
   }
   render() {
-    // return this.update();
-    return RootStackScreen();
+    return this.update();
+    // return RootStackScreen();
     // return this.state.updateState ? this.update() : RootStackScreen();
-    // let progressView;
-    //
-    // if (this.state.progress) {
-    //   progressView = (
-    //     <Text style={styles.messages}>
-    //       {this.state.progress.receivedBytes} of {this.state.progress.totalBytes} bytes received
-    //     </Text>
-    //   );
-    // }
-    //
-    // return (
-    //   <View style={styles.container}>
-    //     <Text style={styles.welcome}>Welcome to CodePush!</Text>
-    //     <TouchableOpacity onPress={this.sync.bind(this)}>
-    //       <Text style={styles.syncButton}>Press for background sync</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity onPress={this.syncImmediate.bind(this)}>
-    //       <Text style={styles.syncButton}>Press for dialog-driven sync</Text>
-    //     </TouchableOpacity>
-    //     {progressView}
-    //     <Image style={styles.image} resizeMode={'contain'} source={require('./images/laptop_phone_howitworks.png')} />
-    //     <TouchableOpacity onPress={this.toggleAllowRestart.bind(this)}>
-    //       <Text style={styles.restartToggleButton}>Restart {this.state.restartAllowed ? 'allowed' : 'forbidden'}</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity onPress={this.getUpdateMetadata.bind(this)}>
-    //       <Text style={styles.syncButton}>Press for Update Metadata</Text>
-    //     </TouchableOpacity>
-    //     <Text style={styles.messages}>{this.state.syncMessage || ''}</Text>
-    //   </View>
-    // );
+  }
+  onButtonClick(event) {
+    NativeModules.RNToolsManager.openMeiQiaUpdate(
+      JSON.stringify({
+        name: '游客312321',
+        avatar: 'https://s3.cn-north-1.amazonaws.com.cn/pics.meiqia.bucket/1dee88eabfbd7bd4',
+        gender: '男',
+        tel: '1300000000',
+      }),
+      _ => {
+        console.log(event);
+      },
+    );
   }
   update() {
     let progressView;
@@ -182,39 +137,12 @@ class App extends Component<{}> {
             <Path strokeLinecap="round" strokeWidth="8" d={progres} />
           </G>
         </Svg>
-        // <Text style={styles.messages}>
-        //   {this.state.progress.receivedBytes} of {this.state.progress.totalBytes} bytes received
-        // </Text>
       );
     }
-
     return (
       <ImageBackground source={require('./images/SplashBKImages.png')} style={styles.container}>
         <View style={styles.iconview}>
-          {/*<VideoPlayer*/}
-          {/*  video={{ uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' }}*/}
-          {/*  videoWidth={1600}*/}
-          {/*  videoHeight={900}*/}
-          {/*  thumbnail={{ uri: 'https://i.picsum.photos/id/866/1600/900.jpg' }}*/}
-          {/*/>*/}
-          {/*<WS*/}
-          {/*  ref={ref => {*/}
-          {/*    this.ws = ref;*/}
-          {/*  }}*/}
-          {/*  url="wss://api2.telebott.com/message/123"*/}
-          {/*  onOpen={() => {*/}
-          {/*    console.log('Open!');*/}
-          {/*    this.ws.send('Hello');*/}
-          {/*  }}*/}
-          {/*  onMessage={console.log}*/}
-          {/*  onError={console.log}*/}
-          {/*  onClose={(err) => {*/}
-          {/*    Alert.alert('关闭原因', JSON.stringify(err));*/}
-          {/*  }}*/}
-          {/*  // onClose={console.log}*/}
-          {/*  // reconnect // Will try to reconnect onClose*/}
-          {/*/>*/}
-          {/*<Text style={styles.welcome}>应用检查更新...</Text>*/}
+          <Button onPress={this.onButtonClick.bind(this)} title={'打开客服'} />
           {progressView}
           <Text style={styles.messages}>{this.state.syncMessage || ''}</Text>
         </View>

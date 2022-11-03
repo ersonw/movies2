@@ -17,7 +17,7 @@ code-push release-react Movies2Android android -d Production
 
     "react-native-webrtc": "git+https://github.com/ersonw/react-native-webrtc.git",
 "react-native-ffmpeg": "^0.5.2",
-
+"react-native-mmeiqia": "git+https://github.com/ersonw/react-native-mmeiqia.git"
 netstat -tunlp |grep 8081
 lsof -i:8081
 

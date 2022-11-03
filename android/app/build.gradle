@@ -144,8 +144,7 @@ android {
         versionName "1.2.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         manifestPlaceholders = [
-                OPENINSTALL_APPKEY : "bn0uf16q",
-//                applicationName: "android.app.Application",
+                OPENINSTALL_APPKEY : "pzkelvrz",
         ]
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
@@ -291,6 +290,11 @@ dependencies {
     implementation project(':openinstall-react-native')
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.alibaba:fastjson:1.2.37'
+
+    implementation 'com.meiqia:meiqiasdk:+'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 //    implementation "androidx.core:core-ktx:1.6.0"

@@ -82,6 +82,4 @@ target 'movies2' do
   end
 end
 pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-#pod 'CodePush', :path => '../node_modules/react-native-code-push'
-#pod 'openinstall-react-native', :path => '../node_modules/openinstall-react-native'
-# pod 'react-native-webrtc', :path => '../node_modules/react-native-webrtc'
+#pod 'RNReactNativeMmeiqia', :path => '../node_modules/react-native-mmeiqia/ios'

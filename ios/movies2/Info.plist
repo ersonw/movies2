@@ -29,8 +29,14 @@
 			<string>openinstall</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>bn0uf16q</string>
+				<string>pzkelvrz</string>
 			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -93,6 +99,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>com.openinstall.APP_KEY</key>
-	<string>bn0uf16q</string>
+	<string>pzkelvrz</string>
 </dict>
 </plist>
