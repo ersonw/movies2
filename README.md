@@ -18,8 +18,13 @@ code-push release-react Movies2Android android -d Production
     "react-native-webrtc": "git+https://github.com/ersonw/react-native-webrtc.git",
 "react-native-ffmpeg": "^0.5.2",
 "react-native-mmeiqia": "git+https://github.com/ersonw/react-native-mmeiqia.git"
+"react-native-mmeiqia": "../react-native-mmeiqia"
+yarn add file:../react-native-mmeiqia --force
+yarn add git+https://github.com/ersonw/react-native-mmeiqia.git --force
 netstat -tunlp |grep 8081
 lsof -i:8081
-
+<string>$(MARKETING_VERSION)</string>
 code-push deployment ls  Movies2Ios -k
-code-push deployment ls  Movies2Android -k 
+code-push deployment ls  Movies2Android -k
+adb shell am start -n "com.movies2/com.movies2.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
+pod install --repo-update

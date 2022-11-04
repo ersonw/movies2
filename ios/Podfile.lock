@@ -99,6 +99,12 @@ PODS:
     - Base64 (~> 1.1.2)
   - libevent (2.1.12)
   - Logboard (2.2.2)
+  - Meiqia (3.8.5):
+    - Meiqia/MeiqiaSDK (= 3.8.5)
+    - Meiqia/MQChatViewController (= 3.8.5)
+  - Meiqia/MeiqiaSDK (3.8.5)
+  - Meiqia/MQChatViewController (3.8.5):
+    - Meiqia/MeiqiaSDK
   - openinstall-react-native (1.6.4):
     - React
   - OpenSSL-Universal (1.1.1100)
@@ -512,6 +518,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
+  - Meiqia (~> 3.8.4)
   - openinstall-react-native (from `../node_modules/openinstall-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - Permission-AppTrackingTransparency (from `../node_modules/react-native-permissions/ios/AppTrackingTransparency`)
@@ -600,6 +607,7 @@ SPEC REPOS:
     - JWT
     - libevent
     - Logboard
+    - Meiqia
     - OpenSSL-Universal
     - SocketRocket
     - SSZipArchive
@@ -780,6 +788,7 @@ SPEC CHECKSUMS:
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
+  Meiqia: 1bf5a4dbb8888efc308fcddf82f204996542de7a
   openinstall-react-native: 6e3f39553e39210111609ecff76803cffb9504f8
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   Permission-AppTrackingTransparency: 9eedbc3b5a2907b8cb2c971461754616eac1661d
@@ -848,6 +857,6 @@ SPEC CHECKSUMS:
   Yoga: 043f8eb97345d0171f27fead4d1849cacf0472a5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: bc8a839acfe31c49e7ec056f75c6a39017d42a39
+PODFILE CHECKSUM: ee0b6c17c7f5decb1dff6e579f0867a78fe6fb56
 
 COCOAPODS: 1.11.2

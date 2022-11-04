@@ -5,6 +5,7 @@ import RootStackScreen from './src/navigation/RootStackScreen';
 import OpeninstallModule from 'openinstall-react-native';
 import { G, Path, Svg } from 'react-native-svg';
 import { Alert, Button } from 'react-native';
+import { initSDK, show } from './modal/MeiQia';
 
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
@@ -64,16 +65,12 @@ class App extends Component<{}> {
         console.log(`androidId:${event.androidId}`);
       }
     });
-    NativeModules.RNToolsManager.initMeiQia(
-      '55584b4e99ced1153307db4d80b19c97',
-      '$2a$04$XIszp1eXvt2w9.3J9x0.Q.YLyIg5c7z3/n3E5/9ICK2LGPP4jYBfy',
-      event => {
-        // console.log(event);
-        if (event.code === 0 && event.clientId !== undefined) {
-          this.setState({ clientId: event.clientId });
-        }
-      },
-    );
+    initSDK({
+      appKey: '55584b4e99ced1153307db4d80b19c97',
+      secretKey: '$2a$04$XIszp1eXvt2w9.3J9x0.Q.YLyIg5c7z3/n3E5/9ICK2LGPP4jYBfy',
+    }).then(event => {
+      this.setState({ meiQiaClientId: event.clientId });
+    });
     this.sync();
     OpeninstallModule.init();
     if (Platform.OS === 'android') {
@@ -111,15 +108,23 @@ class App extends Component<{}> {
     // return this.state.updateState ? this.update() : RootStackScreen();
   }
   onButtonClick(event) {
-    NativeModules.RNToolsManager.openMeiQiaUpdate(
-      JSON.stringify({
-        name: '游客312321',
-        avatar: 'https://s3.cn-north-1.amazonaws.com.cn/pics.meiqia.bucket/1dee88eabfbd7bd4',
-        gender: '男',
-        tel: '1300000000',
-      }),
+    show(
+      {
+        clientInfo: {
+          name: '31312游客31232123132',
+          avatar: 'https://s3.cn-north-1.amazonaws.com.cn/pics.meiqia.bucket/1dee88eabfbd7bd4',
+          gender: '男',
+          tel: '1300000000',
+        },
+        clientId: {
+          id: this.state.meiQiaClientId,
+        },
+        customId: {
+          id: '123',
+        },
+      },
       _ => {
-        console.log(event);
+        console.log(_);
       },
     );
   }

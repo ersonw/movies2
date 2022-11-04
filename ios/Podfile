@@ -82,4 +82,4 @@ target 'movies2' do
   end
 end
 pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-#pod 'RNReactNativeMmeiqia', :path => '../node_modules/react-native-mmeiqia/ios'
+pod 'Meiqia', '~> 3.8.5'

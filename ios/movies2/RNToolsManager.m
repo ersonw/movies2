@@ -54,6 +54,13 @@ RCT_EXPORT_METHOD(getAppVersionUUID:(RCTResponseSenderBlock)callback)
 //  NSString *bundleIdentifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];//获取项目版本号
 //  callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
 }
+
+RCT_EXPORT_METHOD(initMeiQia:(RCTResponseSenderBlock)callback)
+{
+  UIDevice* device = [UIDevice currentDevice];
+  NSString *bundleIdentifier = [[device identifierForVendor] UUIDString];
+  callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
+}
 - (NSString*)isDevicePhysical {
 #if TARGET_OS_SIMULATOR
   NSString* isPhysicalDevice = @"false";

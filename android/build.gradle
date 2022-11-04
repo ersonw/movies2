@@ -28,6 +28,7 @@ buildscript {
         classpath("de.undercouch:gradle-download-task:5.0.1")
 //        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
+        classpath "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0@aar"
         classpath 'ly.img.android.sdk:plugin:9.2.0'
         classpath 'androidx.appcompat:appcompat:1.0.2'
 //        classpath "androidx.localbroadcastmanager:localbroadcastmanager:1.1.0"
