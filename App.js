@@ -71,7 +71,7 @@ class App extends Component<{}> {
     }).then(event => {
       this.setState({ meiQiaClientId: event.clientId });
     });
-    this.sync();
+    // this.sync();
     OpeninstallModule.init();
     if (Platform.OS === 'android') {
       //Android平台需要运行的代码
@@ -103,15 +103,15 @@ class App extends Component<{}> {
     }
   }
   render() {
-    return this.update();
-    // return RootStackScreen();
+    // return this.update();
+    return RootStackScreen();
     // return this.state.updateState ? this.update() : RootStackScreen();
   }
   onButtonClick(event) {
     show(
       {
         clientInfo: {
-          name: '31312游sdsa客312322',
+          name: '31312游客312322',
           avatar: 'https://s3.cn-north-1.amazonaws.com.cn/pics.meiqia.bucket/1dee88eabfbd7bd4',
           gender: '男',
           tel: '1300000000',

@@ -10,15 +10,8 @@ react-core-6 signal
 code-push release-react Movies2Ios ios -d Production
 
 code-push release-react Movies2Android android -d Production
+code-push app rm Movies2Android
 
-"react-native-webrtc": "^106.0.0-beta.3"
-"react-native-webrtc": "git+https://github.com/ersonw/react-native-webrtc.git"
- "react-native-webrtc": "git+https://github.com/ant-media/WebRTC-React-Native-SDK.git"
-
-    "react-native-webrtc": "git+https://github.com/ersonw/react-native-webrtc.git",
-"react-native-ffmpeg": "^0.5.2",
-"react-native-mmeiqia": "git+https://github.com/ersonw/react-native-mmeiqia.git"
-"react-native-mmeiqia": "../react-native-mmeiqia"
 yarn add file:../react-native-mmeiqia --force
 yarn add git+https://github.com/ersonw/react-native-mmeiqia.git --force
 netstat -tunlp |grep 8081
@@ -29,11 +22,7 @@ code-push deployment ls  Movies2Ios -k
 code-push deployment ls  Movies2Android -k
 adb shell am start -n "com.movies2/com.movies2.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
 pod install --repo-update
-#aliyun EVE
-<key>CodePushDeploymentKey</key>
-<string>9kUqqwKOQB9muXzaTuCFkVwMKvsp4ksvOXqog</string>
-<key>CodePushServerURL</key>
-<string>https://alb-s86f1csy6di0gp207m.cn-shenzhen.alb.aliyuncs.com</string>
+
 #LOCAL
 <key>CodePushDeploymentKey</key>
 <string>0ElbmQqCMcfi1BouBIDXOu6GNiN14ksvOXqog</string>
