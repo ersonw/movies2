@@ -42,9 +42,9 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CodePushDeploymentKey</key>
-	<string>9kUqqwKOQB9muXzaTuCFkVwMKvsp4ksvOXqog</string>
+	<string>0ElbmQqCMcfi1BouBIDXOu6GNiN14ksvOXqog</string>
 	<key>CodePushServerURL</key>
-	<string>https://alb-s86f1csy6di0gp207m.cn-shenzhen.alb.aliyuncs.com</string>
+	<string>https://api.obsi.cc</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

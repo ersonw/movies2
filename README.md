@@ -28,3 +28,8 @@ code-push deployment ls  Movies2Ios -k
 code-push deployment ls  Movies2Android -k
 adb shell am start -n "com.movies2/com.movies2.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
 pod install --repo-update
+
+<key>CodePushDeploymentKey</key>
+<string>9kUqqwKOQB9muXzaTuCFkVwMKvsp4ksvOXqog</string>
+<key>CodePushServerURL</key>
+<string>https://alb-s86f1csy6di0gp207m.cn-shenzhen.alb.aliyuncs.com</string>

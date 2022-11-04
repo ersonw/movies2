@@ -89,6 +89,8 @@ public class RNReactNativeMmeiqiaModule extends ReactContextBaseJavaModule {
 
         if (data.hasKey("customId") && data.getMap("customId").hasKey("id") && !data.getMap("customId").getString("id").equals("")) {
             intentConfig.setCustomizedId(data.getMap("customId").getString("id")); // 相同的 id 会被识别为同一个顾客
+        }else{
+            intentConfig.setCustomizedId(RNToolsManager.getAndroidId());
         }
         if (data.hasKey("clientId") && data.getMap("clientId").hasKey("id") && !data.getMap("clientId").getString("id").equals("")) {
             intentConfig.setClientId(data.getMap("clientId").getString("id"));

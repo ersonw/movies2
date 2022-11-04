@@ -119,9 +119,6 @@ class App extends Component<{}> {
         clientId: {
           id: this.state.meiQiaClientId,
         },
-        customId: {
-          id: '123',
-        },
       },
       _ => {
         console.log(_);

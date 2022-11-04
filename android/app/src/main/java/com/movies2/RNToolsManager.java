@@ -36,7 +36,7 @@ import java.util.HashMap;
 
 public class RNToolsManager extends ReactContextBaseJavaModule {
     private static ReactApplicationContext context;
-    private final ContentResolver contentResolver;
+    private static  ContentResolver contentResolver;
     private final PackageManager packageManager;
     private static  String meiQiaAppKey;
     private static  String meiQiaSecretKey;
@@ -46,7 +46,7 @@ public class RNToolsManager extends ReactContextBaseJavaModule {
     public RNToolsManager(ReactApplicationContext reactContext) {
         super(reactContext);
         context = reactContext;
-        this.contentResolver = reactContext.getContentResolver();
+        contentResolver = reactContext.getContentResolver();
         this.packageManager = getReactApplicationContext().getPackageManager();
     }
 
@@ -192,7 +192,7 @@ public class RNToolsManager extends ReactContextBaseJavaModule {
         return features;
     }
     @SuppressLint("HardwareIds")
-    private String getAndroidId() {
+    public static String getAndroidId() {
         return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID);
     }
     private boolean isEmulator() {
@@ -227,29 +227,6 @@ public class RNToolsManager extends ReactContextBaseJavaModule {
             return info;
         }
     }
-//    @ReactMethod
-//    public void initMeiQia(String appKey,String secretKey,Callback successCallback){
-//        RNToolsManager.meiQiaAppKey = appKey;
-//        RNToolsManager.meiQiaSecretKey = secretKey;
-//        WritableNativeMap build = new WritableNativeMap();
-//        MQConfig.init(RNToolsManager.context, RNToolsManager.meiQiaAppKey, new OnInitCallback() {
-//            @Override
-//            public void onSuccess(String clientId) {
-//                build.putString("clientId",clientId);
-//                build.putInt("code",0);
-//                build.putString("message","init success");
-//                successCallback.invoke(build);
-////                Toast.makeText(RNToolsManager.context.getCurrentActivity(), "init success", Toast.LENGTH_SHORT).show();
-//            }
-//            @Override
-//            public void onFailure(int code, String message) {
-//                build.putInt("code",code);
-//                build.putString("message",message);
-//                successCallback.invoke(build);
-////                Toast.makeText(RNToolsManager.context.getCurrentActivity(), "int failure", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
     private HashMap<String,String> toHashMap(String map){
         JSONObject object = JSONObject.parseObject(map);
         HashMap<String,String> hashMap = new HashMap<>();
@@ -280,86 +257,4 @@ public class RNToolsManager extends ReactContextBaseJavaModule {
         }
         return hashMap;
     }
-//    @ReactMethod
-//    public void openMeiQia(String clientInfo,Callback successCallback){
-//        try {
-//            Intent intent = new MQIntentBuilder(context.getCurrentActivity())
-//                    .setClientInfo(toHashMap(clientInfo))
-//                    .build();
-//            Objects.requireNonNull(context.getCurrentActivity()).startActivity(intent);
-//            successCallback.invoke("ok");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//    @ReactMethod
-//    public void openMeiQiaUpdate(String clientInfo,Callback successCallback){
-//        Intent intent = new MQIntentBuilder(context.getCurrentActivity())
-////                .setCustomizedId("开发者的 id") // 相同的 id 会被识别为同一个顾客
-//                .updateClientInfo(toHashMap(clientInfo))
-//                .build();
-//        Objects.requireNonNull(context.getCurrentActivity()).startActivity(intent);
-//        successCallback.invoke("ok");
-//    }
-//    @ReactMethod
-//    public void openMeiQiaAgentId(String clientInfo,String agentId,Callback successCallback){
-//        Intent intent = new MQIntentBuilder(context.getCurrentActivity())
-//                .setScheduledAgent(agentId)
-//                .setClientInfo(toHashMap(clientInfo))
-//                .build();
-//        Objects.requireNonNull(context.getCurrentActivity()).startActivity(intent);
-//    }
-//    @ReactMethod
-//    public void openMeiQiaAgentIdUpdate(String clientInfo,String agentId,Callback successCallback){
-//        Intent intent = new MQIntentBuilder(context.getCurrentActivity())
-//                .setScheduledAgent(agentId)
-//                .updateClientInfo(toHashMap(clientInfo))
-//                .build();
-//        Objects.requireNonNull(context.getCurrentActivity()).startActivity(intent);
-//    }
-//    @ReactMethod
-//    public void openMeiQiaGroup(String clientInfo,String groupId,Callback successCallback){
-//        Intent intent = new MQIntentBuilder(context.getCurrentActivity())
-//                .setScheduledGroup(groupId)
-//                .setClientInfo(toHashMap(clientInfo))
-//                .build();
-//        Objects.requireNonNull(context.getCurrentActivity()).startActivity(intent);
-//    }
-//    @ReactMethod
-//    public void openMeiQiaConsult(String clientInfo,String productStr,Callback successCallback){
-//        ReadableNativeMap product = toWritableNativeMap(productStr);
-//        Bundle productCardBundle = new Bundle();
-//        productCardBundle.putString("title", product.getString("title"));
-//        productCardBundle.putString("description", product.getString("description"));
-//        productCardBundle.putString("pic_url", product.getString("pic_url"));
-//        productCardBundle.putString("product_url", product.getString("product_url"));
-//        productCardBundle.putLong("sales_count", product.getInt("sales_count"));
-//        Intent intent = new MQIntentBuilder(context.getCurrentActivity())
-//                .setPreSendTextMessage(product.getString("message"))
-//                .setPreSendProductCardMessage(productCardBundle)
-//                .setClientInfo(toHashMap(clientInfo))
-//                .build();
-//        Objects.requireNonNull(context.getCurrentActivity()).startActivity(intent);
-//    }
-//    @ReactMethod
-//    public void onMeiQiaEvent(String eventKey,String eventvalue, Callback successCallback){
-//        MQClientEvent clientEvent = new MQClientEvent();
-//        clientEvent.setEvent(eventKey, eventvalue); // 事件字段需要先在后台创建
-//        WritableNativeMap map = new WritableNativeMap();
-//        MQManager.getInstance(context).setClientEvent(clientEvent, new OnClientInfoCallback() {
-//            @Override
-//            public void onSuccess() {
-//                map.putInt("code",0);
-//                map.putString("message", "ok");
-//                successCallback.invoke(map);
-//            }
-//
-//            @Override
-//            public void onFailure(int code, String message) {
-//                map.putInt("code",code);
-//                map.putString("message", message);
-//                successCallback.invoke(map);
-//            }
-//        });
-//    }
 }

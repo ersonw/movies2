@@ -59,26 +59,24 @@ RCT_EXPORT_METHOD(show: (NSDictionary *)param resolve: (RCTPromiseResolveBlock)r
     [aStyle setEnableRoundAvatar:YES];
     // [aStyle setEnableOutgoingAvatar:NO]; //不显示用户头像
     // [aStyle setEnableIncomingAvatar:NO]; //不显示客服头像
-    
+//  NSDictionary *clientInfo = NULL;
     // 设置客户端信息
     if((NSDictionary *)param[@"clientInfo"]){
-        NSDictionary *clientInfo = (NSDictionary *)param[@"clientInfo"];
-        [chatViewManager setClientInfo: clientInfo];
+      NSDictionary *clientInfo = (NSDictionary *)param[@"clientInfo"];
+      [chatViewManager setClientInfo: clientInfo override: YES];
     }
-    
-    //设置美洽clientId
-    if((NSDictionary *)param[@"clientId"]&&(NSString *)param[@"clientId"][@"id"]&&![(NSString *)param[@"clientId"][@"id"] isEqual:@""]){
-        NSDictionary *clientInfo = (NSDictionary *)param[@"clientId"][@"id"];
-        [chatViewManager setClientInfo: clientInfo];
-    }
-    
+  //设置美洽clientId
+  if((NSDictionary *)param[@"clientId"]&&(NSString *)param[@"clientId"][@"id"]&&![(NSString *)param[@"clientId"][@"id"] isEqual:@""]){
+    [chatViewManager setLoginMQClientId: (NSString *)param[@"clientId"][@"id"]];
+  }
     //customId
     if ((NSString *)param[@"customId"]&&(NSString *)param[@"customId"][@"id"]&&![(NSString *)param[@"customId"][@"id"] isEqual:@""]){
         NSString *customId = (NSString *)param[@"customId"][@"id"];
         [chatViewManager setLoginCustomizedId:customId];
     }else{
         #pragma mark 切记切记切记 下面这一行是错误的写法 , 这样会导致 ID = "notadda" 和 meiqia多个用户绑定,最终导致 对话内容错乱 A客户能看到 B C D的客户的对话内容
-        [chatViewManager setLoginCustomizedId:@"notadda"];
+      UIDevice* device = [UIDevice currentDevice];
+        [chatViewManager setLoginCustomizedId:[[device identifierForVendor] UUIDString]];
     }
     
     //客服组scheduledInfo
