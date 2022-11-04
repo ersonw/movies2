@@ -111,7 +111,7 @@ class App extends Component<{}> {
     show(
       {
         clientInfo: {
-          name: '31312游客31232123132',
+          name: '31312游sdsa客312322',
           avatar: 'https://s3.cn-north-1.amazonaws.com.cn/pics.meiqia.bucket/1dee88eabfbd7bd4',
           gender: '男',
           tel: '1300000000',
