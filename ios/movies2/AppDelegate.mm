@@ -33,9 +33,9 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   RCTAppSetupPrepareApp(application);
-
+  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
-
+  
 #if RCT_NEW_ARCH_ENABLED
   _contextContainer = std::make_shared<facebook::react::ContextContainer const>();
   _reactNativeConfig = std::make_shared<facebook::react::EmptyReactNativeConfig const>();
@@ -43,24 +43,105 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   _bridgeAdapter = [[RCTSurfacePresenterBridgeAdapter alloc] initWithBridge:bridge contextContainer:_contextContainer];
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
 #endif
-
+  
   NSDictionary *initProps = [self prepareInitialProps];
   UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"movies2", initProps);
-
+  
   if (@available(iOS 13.0, *)) {
     rootView.backgroundColor = [UIColor systemBackgroundColor];
   } else {
     rootView.backgroundColor = [UIColor whiteColor];
   }
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+  if (payload) {
+    NSLog(@"payload %@", payload);
+  }
+  NSLog( @" Registering for push notifications... ");
+  if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+          NSLog(@"Requesting permission for push notifications..."); // iOS 8
+          UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:
+              UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
+              UIUserNotificationTypeSound categories:nil];
+          [UIApplication.sharedApplication registerUserNotificationSettings:settings];
+      } else {
+          NSLog(@"Registering device for push notifications..."); // iOS 7 and earlier
+          [UIApplication.sharedApplication registerForRemoteNotificationTypes:
+              UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |
+              UIRemoteNotificationTypeSound];
+      }
   return YES;
 }
 
+/** 远程通知注册成功委托 */
+- (void)application:(UIApplication *)application
+    didRegisterUserNotificationSettings:(UIUserNotificationSettings *)settings
+{
+    NSLog(@"Registering device for push notifications..."); // iOS 8
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application
+    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+//  NSData *data = [@"TEST" dataUsingEncoding:NSUTF8StringEncoding];
+//  NSString *str2 = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+  NSUInteger dataLength = deviceToken.length;
+  if (dataLength == 0) {
+    return;
+  }
+  const unsigned char *dataBuffer = (const unsigned char *)deviceToken.bytes;
+  NSMutableString *hexTokenString  = [NSMutableString stringWithCapacity:(dataLength * 2)];
+  for (int i = 0; i < dataLength; ++i) {
+    [hexTokenString appendFormat:@"%02x", dataBuffer[i]];
+  }
+  NSLog(@"push DeviceToken token:%@", hexTokenString);
+}
+
+- (void)application:(UIApplication *)application
+    didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"Failed to register: %@", error);
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier
+    forRemoteNotification:(NSDictionary *)notification completionHandler:(void(^)())completionHandler
+{
+    NSLog(@"Received push notification: %@, identifier: %@", notification, identifier); // iOS 8
+    completionHandler();
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)payload {
+    NSLog(@"remote notification: %@",[payload description]);
+    NSString* alertStr = nil;
+    NSDictionary *apsInfo = [payload objectForKey:@"aps"];
+    NSObject *alert = [apsInfo objectForKey:@"alert"];
+    if ([alert isKindOfClass:[NSString class]])
+    {
+        alertStr = (NSString*)alert;
+    }
+    else if ([alert isKindOfClass:[NSDictionary class]])
+    {
+        NSDictionary* alertDict = (NSDictionary*)alert;
+        alertStr = [alertDict objectForKey:@"body"];
+    }
+    application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+    if ([application applicationState] == UIApplicationStateActive && alertStr != nil)
+    {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Pushed Message" message:alertStr delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+- (NSString *)modeString
+{
+#if DEBUG
+    return @"Development (sandbox)";
+#else
+    return @"Production";
+#endif
+}
 /// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
 ///
 /// @see: https://reactjs.org/blog/2022/03/29/react-v18.html
@@ -135,18 +216,19 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 //iOS9以上，会优先走这个方法
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
  //openURL1
- [RCTOpenInstall handLinkURL:url];
+ [InvitationSDK handLinkURL:url];
  return YES;
 }
 //适用目前所有iOS版本
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
  //openURL2
- [RCTOpenInstall handLinkURL:url];
+ [InvitationSDK handLinkURL:url];
  return YES;
 }
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler{
- //univeral link
- [RCTOpenInstall continueUserActivity:userActivity];
- return YES;
+    //处理通过一键唤起App时传递的数据
+    [InvitationSDK continueUserActivity:userActivity];
+    //其他第三方回调；
+     return YES;
 }
 @end

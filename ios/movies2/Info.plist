@@ -26,7 +26,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>openinstall</string>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>pzkelvrz</string>
@@ -42,9 +42,9 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CodePushDeploymentKey</key>
-    <string>inySARJcdR50odpZMiGrqjlkJpCo4ksvOXqog</string>
-    <key>CodePushServerURL</key>
-    <string>https://alb-s86f1csy6di0gp207m.cn-shenzhen.alb.aliyuncs.com</string>
+	<string>inySARJcdR50odpZMiGrqjlkJpCo4ksvOXqog</string>
+	<key>CodePushServerURL</key>
+	<string>https://alb-s86f1csy6di0gp207m.cn-shenzhen.alb.aliyuncs.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

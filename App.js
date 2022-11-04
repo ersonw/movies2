@@ -103,8 +103,8 @@ class App extends Component<{}> {
     }
   }
   render() {
-    // return this.update();
-    return RootStackScreen();
+    return this.update();
+    // return RootStackScreen();
     // return this.state.updateState ? this.update() : RootStackScreen();
   }
   onButtonClick(event) {

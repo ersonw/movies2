@@ -137,6 +137,10 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.movies2"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "yourAppKey",         //在此替换你的APPKey
+                JPUSH_CHANNEL: "yourChannel"        //在此替换你的channel
+        ]
 //        applicationId "com.telebott.movie_fix"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
