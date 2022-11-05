@@ -2,8 +2,11 @@
 #import <sys/utsname.h>
 @implementation RNToolsManager
 @synthesize bridge = _bridge;
-
+static NSString *deviceToken;
 RCT_EXPORT_MODULE(RNToolsManager);
+- (void) setDeviceToken:(NSString*) token {
+  deviceToken = token;
+}
 //  对外提供调用方法,Callback
 RCT_EXPORT_METHOD(getAppVersion:(RCTResponseSenderBlock)callback)
 {
@@ -23,6 +26,7 @@ RCT_EXPORT_METHOD(getAppVersionPackage:(RCTResponseSenderBlock)callback)
   struct utsname un;
   uname(&un);
   NSArray *array = [@{
+    @"deviceToken" : deviceToken,
     @"name" : [device name],
     @"systemName" : [device systemName],
     @"systemVersion" : [device systemVersion],
@@ -38,12 +42,6 @@ RCT_EXPORT_METHOD(getAppVersionPackage:(RCTResponseSenderBlock)callback)
       @"machine" : @(un.machine),
     }
   } copy];
-//  for (int i = 0; i < array.count; i++)
-//          {
-//              NSString * str = array[i];
-//              NSLog(@"array[%d] = %@",i,str);
-//          }
-//  callback(@[[array copy]]);
   callback(@[array]);
 }
 RCT_EXPORT_METHOD(getAppVersionUUID:(RCTResponseSenderBlock)callback)

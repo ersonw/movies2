@@ -52,10 +52,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   } else {
     rootView.backgroundColor = [UIColor whiteColor];
   }
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
   NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
   if (payload) {
     NSLog(@"payload %@", payload);
@@ -67,12 +63,17 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
               UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
               UIUserNotificationTypeSound categories:nil];
           [UIApplication.sharedApplication registerUserNotificationSettings:settings];
-      } else {
+  } else {
           NSLog(@"Registering device for push notifications..."); // iOS 7 and earlier
           [UIApplication.sharedApplication registerForRemoteNotificationTypes:
               UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |
               UIRemoteNotificationTypeSound];
-      }
+  }
+  UIViewController *rootViewController = [UIViewController new];
+  rootViewController.view = rootView;
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
+  
   return YES;
 }
 
@@ -99,6 +100,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
     [hexTokenString appendFormat:@"%02x", dataBuffer[i]];
   }
   NSLog(@"push DeviceToken token:%@", hexTokenString);
+  [RNToolsManager setDeviceToken:hexTokenString];
 }
 
 - (void)application:(UIApplication *)application

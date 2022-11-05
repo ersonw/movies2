@@ -5,7 +5,7 @@ import RootStackScreen from './src/navigation/RootStackScreen';
 import OpeninstallModule from 'openinstall-react-native';
 import { G, Path, Svg } from 'react-native-svg';
 import { Alert, Button } from 'react-native';
-import { initSDK, show } from './modal/MeiQia';
+import MeiQia from './modal/MeiQia';
 
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
@@ -59,19 +59,20 @@ class App extends Component<{}> {
   }
   componentDidMount() {
     NativeModules.RNToolsManager.getAppVersionPackage(event => {
+      console.log(event);
       if (Platform.OS === 'ios') {
         console.log(`IOS IFV:${event.identifierForVendor}`);
       } else if (Platform.OS === 'android') {
         console.log(`androidId:${event.androidId}`);
       }
     });
-    initSDK({
+    MeiQia.initSDK({
       appKey: '55584b4e99ced1153307db4d80b19c97',
       secretKey: '$2a$04$XIszp1eXvt2w9.3J9x0.Q.YLyIg5c7z3/n3E5/9ICK2LGPP4jYBfy',
     }).then(event => {
       this.setState({ meiQiaClientId: event.clientId });
     });
-    // this.sync();
+    this.sync();
     OpeninstallModule.init();
     if (Platform.OS === 'android') {
       //Android平台需要运行的代码
@@ -108,7 +109,7 @@ class App extends Component<{}> {
     // return this.state.updateState ? this.update() : RootStackScreen();
   }
   onButtonClick(event) {
-    show(
+    MeiQia.show(
       {
         clientInfo: {
           name: '31312游客312322',
