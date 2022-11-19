@@ -83,3 +83,4 @@ target 'movies2' do
 end
 pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 pod 'Meiqia', '~> 3.8.5'
+# pod 'WechatOpenSDK', '~> 1.9.7'

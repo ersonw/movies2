@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
-
+#import <UIKit/UIKit.h>
+#import "WXApi.h"
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -18,7 +19,9 @@
 #import <react/config/ReactNativeConfig.h>
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
+@interface AppDelegate ()<WXApiDelegate>
 
+@end
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
   RCTTurboModuleManager *_turboModuleManager;
   RCTSurfacePresenterBridgeAdapter *_bridgeAdapter;
@@ -73,7 +76,14 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  
+  [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString *log) {
+      NSLog(@"WeChatSDK: %@", log);
+  }];
+//  [WXApi registerApp:@"wx31095331f500c042"
+//  universalLink:@"https://your_domain/app/"];
+//  [WXApi checkUniversalLinkReady:^(WXULCheckStep step, WXCheckULStepResult* result) {
+//      NSLog(@"%@, %u, %@, %@", @(step), result.success, result.errorInfo, result.suggestion);
+//  }];
   return YES;
 }
 
@@ -221,6 +231,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
  [InvitationSDK handLinkURL:url];
  return YES;
 }
+
 //适用目前所有iOS版本
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
  //openURL2

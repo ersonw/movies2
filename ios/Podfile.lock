@@ -168,6 +168,8 @@ PODS:
     - FBLazyVector (= 0.70.2)
     - RCTRequired (= 0.70.2)
     - React-Core (= 0.70.2)
+  - RCTWeChat (1.1.26):
+    - React-Core
   - React (0.70.2):
     - React-Core (= 0.70.2)
     - React-Core/DevSupport (= 0.70.2)
@@ -482,6 +484,7 @@ PODS:
   - SSZipArchive (2.2.3)
   - VideoEditorSDK (10.30.1):
     - imglyKit (= 10.30.1)
+  - WechatOpenSDK (1.9.7)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -518,7 +521,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
-  - Meiqia (~> 3.8.4)
+  - Meiqia (~> 3.8.5)
   - openinstall-react-native (from `../node_modules/openinstall-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - Permission-AppTrackingTransparency (from `../node_modules/react-native-permissions/ios/AppTrackingTransparency`)
@@ -543,6 +546,7 @@ DEPENDENCIES:
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
+  - RCTWeChat (from `../node_modules/react-native-wechat-lib`)
   - React (from `../node_modules/react-native/`)
   - React-bridging (from `../node_modules/react-native/ReactCommon`)
   - React-callinvoker (from `../node_modules/react-native/ReactCommon/callinvoker`)
@@ -583,6 +587,7 @@ DEPENDENCIES:
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNVideoEditorSDK (from `../node_modules/react-native-videoeditorsdk`)
+  - WechatOpenSDK (~> 1.9.7)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -612,6 +617,7 @@ SPEC REPOS:
     - SocketRocket
     - SSZipArchive
     - VideoEditorSDK
+    - WechatOpenSDK
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -679,6 +685,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
     :path: "../node_modules/react-native/Libraries/TypeSafety"
+  RCTWeChat:
+    :path: "../node_modules/react-native-wechat-lib"
   React:
     :path: "../node_modules/react-native/"
   React-bridging:
@@ -813,6 +821,7 @@ SPEC CHECKSUMS:
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: d4033a367d0bfd1f23f67b501f8cdabf9afe617e
   RCTTypeSafety: b112b2ccc59309a65284280c0a53baf1ce4b5860
+  RCTWeChat: 289c92186c1f55716a6378af55388292d94b2d9e
   React: 04474547a4729eef1fb378ca42f302f4b3219eb8
   React-bridging: 1c8695b292b4a9baaca3960f6166d9766e20492d
   React-callinvoker: 4d91e2db7773ee3fcea2d3a5c6beb52a5bfd4d71
@@ -854,9 +863,10 @@ SPEC CHECKSUMS:
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   VideoEditorSDK: 8248852e4288a996119a099ad985e36fdcb58d87
+  WechatOpenSDK: 2f0ae448c7525cb5c27db5f7aa0f568de0988fa4
   Yoga: 043f8eb97345d0171f27fead4d1849cacf0472a5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: ee0b6c17c7f5decb1dff6e579f0867a78fe6fb56
+PODFILE CHECKSUM: 0c415dd290cfa51530b5d750a819b6a021d95248
 
 COCOAPODS: 1.11.2

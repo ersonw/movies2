@@ -1,13 +1,15 @@
 #import "RNToolsManager.h"
 #import <sys/utsname.h>
+
 @implementation RNToolsManager
 @synthesize bridge = _bridge;
 static NSString *deviceToken;
 RCT_EXPORT_MODULE(RNToolsManager);
-- (void) setDeviceToken:(NSString*) token {
++ (void) setDeviceToken:(NSString*) token {
   deviceToken = token;
 }
 //  对外提供调用方法,Callback
+
 RCT_EXPORT_METHOD(getAppVersion:(RCTResponseSenderBlock)callback)
 {
   NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];//获取项目版本号
