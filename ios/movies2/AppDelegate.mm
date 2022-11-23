@@ -1,6 +1,5 @@
 #import "AppDelegate.h"
 #import <UIKit/UIKit.h>
-#import "WXApi.h"
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -19,9 +18,6 @@
 #import <react/config/ReactNativeConfig.h>
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
-@interface AppDelegate ()<WXApiDelegate>
-
-@end
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
   RCTTurboModuleManager *_turboModuleManager;
   RCTSurfacePresenterBridgeAdapter *_bridgeAdapter;
@@ -57,7 +53,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   }
   NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
   if (payload) {
-    NSLog(@"payload %@", payload);
+    NSLog(@"payload %@", [payload description]);
   }
   NSLog( @" Registering for push notifications... ");
   if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -72,18 +68,11 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
               UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |
               UIRemoteNotificationTypeSound];
   }
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  [WXApi startLogByLevel:WXLogLevelDetail logBlock:^(NSString *log) {
-      NSLog(@"WeChatSDK: %@", log);
-  }];
-//  [WXApi registerApp:@"wx31095331f500c042"
-//  universalLink:@"https://your_domain/app/"];
-//  [WXApi checkUniversalLinkReady:^(WXULCheckStep step, WXCheckULStepResult* result) {
-//      NSLog(@"%@, %u, %@, %@", @(step), result.success, result.errorInfo, result.suggestion);
-//  }];
   return YES;
 }
 
@@ -98,8 +87,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-//  NSData *data = [@"TEST" dataUsingEncoding:NSUTF8StringEncoding];
-//  NSString *str2 = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
   NSUInteger dataLength = deviceToken.length;
   if (dataLength == 0) {
     return;
@@ -179,7 +166,9 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
+  [RCTBundleURLProvider sharedSettings].jsLocation=@"192.168.1.11";
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
+//  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 //  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #else
 //   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
