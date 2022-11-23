@@ -230,15 +230,9 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
             v1SigningEnabled true
-//            v2SigningEnabled false
-//            storeFile file('key.keystore')
-//            storePassword 'movies123'
-//            keyAlias 'key'
-//            keyPassword 'movies123'
         }
         release {
             v1SigningEnabled true
-//            v2SigningEnabled false
             storeFile file('key.keystore')
             storePassword 'movies123'
             keyAlias 'key'
