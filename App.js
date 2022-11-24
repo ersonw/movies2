@@ -59,11 +59,11 @@ class App extends Component<{}> {
   }
   componentDidMount() {
     NativeModules.RNToolsManager.getAppVersionPackage(event => {
-      console.log(event);
+      // console.log(event);
       if (Platform.OS === 'ios') {
-        console.log(`IOS IFV:${event.identifierForVendor}`);
+        // console.log(`IOS IFV:${event.identifierForVendor}`);
       } else if (Platform.OS === 'android') {
-        console.log(`androidId:${event.androidId}`);
+        // console.log(`androidId:${event.androidId}`);
       }
     });
     MeiQia.initSDK({

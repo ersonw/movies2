@@ -9,24 +9,13 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from 'react-native';
-import {
-  ScreenCapturePickerView,
-  RTCPeerConnection,
-  RTCIceCandidate,
-  RTCSessionDescription,
-  RTCView,
-  MediaStream,
-  MediaStreamTrack,
-  mediaDevices,
-  registerGlobals,
-} from 'react-native-webrtc';
 
 import useFetchData from '../../hooks/useFetchData';
 import Loading from '../../components/shared/Loading';
 import NetworkError from '../../components/shared/NetworkError';
 import Colors from '../../constants/Colors';
 import storageUtil from '../../utils/StorageUtil';
-import { async } from '@babel/runtime/helpers/regeneratorRuntime';
+
 const url = '/api/v2/home.json';
 
 const HomeScreen = ({ navigation }) => {

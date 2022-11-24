@@ -17,7 +17,7 @@ const DiscoverStackScreen = () => {
         component={HomeScreen}
         options={({ navigation, route }) => ({
           ...HeaderButtonsOption(navigation),
-          title: '发现',
+          // title: '发现',
         })}
       />
       <DiscoverStack.Screen name="Courses" component={CoursesScreen} />
