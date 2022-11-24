@@ -6,6 +6,7 @@ import OpeninstallModule from 'openinstall-react-native';
 import { G, Path, Svg } from 'react-native-svg';
 import { Alert, Button } from 'react-native';
 import MeiQia from './modal/MeiQia';
+import RNToolsManager from './modal/RNToolsManager';
 
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
@@ -58,7 +59,8 @@ class App extends Component<{}> {
     );
   }
   componentDidMount() {
-    NativeModules.RNToolsManager.getAppVersionPackage(event => {
+    RNToolsManager.disableIdleTimer();
+    RNToolsManager.getAppVersionPackage(event => {
       // console.log(event);
       if (Platform.OS === 'ios') {
         // console.log(`IOS IFV:${event.identifierForVendor}`);
@@ -99,6 +101,7 @@ class App extends Component<{}> {
   }
 
   componentWillUnMount() {
+    RNToolsManager.enableIdleTimer();
     if (Platform.OS === 'ios') {
       OpeninstallModule.removeWakeUpListener(this.receiveWakeupListener); //移除监听
     }

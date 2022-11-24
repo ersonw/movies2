@@ -3,7 +3,7 @@
     <node-interpreter value="project" />
     <react-native value="$PROJECT_DIR$/node_modules/react-native" />
     <platform value="IOS" />
-    <run-arguments value="--device &quot;00008030-000D784C11E3802E&quot;" />
+    <run-arguments value="--device &quot;iPhone 11&quot;" />
     <envs />
     <only-packager />
     <hermes-engine value="true" />

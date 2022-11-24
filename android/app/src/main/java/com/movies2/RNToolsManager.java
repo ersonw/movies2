@@ -16,6 +16,7 @@ import com.facebook.react.uimanager.IllegalViewOperationException;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -49,7 +51,29 @@ public class RNToolsManager extends ReactContextBaseJavaModule {
         contentResolver = reactContext.getContentResolver();
         this.packageManager = getReactApplicationContext().getPackageManager();
     }
-
+    @ReactMethod
+    public void disableIdleTimer() {
+        setIdleTimerDisabled(true);
+    }
+    @ReactMethod
+    public void enableIdleTimer() {
+        setIdleTimerDisabled(false);
+    }
+    public void setIdleTimerDisabled(final boolean disabled) {
+        final Activity activity = this.getCurrentActivity();
+        if (activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (disabled) {
+                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    } else {
+                        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    }
+                }
+            });
+        }
+    }
     public String getMacAddress() {
 
         String macAddress = null;

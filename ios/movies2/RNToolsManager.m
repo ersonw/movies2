@@ -8,8 +8,28 @@ RCT_EXPORT_MODULE(RNToolsManager);
 + (void) setDeviceToken:(NSString*) token {
   deviceToken = token;
 }
-//  对外提供调用方法,Callback
+RCT_EXPORT_METHOD(disableIdleTimer)
+{
+    //  DON'T let the device go to sleep during our sync
+  dispatch_async(dispatch_get_main_queue(), ^{
 
+  [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+
+  [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+
+  });
+}
+
+RCT_EXPORT_METHOD(enableIdleTimer)
+{
+    //  DON'T let the device go to sleep during our sync
+  dispatch_async(dispatch_get_main_queue(), ^{
+
+  [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+
+  });
+}
+//  对外提供调用方法,Callback
 RCT_EXPORT_METHOD(getAppVersion:(RCTResponseSenderBlock)callback)
 {
   NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];//获取项目版本号
@@ -53,13 +73,6 @@ RCT_EXPORT_METHOD(getAppVersionUUID:(RCTResponseSenderBlock)callback)
   callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
 //  NSString *bundleIdentifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];//获取项目版本号
 //  callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
-}
-
-RCT_EXPORT_METHOD(initMeiQia:(RCTResponseSenderBlock)callback)
-{
-  UIDevice* device = [UIDevice currentDevice];
-  NSString *bundleIdentifier = [[device identifierForVendor] UUIDString];
-  callback(@[[NSString stringWithFormat:@"%@",bundleIdentifier]]);
 }
 - (NSString*)isDevicePhysical {
 #if TARGET_OS_SIMULATOR

@@ -166,7 +166,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
-  [RCTBundleURLProvider sharedSettings].jsLocation=@"192.168.1.11";
+//  [RCTBundleURLProvider sharedSettings].jsLocation=@"192.168.1.11";
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 //  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 //  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];

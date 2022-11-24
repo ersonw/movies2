@@ -12,24 +12,25 @@ const HeaderButtonsOption = navigation => {
       //   color={Colors.headerButton}
       //   onPress={() => navigation.navigate('InformationStack')}
       // />
-      <TextInput placeholder="搜索您喜欢的内容" style={Colors.headerButton} value="dsads" />
-    ),
-    headerRight: () => (
       <>
         <SimpleLineIcons
           name="magnifier"
           size={20}
           color={Colors.headerButton}
+          style={{ marginRight: 5 }}
           onPress={() => navigation.navigate('SearchStack')}
         />
-        <SimpleLineIcons
-          name="options"
-          size={20}
-          color={Colors.headerButton}
-          style={{ marginLeft: 15 }}
-          onPress={() => navigation.navigate('SettingStack')}
-        />
+        <TextInput placeholder="搜索您喜欢的内容" color={Colors.primary} style={{ width: '80%' }} />
       </>
+    ),
+    headerRight: () => (
+      <SimpleLineIcons
+        name="grid"
+        size={20}
+        color={Colors.headerButton}
+        style={{ marginRight: 15 }}
+        onPress={() => navigation.navigate('SettingStack')}
+      />
     ),
   };
 };
