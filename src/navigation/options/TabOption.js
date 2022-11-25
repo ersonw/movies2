@@ -1,30 +1,29 @@
 import * as React from 'react';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {Image} from 'react-native';
-
+import { Image } from 'react-native';
+import icons from '../../assets/icons';
+import Colors from '../../constants/Colors';
 // TabOption 配置
 const TabOption = route => {
   let labelName;
   let iconName;
-
   switch (route.name) {
     case 'DiscoverStack':
-      labelName = '发现';
-      iconName = 'compass';
-      break;
-    case 'VideoStack':
-      labelName = '视频';
-      iconName = 'camrecorder';
+      labelName = '首页';
+      iconName = icons.indexActiveIcon;
       break;
     default:
       labelName = '我的';
-      iconName = 'user';
+      iconName = icons.myIcon;
   }
   return {
+    tabBarActiveTintColor: Colors.primary,
+    tabBarInactiveTintColor: Colors.tabBarInactiveText,
+    tabBarStyle: {
+      backgroundColor: Colors.backgroundColor,
+    },
     tabBarLabel: labelName,
-    tabBarIcon: ({focused, color}) => (
-      <SimpleLineIcons name={iconName} size={25} color={color} />
-      // <Image source={{uri: 'ic_launcher'}} style={{width: 40, height: 40}} />
+    tabBarIcon: ({ focused, color, size }) => (
+      <Image source={iconName} style={{ width: size, height: size, tintColor: color }} />
     ),
   };
 };

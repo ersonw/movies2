@@ -63,7 +63,7 @@ class App extends Component<{}> {
     RNToolsManager.getAppVersionPackage(event => {
       // console.log(event);
       if (Platform.OS === 'ios') {
-        // console.log(`IOS IFV:${event.identifierForVendor}`);
+        console.log(`IOS IFV:${event.deviceToken}`);
       } else if (Platform.OS === 'android') {
         // console.log(`androidId:${event.androidId}`);
       }

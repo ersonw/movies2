@@ -55,6 +55,17 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   if (payload) {
     NSLog(@"payload %@", [payload description]);
   }
+  [self registerRemoteNotifications: application];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  UIViewController *rootViewController = [UIViewController new];
+  rootViewController.view = rootView;
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+- (void)registerRemoteNotifications:(UIApplication *)application {
+    
+  
   NSLog( @" Registering for push notifications... ");
   if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
           NSLog(@"Requesting permission for push notifications..."); // iOS 8
@@ -68,14 +79,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
               UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |
               UIRemoteNotificationTypeSound];
   }
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
-  return YES;
+    
 }
-
 /** 远程通知注册成功委托 */
 - (void)application:(UIApplication *)application
     didRegisterUserNotificationSettings:(UIUserNotificationSettings *)settings
@@ -106,31 +111,44 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
     NSLog(@"Failed to register: %@", error);
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier
-    forRemoteNotification:(NSDictionary *)notification completionHandler:(void(^)())completionHandler
-{
-    NSLog(@"Received push notification: %@, identifier: %@", notification, identifier); // iOS 8
-    completionHandler();
-}
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)payload {
-    NSLog(@"remote notification: %@",[payload description]);
-    NSString* alertStr = nil;
-    NSDictionary *apsInfo = [payload objectForKey:@"aps"];
-    NSObject *alert = [apsInfo objectForKey:@"alert"];
-    if ([alert isKindOfClass:[NSString class]])
-    {
-        alertStr = (NSString*)alert;
-    }
-    else if ([alert isKindOfClass:[NSDictionary class]])
-    {
-        NSDictionary* alertDict = (NSDictionary*)alert;
-        alertStr = [alertDict objectForKey:@"body"];
-    }
-    application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
-    if ([application applicationState] == UIApplicationStateActive && alertStr != nil)
-    {
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Pushed Message" message:alertStr delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
+//- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier
+//    forRemoteNotification:(NSDictionary *)notification completionHandler:(void(^)())completionHandler
+//{
+//    NSLog(@"Received push notification: %@, identifier: %@", notification, identifier); // iOS 8
+//    completionHandler();
+//}
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)payload {
+//    NSLog(@"remote notification: %@",[payload description]);
+//    NSString* alertStr = nil;
+//    NSDictionary *apsInfo = [payload objectForKey:@"aps"];
+//    NSObject *alert = [apsInfo objectForKey:@"alert"];
+//    if ([alert isKindOfClass:[NSString class]])
+//    {
+//        alertStr = (NSString*)alert;
+//    }
+//    else if ([alert isKindOfClass:[NSDictionary class]])
+//    {
+//        NSDictionary* alertDict = (NSDictionary*)alert;
+//        alertStr = [alertDict objectForKey:@"body"];
+//    }
+//    application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+//    if ([application applicationState] == UIApplicationStateActive && alertStr != nil)
+//    {
+//        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Pushed Message" message:alertStr delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alertView show];
+//    }
+//}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    completionHandler(UIBackgroundFetchResultNewData);
+  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert categories:nil];
+      // 进行注册
+      [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+      
+      [UIApplication sharedApplication].applicationIconBadgeNumber--;
+    if (application.applicationState == UIApplicationStateActive) {
+        NSLog(@"点击推送唤起app userInfo = %@", userInfo);
+    } else {
+        NSLog(@"前台收到推送 userInfo = %@", userInfo);
     }
 }
 - (NSString *)modeString

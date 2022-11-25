@@ -3,13 +3,13 @@ import { StyleSheet, ActivityIndicator } from 'react-native';
 import Colors from '../../constants/Colors';
 
 const Loading = () => {
-  return <ActivityIndicator size="small" color={Colors.primary} style={styles.ActivityIndicatorStyle} />;
+  return <ActivityIndicator size="large" color={Colors.white} style={styles.ActivityIndicatorStyle} />;
 };
 
 const styles = StyleSheet.create({
   ActivityIndicatorStyle: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.backgroundColor,
   },
 });
 

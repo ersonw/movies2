@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Colors from '../../constants/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 //  Card Stack 配置
 const CardOption = (route, navigation) => ({
@@ -10,7 +10,6 @@ const CardOption = (route, navigation) => ({
     fontWeight: '400',
     color: Colors.headerTitle,
   },
-
   // 标题组件的颜色（自带返回箭头）
   headerTintColor: Colors.primary,
 

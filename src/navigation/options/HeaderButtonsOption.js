@@ -1,37 +1,55 @@
 import * as React from 'react';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Colors from '../../constants/Colors';
-import { TextInput } from 'react-native';
+import { SafeAreaView, TextInput } from 'react-native';
 
 const HeaderButtonsOption = navigation => {
   return {
-    headerLeft: () => (
-      // <SimpleLineIcons
-      //   name="bell"
-      //   size={20}
-      //   color={Colors.headerButton}
-      //   onPress={() => navigation.navigate('InformationStack')}
-      // />
-      <>
-        <SimpleLineIcons
-          name="magnifier"
-          size={20}
-          color={Colors.headerButton}
-          style={{ marginRight: 5 }}
-          onPress={() => navigation.navigate('SearchStack')}
-        />
-        <TextInput placeholder="搜索您喜欢的内容" color={Colors.primary} style={{ width: '80%' }} />
-      </>
-    ),
+    headerTitle: () => null,
+    headerLeft: () => {
+      return (
+        <>
+          <SafeAreaView
+            style={{
+              width: '85%',
+              backgroundColor: Colors.date,
+              borderRadius: 9,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <SimpleLineIcons
+              name="magnifier"
+              size={15}
+              color={Colors.tabBarInactiveText}
+              style={{ marginLeft: 9 }}
+              onPress={() => navigation.navigate('SearchStack')}
+            />
+            <TextInput
+              placeholder="搜索您喜欢的内容"
+              color={Colors.white}
+              style={{
+                margin: 12,
+                width: '80%',
+                fontSize: 15,
+              }}
+              placeholderTextColor={Colors.tabBarInactiveText}
+            />
+          </SafeAreaView>
+        </>
+      );
+    },
     headerRight: () => (
       <SimpleLineIcons
         name="grid"
         size={20}
         color={Colors.headerButton}
-        style={{ marginRight: 15 }}
         onPress={() => navigation.navigate('SettingStack')}
       />
     ),
+    headerTitleAlign: 'center',
+    headerLargeStyle: {
+      backgroundColor: Colors.backgroundColor,
+    },
   };
 };
 

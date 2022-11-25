@@ -1,5 +1,5 @@
 export default {
-  primary: '#1f99b0',
+  primary: '#FF7031',
   premium: '#1f99b0',
   free: '#d3d7e0',
   moderator: '#56b1e0',
@@ -9,9 +9,10 @@ export default {
   white: '#fff',
   black: '#404044',
   navbarBottom: '#a7a7aa',
-  tabBarInactiveText: '#999',
+  tabBarInactiveText: '#504F56',
   tabBarActiveText: '#404044',
   date: '#787C7D',
-  headerTitle: '#2A2929',
-  headerButton: '#7A7D7E',
+  headerTitle: '#d3d7e0',
+  headerButton: '#fff',
+  backgroundColor: '#181921',
 };

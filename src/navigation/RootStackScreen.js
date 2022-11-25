@@ -8,6 +8,7 @@ import SettingStackScreen from './stacks/SettingStackScreen';
 import ChapterStackScreen from './stacks/ChapterStackScreen';
 import TabScreen from './TabScreen';
 import ModalOption from './options/ModalOption';
+import Colors from '../constants/Colors';
 
 const RootStack = createNativeStackNavigator();
 
@@ -24,7 +25,6 @@ const RootStackScreen = () => {
           <RootStack.Screen name="SettingStack" component={SettingStackScreen} />
           <RootStack.Screen name="ChapterStack" component={ChapterStackScreen} />
         </RootStack.Group>
-
         <RootStack.Group>
           <RootStack.Screen
             name="InformationStack"

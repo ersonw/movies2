@@ -31,7 +31,7 @@ const HomeScreen = ({ navigation }) => {
   }
 
   // storageUtil.test = '123';
-  console.log((storageUtil.test = { ssss: '5453156' }));
+  // console.log((storageUtil.test = { ssss: '5453156' }));
   // console.log(storageUtil.test);
   // setData('test', 'test123');
   // 网络错误
@@ -81,7 +81,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.backgroundColor,
   },
   course: {
     marginTop: 20,

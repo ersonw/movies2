@@ -22,7 +22,7 @@ const NetworkError = props => {
 const styles = StyleSheet.create({
   notice: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.backgroundColor,
     alignItems: 'center',
     justifyContent: 'center',
   },
