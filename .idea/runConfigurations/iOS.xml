@@ -6,7 +6,6 @@
     <run-arguments value="--device &quot;iPhone 11&quot;" />
     <envs />
     <only-packager />
-    <hermes-engine value="true" />
     <browser value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
     <method v="2">
       <option name="ReactNativePackager" enabled="true" />

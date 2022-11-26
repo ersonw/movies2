@@ -119,8 +119,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>com.openinstall.APP_KEY</key>
+	<true/>
+	<key>com.invitation.APP_KEY</key>
 	<string>pzkelvrz</string>
 </dict>
 </plist>

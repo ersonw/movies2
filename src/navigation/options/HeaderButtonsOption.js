@@ -1,56 +1,1 @@
-import * as React from 'react';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Colors from '../../constants/Colors';
-import { SafeAreaView, TextInput } from 'react-native';
-
-const HeaderButtonsOption = navigation => {
-  return {
-    headerTitle: () => null,
-    headerLeft: () => {
-      return (
-        <>
-          <SafeAreaView
-            style={{
-              width: '85%',
-              backgroundColor: Colors.date,
-              borderRadius: 9,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <SimpleLineIcons
-              name="magnifier"
-              size={15}
-              color={Colors.tabBarInactiveText}
-              style={{ marginLeft: 9 }}
-              onPress={() => navigation.navigate('SearchStack')}
-            />
-            <TextInput
-              placeholder="搜索您喜欢的内容"
-              color={Colors.white}
-              style={{
-                margin: 12,
-                width: '80%',
-                fontSize: 15,
-              }}
-              placeholderTextColor={Colors.tabBarInactiveText}
-            />
-          </SafeAreaView>
-        </>
-      );
-    },
-    headerRight: () => (
-      <SimpleLineIcons
-        name="grid"
-        size={20}
-        color={Colors.headerButton}
-        onPress={() => navigation.navigate('SettingStack')}
-      />
-    ),
-    headerTitleAlign: 'center',
-    headerLargeStyle: {
-      backgroundColor: Colors.backgroundColor,
-    },
-  };
-};
-
-export default HeaderButtonsOption;
+import * as React from 'react';import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';import Colors from '../../constants/Colors';import {Dimensions, Image, SafeAreaView, TextInput} from 'react-native';import {Avatar, Icon, Input, ListItem, SearchBar} from 'react-native-elements';const { width } = Dimensions.get('window');const state = {focused: true};const HeaderButtonsOption = navigation => {    const list = [        {            name: 'Amy Farha',            avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',            subtitle: 'Vice President'        },        {            name: 'Chris Jackson',            avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',            subtitle: 'Vice Chairman'        },    ];    return {        headerLeft: () => null,        headerTitle: () => {            return (                <SafeAreaView                    style={{                        width: width-50,                    }}                >                    <Input                        onFocus={()=>{                            state.focused = true;                            console.log(`focused:${state.focused}`);                        }}                        onBlur={()=>{                            state.focused = false;                            console.log(`focused:${state.focused}`);                        }}                        placeholder="搜索您喜欢的内容"                        selectionColor={Colors.date}                        returnKeyType='search'                        textAlign='center'                        underlineColorAndroid='transparent'                        maxLength={20}                        // multiline={true}                        inputContainerStyle={{                            borderWidth: 0,                            borderColor: "transparent",                            alignItems: 'center',                        }}                        style={{                            color: Colors.primary,                        }}                        containerStyle={{                            marginLeft: -10,                            width: width-20,                            height: 45,                            backgroundColor: Colors.tabBarInactiveText,                            borderRadius: 9,                            overflow: 'hidden',                        }}                        // placeholderTextColor={Colors.tabBarInactiveText}                        leftIconContainerStyle={{}}                        leftIcon={                            <SimpleLineIcons                                name="magnifier"                                size={20}                                color={Colors.white}                                style={{ marginLeft: 9 }}                                onPress={() => navigation.navigate('SearchStack')}                            />                        }                        rightIconContainerStyle={{                            marginLeft: 10,                        }}                        rightIcon={                            <SimpleLineIcons                                name="grid"                                size={20}                                color={Colors.headerButton}                                onPress={() => navigation.navigate('SettingStack')}                            />                        }                    />                    {                        state.focused===true && list.map((l, i) => (                            <ListItem key={i} bottomDivider>                                <Avatar source={{uri: l.avatar_url}} />                                <ListItem.Content>                                    <ListItem.Title>{l.name}</ListItem.Title>                                    <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>                                </ListItem.Content>                            </ListItem>                        ))                    }                </SafeAreaView>            );        },        // headerRight: () => (        //        // ),        // headerBackground: ()=>(        //     <Image source={require('../../assets/images/77da2dfd7c63b487e168f6a43512be43.jpeg')} />        // ),        headerTitleAlign: 'center',        headerStyle: {            backgroundColor: Colors.backgroundColor,        },    };};export default HeaderButtonsOption;

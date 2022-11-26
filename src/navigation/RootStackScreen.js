@@ -18,6 +18,15 @@ const RootStackScreen = () => {
       <RootStack.Navigator
         screenOptions={{
           headerShown: false,
+          //   title: '',
+          //   headerStyle: {
+          //       backgroundColor: Colors.backgroundColor,
+          //   },
+          statusBarStyle: 'light',
+          statusBarColor: Colors.backgroundColor,
+          // statusBarHidden: false,
+          // statusBarAnimation: 'none',
+          // statusBarTranslucent: true,
         }}>
         <RootStack.Group>
           <RootStack.Screen name="Tab" component={TabScreen} />

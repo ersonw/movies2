@@ -5,6 +5,7 @@ import DiscoverStackScreen from './stacks/DiscoverStackScreen';
 import VideoStackScreen from './stacks/VideoStackScreen';
 import UserStackScreen from './stacks/UserStackScreen';
 import IndexStackScreen from './stacks/IndexStackScreen';
+import Colors from '../constants/Colors';
 
 const Tab = createBottomTabNavigator();
 
