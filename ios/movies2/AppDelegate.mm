@@ -6,7 +6,7 @@
 
 #import <React/RCTAppSetupUtils.h>
 #import <CodePush/CodePush.h>
-
+#import <UserNotifications/UserNotifications.h>
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -14,8 +14,8 @@
 #import <React/RCTSurfacePresenter.h>
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
-
 #import <react/config/ReactNativeConfig.h>
+
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
@@ -51,44 +51,43 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   } else {
     rootView.backgroundColor = [UIColor whiteColor];
   }
-  NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-  if (payload) {
-    NSLog(@"payload %@", [payload description]);
-  }
-  [self registerRemoteNotifications: application];
+//  NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//  if (payload) {
+//    NSLog(@"payload %@", [payload description]);
+//  }
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [self registerRemoteNotifications: application];
   return YES;
 }
 - (void)registerRemoteNotifications:(UIApplication *)application {
     
-  
-  NSLog( @" Registering for push notifications... ");
-  if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-          NSLog(@"Requesting permission for push notifications..."); // iOS 8
-          UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:
-              UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
-              UIUserNotificationTypeSound categories:nil];
-          [UIApplication.sharedApplication registerUserNotificationSettings:settings];
-  } else {
-          NSLog(@"Registering device for push notifications..."); // iOS 7 and earlier
-          [UIApplication.sharedApplication registerForRemoteNotificationTypes:
-              UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |
-              UIRemoteNotificationTypeSound];
+  if (@available(iOS 10.0, *)) { // iOS10 以上
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+      if(!granted){
+        [self registerRemoteNotifications: application];
+        return;
+      }
+      //注册远端消息通知获取device token
+      [application registerForRemoteNotifications];
+    }];
+  } else {// iOS8.0 以上
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
   }
-    
 }
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
 /** 远程通知注册成功委托 */
 - (void)application:(UIApplication *)application
     didRegisterUserNotificationSettings:(UIUserNotificationSettings *)settings
 {
-    NSLog(@"Registering device for push notifications..."); // iOS 8
     [application registerForRemoteNotifications];
 }
-
+#endif
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -101,7 +100,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   for (int i = 0; i < dataLength; ++i) {
     [hexTokenString appendFormat:@"%02x", dataBuffer[i]];
   }
-  NSLog(@"push DeviceToken token:%@", hexTokenString);
+//  NSLog(@"push DeviceToken token:%@", hexTokenString);
   [RNToolsManager setDeviceToken:hexTokenString];
 }
 
@@ -110,46 +109,45 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 {
     NSLog(@"Failed to register: %@", error);
 }
-
-//- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier
-//    forRemoteNotification:(NSDictionary *)notification completionHandler:(void(^)())completionHandler
-//{
-//    NSLog(@"Received push notification: %@, identifier: %@", notification, identifier); // iOS 8
-//    completionHandler();
-//}
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)payload {
-//    NSLog(@"remote notification: %@",[payload description]);
-//    NSString* alertStr = nil;
-//    NSDictionary *apsInfo = [payload objectForKey:@"aps"];
-//    NSObject *alert = [apsInfo objectForKey:@"alert"];
-//    if ([alert isKindOfClass:[NSString class]])
-//    {
-//        alertStr = (NSString*)alert;
-//    }
-//    else if ([alert isKindOfClass:[NSDictionary class]])
-//    {
-//        NSDictionary* alertDict = (NSDictionary*)alert;
-//        alertStr = [alertDict objectForKey:@"body"];
-//    }
-//    application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
-//    if ([application applicationState] == UIApplicationStateActive && alertStr != nil)
-//    {
-//        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Pushed Message" message:alertStr delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [alertView show];
-//    }
-//}
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     completionHandler(UIBackgroundFetchResultNewData);
-  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert categories:nil];
-      // 进行注册
-      [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-      
-      [UIApplication sharedApplication].applicationIconBadgeNumber--;
     if (application.applicationState == UIApplicationStateActive) {
-        NSLog(@"点击推送唤起app userInfo = %@", userInfo);
+      [RNToolsManager setNotificationMessage:userInfo];
+//        NSLog(@"前台收到推送 userInfo = %@", userInfo);
     } else {
-        NSLog(@"前台收到推送 userInfo = %@", userInfo);
+      [RNToolsManager setNotificationMessageBackground:userInfo];
+//        NSLog(@"后台收到推送 userInfo = %@", userInfo);
     }
+//   [self handlerNotification:userInfo];
+}
+- (void)handlerNotification:(NSDictionary *)userInfo{
+////  --------注册通知
+//      UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//  //--------获取权限（角标，通知，音效）
+//      [center requestAuthorizationWithOptions:UNAuthorizationOptionBadge|UNAuthorizationOptionAlert|UNAuthorizationOptionSound
+//                            completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//          if (granted) {
+//              NSLog(@"seccess");
+//          }
+//      }];
+//  NSDictionary *alert = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+//  UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+//  content.title = [NSString stringWithFormat:@"%@",[alert valueForKey:@"title"]];
+//  content.subtitle = [NSString stringWithFormat:@"%@",[alert valueForKey:@"subtitle"]];
+//  content.body = [NSString stringWithFormat:@"%@",[alert valueForKey:@"body"]];
+//  long long scannedNumber;
+//  NSScanner *scanner = [NSScanner scannerWithString:[NSString stringWithFormat:@"%@",[alert valueForKey:@"badge"]]];
+//  [scanner scanLongLong:&scannedNumber];
+//  content.badge = [NSNumber numberWithLongLong: scannedNumber];
+//  NSLog(@"userInfo: %@",userInfo);
+//  content.sound = [UNNotificationSound soundNamed:@"%@"];
+  //--------设置触发机制
+//  UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:60 repeats:YES];
+//  UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"REQUEST" content:content trigger:trigger];
+////  //---------添加通知到通知中心
+//  [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+//          NSLog(@"error : %@",error);
+//      }];
 }
 - (NSString *)modeString
 {
@@ -186,10 +184,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #if DEBUG
 //  [RCTBundleURLProvider sharedSettings].jsLocation=@"192.168.1.11";
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-//  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-//  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #else
-//   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   return [CodePush bundleURL];
 #endif
 }

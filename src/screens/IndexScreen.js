@@ -11,17 +11,16 @@ import {
   Dimensions,
 } from 'react-native';
 
-import useFetchData from '../../hooks/useFetchData';
-import Loading from '../../components/shared/Loading';
-import NetworkError from '../../components/shared/NetworkError';
-import Colors from '../../constants/Colors';
+import useFetchData from '../hooks/useFetchData';
+import Loading from '../components/shared/Loading';
+import NetworkError from '../components/shared/NetworkError';
+import Colors from '../constants/Colors';
 import Swiper from 'react-native-swiper';
-import storageUtil from '../../utils/StorageUtil';
+import storageUtil from '../utils/StorageUtil';
+import NetWorkUtil from '../utils/NetWorkUtil';
 var { width, height } = Dimensions.get('window');
-const url = '/api/v2/home.json';
-
-const HomeScreen = ({ navigation }) => {
-  const { data, loading, error, onReload, refreshing, onRefresh } = useFetchData(url, {
+const IndexScreen = ({ navigation }) => {
+  const { data, loading, error, onReload, refreshing, onRefresh } = useFetchData(NetWorkUtil.indexList, {
     recommended_courses: [],
     calendar_courses: [],
     popular_courses: [],
@@ -38,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
   // setData('test', 'test123');
   // 网络错误
   if (!error) {
-    return <NetworkError onReload={() => onReload(url)} />;
+    return <NetworkError onReload={() => onReload(NetWorkUtil.indexList)} />;
   }
 
   const renderItem = ({ item, index }) => (
@@ -63,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView
       style={styles.container}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => onRefresh(url)} />}>
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => onRefresh(NetWorkUtil.indexList)} />}>
       <View style={styles.course}>
         <Swiper
           style={styles.swiper}
@@ -72,10 +71,16 @@ const HomeScreen = ({ navigation }) => {
           paginationStyle={{ bottom: 10, color: Colors.primary }}
           autoplay={true}
           showsButtons={false}>
-          <Image source={require('../../assets/images/girl2.png')} style={{ height: 200, width: width }} />
-          <Image source={require('../../assets/images/girl3.png')} style={{ height: 200, width: width }} />
-          <Image source={require('../../assets/images/girl4.png')} style={{ height: 200, width: width }} />
-          <Image source={require('../../assets/images/girl5.png')} style={{ height: 200, width: width }} />
+          <Image
+            source={require('../assets/images/girl2.png')}
+            style={{ height: 200, width: width }}
+            onProgress={() => {
+              console.log('image1');
+            }}
+          />
+          <Image source={require('../assets/images/girl3.png')} style={{ height: 200, width: width }} />
+          <Image source={require('../assets/images/girl4.png')} style={{ height: 200, width: width }} />
+          <Image source={require('../assets/images/girl5.png')} style={{ height: 200, width: width }} />
         </Swiper>
         <View style={styles.content}>
           <Text style={styles.heading}>推荐课程</Text>
@@ -141,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default IndexScreen;

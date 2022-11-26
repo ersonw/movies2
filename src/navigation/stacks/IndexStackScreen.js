@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../../screens/discover/HomeScreen';
+import IndexScreen from '../../screens/IndexScreen';
 import CoursesScreen from '../../screens/video/CoursesScreen';
 import HeaderButtonsOption from '../options/HeaderButtonsOption';
 import CardOption from '../options/CardOption';
 const DiscoverStack = createNativeStackNavigator();
 
-const DiscoverStackScreen = () => {
+const IndexStackScreen = () => {
   return (
     <DiscoverStack.Navigator
       screenOptions={({ route, navigation }) => ({
         ...CardOption(route, navigation),
       })}>
       <DiscoverStack.Screen
-        name="Home1"
-        component={HomeScreen}
+        name="Index"
+        component={IndexScreen}
         options={({ navigation, route }) => ({
           ...HeaderButtonsOption(navigation),
         })}
@@ -24,4 +24,4 @@ const DiscoverStackScreen = () => {
   );
 };
 
-export default DiscoverStackScreen;
+export default IndexStackScreen;

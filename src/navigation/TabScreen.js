@@ -4,6 +4,7 @@ import TabOption from './options/TabOption';
 import DiscoverStackScreen from './stacks/DiscoverStackScreen';
 import VideoStackScreen from './stacks/VideoStackScreen';
 import UserStackScreen from './stacks/UserStackScreen';
+import IndexStackScreen from './stacks/IndexStackScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,9 +15,9 @@ function TabScreen() {
         headerShown: false,
         ...TabOption(route),
       })}>
+      <Tab.Screen name="Home" component={IndexStackScreen} />
       <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
       <Tab.Screen name="VideoStack" component={VideoStackScreen} />
-      <Tab.Screen name="VideoStacks" component={VideoStackScreen} />
       <Tab.Screen name="UserStack" component={UserStackScreen} />
     </Tab.Navigator>
   );

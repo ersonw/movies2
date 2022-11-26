@@ -1,12 +1,73 @@
 #import "RNToolsManager.h"
 #import <sys/utsname.h>
 
+#if __has_include(<React/RCTBridge.h>)
+#import <React/RCTBridge.h>
+#elif __has_include("RCTBridge.h")
+#import "RCTBridge.h"
+#elif __has_include("React/RCTBridge.h")
+#import "React/RCTBridge.h"
+#endif
+
+#define RNToolsManagerNotificationCallBack @"RNToolsManagerNotificationCallBack"
+#define RNToolsManagerNotificationBackgroundCallBack @"RNToolsManagerNotificationBackgroundCallBack"
+
+@interface RNToolsManager ()
+@end
 @implementation RNToolsManager
 @synthesize bridge = _bridge;
-static NSString *deviceToken;
+
+static NSString *deviceToken = @"";
+static NSDictionary *userInfo;
+static RNToolsManager *sharedInstance = nil;
+
 RCT_EXPORT_MODULE(RNToolsManager);
++ (id)allocWithZone:(NSZone *)zone {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [super allocWithZone:zone];
+    });
+    return sharedInstance;
+}
 + (void) setDeviceToken:(NSString*) token {
   deviceToken = token;
+}
++ (void) setNotificationMessage:(NSDictionary *)info{
+  userInfo = info;
+  [sharedInstance sendEvent:userInfo];
+}
+- (void) sendEvent:(NSDictionary *)info{
+  if (self.bridge) {
+    [self.bridge enqueueJSCall:@"RCTDeviceEventEmitter"
+                          method:@"emit"
+                            args:@[RNToolsManagerNotificationCallBack,info]
+                      completion:NULL];
+  }
+}
+RCT_EXPORT_METHOD(getNotification:(RCTResponseSenderBlock)callback)
+{
+  if(userInfo){
+    callback(@[userInfo]);
+  }
+}
++ (void) setNotificationMessageBackground:(NSDictionary *)info{
+  userInfo = info;
+  [sharedInstance sendEventBackground:userInfo];
+}
+- (void) sendEventBackground:(NSDictionary *)info{
+  if (self.bridge) {
+    [self.bridge enqueueJSCall:@"RCTDeviceEventEmitter"
+                          method:@"emit"
+                            args:@[RNToolsManagerNotificationBackgroundCallBack,info]
+                      completion:NULL];
+  }
+}
+RCT_EXPORT_METHOD(claenNotification:(RCTResponseSenderBlock)callback)
+{
+  //  清空本地推送
+  UIApplication *app =[UIApplication sharedApplication];
+  app.applicationIconBadgeNumber = 0;
+  [app cancelAllLocalNotifications];
 }
 RCT_EXPORT_METHOD(disableIdleTimer)
 {

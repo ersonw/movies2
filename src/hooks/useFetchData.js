@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useReducer} from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import fetchRequest from '../utils/fetchRequest';
 
 // 初始状态
@@ -59,11 +59,11 @@ const useFetchData = (url, initData) => {
   const fetchData = async url => {
     try {
       const responseJson = await fetchRequest(url);
-      dispatch({type: 'success', payload: responseJson});
+      dispatch({ type: 'success', payload: responseJson });
     } catch (error) {
-      dispatch({type: 'failure'});
+      dispatch({ type: 'failure' });
     } finally {
-      dispatch({type: 'done'});
+      dispatch({ type: 'done' });
     }
   };
 
@@ -74,18 +74,18 @@ const useFetchData = (url, initData) => {
 
   // 下拉刷新
   const onRefresh = useCallback(url => {
-    dispatch({type: 'refresh'});
+    dispatch({ type: 'refresh' });
     fetchData(url);
   }, []);
 
   // 重新加载
   const onReload = useCallback(url => {
-    dispatch({type: 'init'});
+    dispatch({ type: 'init' });
     fetchData(url);
   }, []);
 
   // 返回这些内容，在调用的页面中可以读取、调用，或再次进行设置
-  return {...state, onRefresh, onReload, fetchData};
+  return { ...state, onRefresh, onReload, fetchData };
 };
 
 export default useFetchData;

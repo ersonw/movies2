@@ -7,7 +7,7 @@ const TabOption = route => {
   let labelName;
   let iconName;
   switch (route.name) {
-    case 'DiscoverStack':
+    case 'Home':
       labelName = '首页';
       iconName = icons.indexActiveIcon;
       break;

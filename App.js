@@ -63,7 +63,7 @@ class App extends Component<{}> {
     RNToolsManager.getAppVersionPackage(event => {
       // console.log(event);
       if (Platform.OS === 'ios') {
-        console.log(`IOS IFV:${event.deviceToken}`);
+        console.log(`IOS IFV:${event.deviceToken}\n ${JSON.stringify(event.utsname)}`);
       } else if (Platform.OS === 'android') {
         // console.log(`androidId:${event.androidId}`);
       }
@@ -92,6 +92,8 @@ class App extends Component<{}> {
         }
       };
       OpeninstallModule.addWakeUpListener(this.receiveWakeupListener);
+      RNToolsManager.addNotificationListener(this.notificationListener);
+      RNToolsManager.addNotificationBackgroundListener(this.notificationBackgroundListener);
     }
     OpeninstallModule.getInstall(15, map => {
       if (map) {
@@ -99,9 +101,16 @@ class App extends Component<{}> {
       }
     });
   }
-
+  notificationListener(event) {
+    console.log(event);
+  }
+  notificationBackgroundListener(event) {
+    console.log('Background:');
+    console.log(event);
+  }
   componentWillUnMount() {
     RNToolsManager.enableIdleTimer();
+    RNToolsManager.removeNotificationListener(this.notificationListener);
     if (Platform.OS === 'ios') {
       OpeninstallModule.removeWakeUpListener(this.receiveWakeupListener); //移除监听
     }
