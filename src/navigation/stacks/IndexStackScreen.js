@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import IndexScreen from '../../screens/IndexScreen';
-import CoursesScreen from '../../screens/video/CoursesScreen';
+import {IndexScreen} from '../../screens/Index';
 import HeaderButtonsOption from '../options/HeaderButtonsOption';
 import CardOption from '../options/CardOption';
+import Applets from '../../screens/Index/components/applets';
 
 const IndexStack = createNativeStackNavigator();
 
@@ -20,6 +20,7 @@ const IndexStackScreen = () => {
                     ...HeaderButtonsOption(navigation),
                 })}
             />
+            <IndexStack.Screen name="applets" component={Applets} />
         </IndexStack.Navigator>
     );
 };

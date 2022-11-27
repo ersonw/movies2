@@ -19,7 +19,7 @@ const TabOption = route => {
     tabBarActiveTintColor: Colors.primary,
     tabBarInactiveTintColor: Colors.tabBarInactiveText,
     tabBarStyle: {
-      backgroundColor: Colors.backgroundColor,
+      backgroundColor: Colors.headerBackgroundColor,
     },
     tabBarLabel: labelName,
     tabBarIcon: ({ focused, color, size }) => (

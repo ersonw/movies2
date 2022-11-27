@@ -1,27 +1,38 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// class Util {
-//   constructor(name) {
-//     this.name = name;
-//   }
-//   async init() {
-//     try {
-//       this.value = await AsyncStorage.getItem(this.name);
-//     } catch (e) {
-//       //
-//     }
-//   }
-//   async update() {
-//     try {
-//       await AsyncStorage.setItem(this.name, this.value);
-//     } catch (e) {
-//       //
-//     }
-//   }
-//   get object() {
-//     return JSON.parse(this.value);
-//   }
-//   set object(value) {
-//     this.value = JSON.stringify(value);
-//   }
-// }
-// export default Util;
+import AsyncStorage from '@react-native-community/async-storage';
+class Util  {
+  constructor(name) {
+    this.state = { name: name };
+    this.read();
+  }
+  async read() {
+    try {
+      const v = await AsyncStorage.getItem(this.name);
+      if (!v)return;
+      const newValue = JSON.parse(v);
+      this.value = {...newValue};
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  save() {
+    try {
+      AsyncStorage.setItem(this.name, JSON.stringify(this.value));
+    } catch (e) {
+        console.log(e);
+    }
+  }
+  get name(){
+    const {name} = this.state;
+    return name;
+  }
+  get value(){
+    const {value} = this.state;
+    return {...value}
+  }
+  set value(newValue){
+    if (!newValue) return;
+    const state = this.state;
+    this.state = { ...state, value: {...newValue}};
+  }
+}
+export default Util;

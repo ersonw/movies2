@@ -13,6 +13,7 @@ export default {
   tabBarActiveText: '#404044',
   date: '#787C7D',
   headerTitle: '#d3d7e0',
+  headerBackgroundColor: '#181921',
   headerButton: '#fff',
   backgroundColor: '#181921',
 };
