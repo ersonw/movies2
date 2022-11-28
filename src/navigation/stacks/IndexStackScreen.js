@@ -20,7 +20,14 @@ const IndexStackScreen = () => {
                     ...HeaderButtonsOption(navigation),
                 })}
             />
-            <IndexStack.Screen name="applets" component={Applets} />
+            <IndexStack.Screen
+                options={({route, navigation}) => ({
+                headerShown: false,
+                statusBarHidden: true,
+            })}
+                name="applets"
+                component={Applets}
+            />
         </IndexStack.Navigator>
     );
 };

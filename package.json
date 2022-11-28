@@ -20,6 +20,7 @@
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
     "aliyun-oss-react-native": "git+https://github.com/ersonw/aliyun-oss-react-native.git",
+    "aws-sdk": "^2.1262.0",
     "axios": "^1.1.3",
     "ffmpeg-kit-react-native": "^4.5.1",
     "less-plugin-glob": "^3.0.0",
@@ -49,7 +50,8 @@
     "react-native-webview": "^11.23.1",
     "react-native-wechat-lib": "^1.1.26",
     "react-redux": "^8.0.4",
-    "react-router-dom": "^6.4.2"
+    "react-router-dom": "^6.4.2",
+    "rn-overlay": "^0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

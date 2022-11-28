@@ -21,6 +21,7 @@ import icons from '../../assets/icons';
 import Applets from './components/applets';
 import storageUtil from '../../utils/StorageUtil';
 import User from '../../data/User';
+import FileUtil from '../../utils/fileUtil';
 const user = new User();
 var {width} = Dimensions.get('window');
 export const IndexScreen = ({navigation}) => {
@@ -36,7 +37,8 @@ export const IndexScreen = ({navigation}) => {
     }
     // const user1 = User.formatJson({id:1,username:'erson',token:"123",nickname: 'test1'});
     // user1.save();
-    console.log(user.token);
+    // console.log(user.token);
+    FileUtil.test();
     // 网络错误
     if (!error) {
         return <NetworkError onReload={() => onReload(NetWorkUtil.indexList)}/>;

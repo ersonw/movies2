@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Colors from '../../constants/Colors';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Platform, View} from 'react-native';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //  Card Stack 配置
 const CardOption = (route, navigation) => {
-    const { params } = route;
+    const {params} = route;
     return ({
         // // 标题组件的颜色（自带返回箭头）
         // headerTintColor: Colors.primary,
@@ -18,6 +17,7 @@ const CardOption = (route, navigation) => {
         gestureDirection: 'horizontal',
         // 默认标题为空
         title: params?.title,
+        // title: '',
         // 标题的样式
         headerTitleStyle: {
             fontWeight: '400',
@@ -26,20 +26,34 @@ const CardOption = (route, navigation) => {
         // headerBackTitle: '',
         // headerBackTitleVisible: false,
         headerBackVisible: false,
-        headerTitle: ()=>null,
-        headerLeft: ()=>null,
-        headerRight: ()=>{
-            return (
-                <View>
-                    <SimpleLineIcons
-                        name="close"
-                        size={20}
-                        color={Colors.white}
-                        onPress={() => navigation.goBack()}
-                    />
-                </View>
-            );
-        },
+        headerLeft: () => (
+            <Icon
+                name="highlight-off"
+                size={24}
+                color={Colors.white}
+                onPress={() => navigation.goBack()}
+            />
+        ),
+        // headerLeft: ()=>null,
+        // headerRight: ()=>{
+        //     return (
+        //         <View>
+        //             <Icon
+        //                 name="settings-backup-restore"
+        //                 size={20}
+        //                 color={Colors.white}
+        //                 onPress={() => navigation.goBack()}
+        //             />
+        //             <Icon
+        //                 name="adjust"
+        //                 size={20}
+        //                 color={Colors.white}
+        //                 onPress={() => navigation.goBack()}
+        //             />
+        //         </View>
+        //     );
+        // },
+
         headerStyle: {
             backgroundColor: Colors.headerBackgroundColor,
         },
