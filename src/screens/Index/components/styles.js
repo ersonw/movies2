@@ -2,6 +2,15 @@ import {StyleSheet} from 'react-native';
 import Colors from '../../../constants/Colors';
 
 export default StyleSheet.create({
+    swiper: {
+        display: 'flex',
+    },
+    swiperImage: {
+        margin: '2%',
+        height: '96%',
+        width: '96%',
+        borderRadius: 9,
+    },
     container: {
         flex: 1,
         // marginTop: 45,

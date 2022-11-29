@@ -50,7 +50,7 @@ const useFetchData = (url, initData) => {
   // 如果有传过来的initData，设置到initialState里
   initialState = {
     ...initialState,
-    data: initData || [],
+    data: initData || {},
   };
 
   // 使用useReducer初始化数据

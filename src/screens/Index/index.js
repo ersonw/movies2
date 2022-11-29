@@ -14,22 +14,18 @@ import useFetchData from '../../hooks/useFetchData';
 import Loading from '../../components/shared/Loading';
 import NetworkError from '../../components/shared/NetworkError';
 import Colors from '../../constants/Colors';
-import Swiper from 'react-native-swiper';
 import styles from './styles';
 import NetWorkUtil from '../../utils/NetWorkUtil';
 import icons from '../../assets/icons';
 import Applets from './components/applets';
-import storageUtil from '../../utils/StorageUtil';
 import User from '../../data/User';
-import FileUtil from '../../utils/fileUtil';
+import {IndexSwiper} from './components/IndexSwiper';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const user = new User();
 var {width} = Dimensions.get('window');
 export const IndexScreen = ({navigation}) => {
-    const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(NetWorkUtil.indexList, {
-        recommended_courses: [],
-        calendar_courses: [],
-        popular_courses: [],
-        introductory_courses: [],
+    const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(NetWorkUtil.videoConcentrations, {
+        list: [],
     });
     // 判断是否加载中
     if (loading) {
@@ -38,22 +34,24 @@ export const IndexScreen = ({navigation}) => {
     // const user1 = User.formatJson({id:1,username:'erson',token:"123",nickname: 'test1'});
     // user1.save();
     // console.log(user.token);
-    FileUtil.test();
+    // FileUtil.test();
     // 网络错误
-    if (!error) {
-        return <NetworkError onReload={() => onReload(NetWorkUtil.indexList)}/>;
+    if (error) {
+        return <NetworkError onReload={() => onReload(NetWorkUtil.videoConcentrations)}/>;
     }
-
+    const { list } = data;
+    // console.log(list[0]);
     const renderItem = ({item, index}) => (
         <TouchableWithoutFeedback
+            key={index}
             onPress={() =>
                 navigation.navigate('Courses', {
                     id: item.id,
                     title: item.name,
                 })
             }>
-            <View style={[styles.default, index === 0 ? styles.first : '', index === data.length - 1 ? styles.last : '']}>
-                <Image source={{uri: item.image}} style={styles.image}/>
+            <View style={[styles.itemBox]}>
+                <Image source={{uri: item.picThumb}} style={styles.itemImage}/>
                 <View style={styles.titleWrapper}>
                     <Text style={styles.title} numberOfLines={2}>
                         {item.name}
@@ -68,37 +66,16 @@ export const IndexScreen = ({navigation}) => {
             style={styles.container}
             refreshControl={
                 <RefreshControl
-                    title='放开我刷新哟~'
+                    title={ refreshing?'正在加载中～':'放开我刷新哟~'}
                     titleColor={Colors.white}
                     tintColor={Colors.primary}
                     refreshing={refreshing}
-                    onRefresh={() => onRefresh(NetWorkUtil.indexList)}
+                    onRefresh={() => onRefresh(NetWorkUtil.videoConcentrations)}
                 />
             }
         >
             <View style={styles.course}>
-                <Swiper
-                    style={styles.swiper}
-                    horizontal={true}
-                    // paginationStyle={{bottom: 10}}
-                    activeDotColor={Colors.primary}
-                    activeDotStyle={{width: 18}}
-                    autoplay={true}
-                    height={210}
-                    width={width}
-                    showsButtons={false}>
-                    <Image
-                        source={require('../../assets/images/girl2.png')}
-                        style={styles.swiperImage}
-                        resizeMode="cover"
-                    />
-                    <Image resizeMode="cover" source={require('../../assets/images/girl3.png')}
-                           style={styles.swiperImage}/>
-                    <Image resizeMode="cover" source={require('../../assets/images/girl4.png')}
-                           style={styles.swiperImage}/>
-                    <Image resizeMode="cover" source={require('../../assets/images/girl5.png')}
-                           style={styles.swiperImage}/>
-                </Swiper>
+                <IndexSwiper navigation={navigation} url={NetWorkUtil.videoPublicity} />
                 <View style={styles.content}>
                     <View style={styles.headButtonBox}>
                         <View style={styles.headButton}>
@@ -151,13 +128,36 @@ export const IndexScreen = ({navigation}) => {
                         </View>
                     </View>
                 </View>
-                <FlatList
-                    data={data.calendar_courses}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={renderItem}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                />
+                { list.map((item, index)=>
+                    (<View style={{...(styles.listBox), width: '95%'}}>
+                        <Text style={styles.heading}>{item.name}</Text>
+                        <FlatList
+                            key={index}
+                            data={item.videos}
+                            keyExtractor={item => item.id}
+                            renderItem={renderItem}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                        <View style={[styles.buttonBox,{width: '100%'}]}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonTitle}>查看更多</Text>
+                            </View>
+                            <View style={[styles.button, {
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }]}>
+                                <MaterialIcons
+                                    name="autorenew"
+                                    size={18}
+                                    color={Colors.white}
+                                />
+                                <Text style={styles.buttonTitle}>换一换</Text>
+                            </View>
+                        </View>
+                    </View>)
+                )}
             </View>
         </ScrollView>
     );

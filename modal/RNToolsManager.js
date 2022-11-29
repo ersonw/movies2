@@ -42,6 +42,11 @@ export function addNotificationBackgroundListener(cb) {
     cb(result);
   });
 }
+export function getNotification(cb){
+  RNToolsManager.getNotification(result => {
+    cb(result);
+  });
+}
 export function removeNotificationListener(cb) {
   if (!listeners[cb]) {
     return;
@@ -50,6 +55,7 @@ export function removeNotificationListener(cb) {
   listeners[cb] = null;
 }
 export default {
+  getNotification,
   disableIdleTimer,
   enableIdleTimer,
   claenNotification,

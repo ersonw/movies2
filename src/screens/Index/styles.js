@@ -10,15 +10,6 @@ export default StyleSheet.create({
     course: {
         marginTop: 10,
     },
-    swiper: {
-        display: 'flex',
-    },
-    swiperImage: {
-        margin: '2%',
-        height: '96%',
-        width: '96%',
-        borderRadius: 9,
-    },
     content: {
         paddingLeft: 15,
         paddingRight: 15,
@@ -36,39 +27,32 @@ export default StyleSheet.create({
         flexDirection: 'row',
         margin: 15,
     },
+    listBox: {
+        width: '95%',
+    },
     heading: {
-        fontWeight: 'bold',
-        fontSize: 20,
-        marginBottom: 10,
-        color: Colors.premium,
+        textAlign: 'left',
+        color: Colors.white,
+        margin: 15,
     },
-    default: {
-        position: 'relative',
-        width: 206,
-        marginLeft: 8,
+    itemBox: {},
+    item: {},
+    itemTitle: {},
+    itemImage: {},
+    buttonBox: {
+        margin: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
-    first: {
-        marginLeft: 15,
+    button: {
+        backgroundColor: 'rgba(253,253,253,0.1)',
+        width: '37%',
+        borderRadius: 9,
     },
-    last: {
-        marginRight: 15,
-    },
-    image: {
-        width: 206,
-        height: 160,
-        borderRadius: 5,
-    },
-    titleWrapper: {
-        marginTop: 6,
-        height: 48,
-        justifyContent: 'center',
-    },
-    title: {
-        fontSize: 16,
-    },
-    date: {
+    buttonTitle: {
+        textAlign: 'center',
+        color: Colors.white,
+        margin: 9,
         fontSize: 12,
-        marginTop: 6,
-        color: Colors.date,
     },
 });
