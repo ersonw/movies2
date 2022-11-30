@@ -41,5 +41,4 @@ export default StyleSheet.create({
         marginLeft: 12,
         marginRight: 12,
     },
-
 });

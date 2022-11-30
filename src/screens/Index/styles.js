@@ -27,32 +27,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         margin: 15,
     },
-    listBox: {
-        width: '95%',
-    },
-    heading: {
-        textAlign: 'left',
-        color: Colors.white,
-        margin: 15,
-    },
-    itemBox: {},
-    item: {},
-    itemTitle: {},
-    itemImage: {},
-    buttonBox: {
-        margin: 15,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    button: {
-        backgroundColor: 'rgba(253,253,253,0.1)',
-        width: '37%',
-        borderRadius: 9,
-    },
-    buttonTitle: {
-        textAlign: 'center',
-        color: Colors.white,
-        margin: 9,
-        fontSize: 12,
-    },
+    // hearButtonImage:{
+    //     width: '100%',
+    // },
 });

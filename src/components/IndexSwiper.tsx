@@ -1,26 +1,22 @@
-import useFetchData from '../../../hooks/useFetchData';
-import Loading from '../../../components/shared/Loading';
-import NetworkError from '../../../components/shared/NetworkError';
+import useFetchData from '../hooks/useFetchData';
+import NetworkError from './shared/NetworkError';
 import * as React from 'react';
-import styles from './styles';
-import Colors from '../../../constants/Colors';
-import {Dimensions, Image, Linking, TouchableWithoutFeedback} from 'react-native';
+import styles from '../screens/Index/components/styles';
+import Colors from '../constants/Colors';
+import {Dimensions, Image, Linking, TouchableWithoutFeedback, View} from 'react-native';
 import Swiper from 'react-native-swiper';
+import {MaskLoading} from './MaskLoading';
+import {CImage} from "./CImage";
 var {width} = Dimensions.get('window');
 export const IndexSwiper = ({navigation, url}) => {
     const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(url, {
         list: [],
     });
-    // 判断是否加载中
-    if (loading) {
-        return <Loading/>;
-    }
     // 网络错误
     if (error) {
         return <NetworkError onReload={() => onReload(url)}/>;
     }
     const { list } = data;
-    // console.log(navigation);
     return (
         <>
             { list && list.length > 0 &&
@@ -48,7 +44,7 @@ export const IndexSwiper = ({navigation, url}) => {
                                 }
                             }
                             }>
-                            <Image
+                            <CImage
                                 source={{ uri: l?.image}}
                                 style={styles.swiperImage}
                                 resizeMode="stretch"
@@ -58,6 +54,7 @@ export const IndexSwiper = ({navigation, url}) => {
                     }
                 </Swiper>)
             }
+            <MaskLoading refreshing={refreshing || loading} />
         </>
     );
 }
