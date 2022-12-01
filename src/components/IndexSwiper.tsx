@@ -1,12 +1,17 @@
 import useFetchData from '../hooks/useFetchData';
 import NetworkError from './shared/NetworkError';
 import * as React from 'react';
-import styles from '../screens/Index/components/styles';
 import Colors from '../constants/Colors';
-import {Dimensions, Image, Linking, TouchableWithoutFeedback, View} from 'react-native';
+import {
+    Dimensions,
+    Linking,
+    StyleSheet,
+    TouchableWithoutFeedback,
+} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {MaskLoading} from './MaskLoading';
 import {CImage} from "./CImage";
+
 var {width} = Dimensions.get('window');
 export const IndexSwiper = ({navigation, url}) => {
     const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(url, {
@@ -16,10 +21,10 @@ export const IndexSwiper = ({navigation, url}) => {
     if (error) {
         return <NetworkError onReload={() => onReload(url)}/>;
     }
-    const { list } = data;
+    const {list} = data;
     return (
         <>
-            { list && list.length > 0 &&
+            {list && list.length > 0 &&
                 (<Swiper
                     style={styles.swiper}
                     horizontal={true}
@@ -31,13 +36,13 @@ export const IndexSwiper = ({navigation, url}) => {
                     width={width}
                     showsButtons={false}>
 
-                    { list && list.map((l, i) => (
+                    {list && list.map((l, i) => (
                         <TouchableWithoutFeedback
                             key={i}
-                            onPress={() =>{
-                                if(l.url && l.url.indexOf('http') > -1){
-                                    Linking.openURL(l.url).then(()=>onRefresh(url));
-                                }else{
+                            onPress={() => {
+                                if (l.url && l.url.indexOf('http') > -1) {
+                                    Linking.openURL(l.url).then(() => onRefresh(url));
+                                } else {
                                     navigation.navigate('JumpView', {
                                         id: l.type,
                                     })
@@ -45,7 +50,7 @@ export const IndexSwiper = ({navigation, url}) => {
                             }
                             }>
                             <CImage
-                                source={{ uri: l?.image}}
+                                source={{uri: l?.image}}
                                 style={styles.swiperImage}
                                 resizeMode="stretch"
                             />
@@ -54,7 +59,48 @@ export const IndexSwiper = ({navigation, url}) => {
                     }
                 </Swiper>)
             }
-            <MaskLoading refreshing={refreshing || loading} />
+            <MaskLoading refreshing={refreshing || loading}/>
         </>
     );
 }
+const styles = StyleSheet.create({
+    swiper: {
+        display: 'flex',
+    },
+    swiperImage: {
+        margin: '2%',
+        height: '96%',
+        width: '96%',
+        borderRadius: 9,
+    },
+    container: {
+        flex: 1,
+        // marginTop: 45,
+        backgroundColor: Colors.backgroundColor,
+    },
+    header: {
+        backgroundColor: 'transparent',
+        flex: 1,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        marginTop: 45,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    headerButtonBox: {
+        // width: 60,
+        marginRight: 15,
+        backgroundColor: 'black',
+        opacity: 0.2,
+        borderRadius: 21,
+    },
+    headerButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 4.5,
+        marginBottom: 4.5,
+        marginLeft: 12,
+        marginRight: 12,
+    },
+});

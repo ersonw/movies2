@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import InformationStackScreen from './stacks/InformationStackScreen';
@@ -13,7 +12,7 @@ import Colors from '../constants/Colors';
 const RootStack = createNativeStackNavigator();
 
 const RootStackScreen = () => {
-  return (
+    return (
     <NavigationContainer>
       <RootStack.Navigator
         screenOptions={{
@@ -45,6 +44,7 @@ const RootStackScreen = () => {
           <RootStack.Screen
             name="Teacher"
             component={TeacherHomeScreen}
+              // @ts-ignore
             options={({ navigation }) => ({
               ...ModalOption(navigation),
               presentation: 'modal',

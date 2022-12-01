@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 import fetchRequest from '../utils/fetchRequest';
 
 // 初始状态

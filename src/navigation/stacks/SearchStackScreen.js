@@ -2,7 +2,7 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../../screens/search/HomeScreen';
 import ResultsScreen from '../../screens/search/ResultsScreen';
-import CardOption from '../options/CardOption';
+import CardOption from '../../components/CardOption';
 
 const SearchStack = createNativeStackNavigator();
 

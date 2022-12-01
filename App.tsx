@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Dimensions, StyleSheet, Text, View, ImageBackground, Platform, NativeModules } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, ImageBackground, Platform } from 'react-native';
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
 import OpeninstallModule from 'openinstall-react-native';
@@ -7,16 +6,17 @@ import { G, Path, Svg } from 'react-native-svg';
 import { Alert, Button } from 'react-native';
 import MeiQia from './modal/MeiQia';
 import RNToolsManager from './modal/RNToolsManager';
+import {Component} from "react";
 
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
-class App extends Component<{}> {
-  constructor() {
-    super();
-    this.state = { restartAllowed: true, updateState: false, meiQiaClientId: '' };
+class cApp extends Component {
+  constructor(props: any) {
+    super(props);
     CodePush.allowRestart();
   }
+  state = { restartAllowed: true, updateState: false, meiQiaClientId: '',progress: undefined,syncMessage: undefined };
 
   codePushStatusDidChange(syncStatus) {
     switch (syncStatus) {
@@ -86,11 +86,6 @@ class App extends Component<{}> {
     } else if (Platform.OS === 'ios') {
       //iOS平台需要运行的代码
       //该方法用于监听app通过univeral link或scheme拉起后获取唤醒参数
-      this.receiveWakeupListener = map => {
-        if (map) {
-          console.log(map);
-        }
-      };
       OpeninstallModule.addWakeUpListener(this.receiveWakeupListener);
       RNToolsManager.addNotificationListener(this.notificationListener);
       RNToolsManager.addNotificationBackgroundListener(this.notificationBackgroundListener);
@@ -101,6 +96,11 @@ class App extends Component<{}> {
       }
     });
   }
+  receiveWakeupListener = map => {
+    if (map) {
+      console.log(map);
+    }
+  };
   notificationListener(event) {
     console.log(event);
   }
@@ -132,9 +132,6 @@ class App extends Component<{}> {
         clientId: {
           id: this.state.meiQiaClientId,
         },
-      },
-      _ => {
-        console.log(_);
       },
     );
   }
@@ -212,8 +209,5 @@ const styles = StyleSheet.create({
  * different check frequency, such as ON_APP_START, for a 'hands-off' approach where CodePush.sync() does not
  * need to be explicitly called. All options of CodePush.sync() are also available in this decorator.
  */
-let codePushOptions = { checkFrequency: CodePush.CheckFrequency.MANUAL };
 
-App = CodePush(codePushOptions)(App);
-
-export default App;
+export const App = CodePush({ checkFrequency: CodePush.CheckFrequency.MANUAL })(cApp);

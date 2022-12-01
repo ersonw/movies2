@@ -1,4 +1,8 @@
-import {ActivityIndicator, StyleSheet, View} from "react-native";
+import {
+    ActivityIndicator,
+    StyleSheet,
+    View,
+} from "react-native";
 import * as React from "react";
 import Colors from '../constants/Colors';
 

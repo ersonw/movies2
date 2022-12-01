@@ -1,5 +1,7 @@
 import {
-    Image, ImageProps, StyleSheet,
+    Image,
+    ImageProps,
+    StyleSheet,
 } from "react-native";
 import * as React from "react";
 import {useState} from "react";

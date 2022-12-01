@@ -2,8 +2,8 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../../screens/video/HomeScreen';
 import CoursesScreen from '../../screens/video/CoursesScreen';
-import HeaderButtonsOption from '../options/HeaderButtonsOption';
-import CardOption from '../options/CardOption';
+import HeaderSearchOption from '../../components/HeaderSearchOption';
+import CardOption from '../../components/CardOption';
 const VideoStack = createNativeStackNavigator();
 
 const VideoStackScreen = () => {
@@ -16,7 +16,7 @@ const VideoStackScreen = () => {
         name="Home"
         component={HomeScreen}
         options={({navigation, route}) => ({
-          ...HeaderButtonsOption(navigation),
+          ...HeaderSearchOption(navigation),
           title: '视频',
         })}
       />

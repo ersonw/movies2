@@ -2,7 +2,7 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../../screens/setting/HomeScreen';
 import DetailsScreen from '../../screens/setting/DetailsScreen';
-import CardOption from '../options/CardOption';
+import CardOption from '../../components/CardOption';
 
 const SettingStack = createNativeStackNavigator();
 

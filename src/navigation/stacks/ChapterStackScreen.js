@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ChaptersScreen from '../../screens/video/ChaptersScreen';
-import CardOption from '../options/CardOption';
+import CardOption from '../../components/CardOption';
 const ChapterStack = createNativeStackNavigator();
 
 const ChapterStackScreen = () => {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../../screens/user/HomeScreen';
-import HeaderButtonsOption from '../options/HeaderButtonsOption';
-import CardOption from '../options/CardOption';
+import HeaderSearchOption from '../../components/HeaderSearchOption';
+import CardOption from '../../components/CardOption';
 import ModalOption from '../options/ModalOption';
 import WithOutHeader from '../options/WithOutHeader';
 const UserStack = createNativeStackNavigator();

@@ -15,7 +15,6 @@ import Colors from '../../constants/Colors';
 import styles from './styles';
 import NetWorkUtil from '../../utils/NetWorkUtil';
 import icons from '../../assets/icons';
-import Applets from './components/applets';
 import User from '../../data/User';
 import {IndexSwiper} from '../../components/IndexSwiper';
 import {ConcentrationsBox} from './components/ConcentrationsBox';
@@ -26,10 +25,6 @@ export const IndexScreen = ({navigation}) => {
     const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(NetWorkUtil.videoConcentrations, {
         list: [],
     });
-    // 判断是否加载中
-    // if (loading) {
-    //     return <Loading/>;
-    // }
     // const user1 = User.formatJson({id:1,username:'erson',token:"123",nickname: 'test1'});
     // user1.save();
     // console.log(user.token);
@@ -39,7 +34,6 @@ export const IndexScreen = ({navigation}) => {
         return <NetworkError onReload={() => onReload(NetWorkUtil.videoConcentrations)}/>;
     }
     const { list } = data;
-    // console.log(list[0]);
     return (
         <ScrollView
             style={styles.container}
@@ -73,8 +67,8 @@ export const IndexScreen = ({navigation}) => {
                             <TouchableWithoutFeedback
                                 onPress={() =>
                                     navigation.navigate('Courses', {
-                                        id: item.id,
-                                        title: item.name,
+                                        // id: item.id,
+                                        // title: item.name,
                                     })
                                 }>
                                 <Image source={icons.jingpinIcon} />
@@ -85,8 +79,8 @@ export const IndexScreen = ({navigation}) => {
                             <TouchableWithoutFeedback
                                 onPress={() =>
                                     navigation.navigate('Courses', {
-                                        id: item.id,
-                                        title: item.name,
+                                        // id: item.id,
+                                        // title: item.name,
                                     })
                                 }>
                                 <Image source={icons.VipIcon} />
@@ -97,8 +91,8 @@ export const IndexScreen = ({navigation}) => {
                             <TouchableWithoutFeedback
                                 onPress={() =>
                                     navigation.navigate('Courses', {
-                                        id: item.id,
-                                        title: item.name,
+                                        // id: item.id,
+                                        // title: item.name,
                                     })
                                 }>
                                 <Image source={icons.remenIcon} />
@@ -108,7 +102,7 @@ export const IndexScreen = ({navigation}) => {
                     </View>
                 </View>
                 { list.map((item, index)=>
-                    (<ConcentrationsBox navigation={navigation} item={item} key={index} />)
+                    (<ConcentrationsBox navigation={navigation} item={item} key={index} ikey={index} />)
                 )}
                 <MaskLoading refreshing={refreshing || loading} />
             </View>
@@ -119,5 +113,4 @@ export const IndexScreen = ({navigation}) => {
 
 export default {
     IndexScreen,
-    Applets,
 };
