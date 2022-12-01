@@ -1,6 +1,7 @@
 import { Dimensions, StyleSheet, Text, View, ImageBackground, Platform } from 'react-native';
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
+// @ts-ignore
 import OpeninstallModule from 'openinstall-react-native';
 import { G, Path, Svg } from 'react-native-svg';
 import { Alert, Button } from 'react-native';
@@ -11,7 +12,7 @@ import {Component} from "react";
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
-class cApp extends Component {
+class App extends Component {
   constructor(props: any) {
     super(props);
     CodePush.allowRestart();
@@ -209,5 +210,8 @@ const styles = StyleSheet.create({
  * different check frequency, such as ON_APP_START, for a 'hands-off' approach where CodePush.sync() does not
  * need to be explicitly called. All options of CodePush.sync() are also available in this decorator.
  */
+let codePushOptions = { checkFrequency: CodePush.CheckFrequency.MANUAL };
 
-export const App = CodePush({ checkFrequency: CodePush.CheckFrequency.MANUAL })(cApp);
+App = CodePush(codePushOptions)(App);
+export default App;
+// export const App = CodePush({ checkFrequency: CodePush.CheckFrequency.MANUAL })(cApp);
