@@ -1,22 +1,29 @@
-import {FlatList, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
+import {
+    FlatList,
+    FlatListProps,
+    RefreshControl,
+    RefreshControlProps,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View
+} from "react-native";
 import * as React from "react";
 import {PicThumb} from "./PicThumb";
 import Colors from '../constants/Colors';
-export type VideoListProp = {
-    list: [],
+import Loading, {LoadingProps} from "./shared/Loading";
+export type VideoListProp<ItemT> = {
     navigation: any,
-    scrollEnabled?: boolean,
-    horizontal?: boolean,
-    numColumns?: number | undefined,
-};
-export const VideoList = (props: VideoListProp) =>{
-    const { list,navigation, } = props;
-    const renderItem = ({item, index}) => {
+    loading?: LoadingProps,
+} & FlatListProps<ItemT>;
+export const VideoList = (props: VideoListProp<any>) =>{
+    const { navigation, loading, refreshing, onRefresh } = props
+    const renderItem = ({item, index}: { item: any, index: number}) => {
         return (
             <TouchableWithoutFeedback
                 key={index}
                 onPress={() =>
-                    navigation.navigate('Courses', {
+                    navigation.navigate('myVideoPlayer', {
                         id: item.id,
                         title: item.name,
                     })
@@ -41,16 +48,21 @@ export const VideoList = (props: VideoListProp) =>{
     };
     return (
         <FlatList
-            data={list}
-            keyExtractor={item => item.id}
-            renderItem={renderItem}
-            scrollEnabled={props.scrollEnabled}
-            horizontal={props.horizontal}
-            // showsHorizontalScrollIndicator={false}
-            // stickyHeaderHiddenOnScroll={false}
-            // showsVerticalScrollIndicator={false}
             style={styles.flatList}
-            numColumns={props.numColumns}
+            keyExtractor={item => item.id}
+            refreshControl={
+                <RefreshControl
+                    title={ refreshing?'正在加载中～':'放开我刷新哟~'}
+                    titleColor={Colors.white}
+                    tintColor={Colors.primary}
+                    refreshing={!!refreshing}
+                    onRefresh={()=>onRefresh?.()}
+                />
+            }
+            {...props}
+            renderItem={renderItem}
+            // @ts-ignore
+            ListFooterComponent={(<Loading {...loading} />)}
         />
     );
 };

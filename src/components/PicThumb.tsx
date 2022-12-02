@@ -27,10 +27,10 @@ export const PicThumb = ({
                     >
                         <View style={styles.maskPriceItem}>
                             {price > 0 ? (
-                                <>
+                                <View style={{justifyContent:'center',alignItems:'center',flexDirection:'row',}}>
                                     <Text style={styles.maskPriceItemTitle}>{price}</Text>
                                     <Image source={Icons.diamondTag}/>
-                                </>
+                                </View>
                             ) : (
                                 <Text style={styles.maskPriceItemTitle}>VIP免费</Text>
                             )

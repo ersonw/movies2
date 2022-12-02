@@ -18,8 +18,8 @@ export const CImage = (props: ImageProps) => {
             // }}
             onLoadStart={() => setLoading(true)}
             onLoadEnd={() => setLoading(false)}
-            onLoad={() => setLoading(true)}
-            onPartialLoad={() => setLoading(true)}
+            // onLoad={() => setLoading(true)}
+            // onPartialLoad={() => setLoading(true)}
         />
         {loading && (<Image
             {...props}

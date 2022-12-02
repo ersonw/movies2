@@ -1,11 +1,12 @@
+import { RouteProp, ParamListBase } from '@react-navigation/native';
 import * as React from 'react';
-import { Image } from 'react-native';
-import icons from '../../assets/icons';
-import Colors from '../../constants/Colors';
+import {ColorValue, Image, ImageSourcePropType} from 'react-native';
+import icons from '../assets/icons';
+import Colors from '../constants/Colors';
 // TabOption 配置
-const TabOption = route => {
+const TabOption = (route: RouteProp<ParamListBase, string>) => {
   let labelName;
-  let iconName;
+  let iconName: ImageSourcePropType | undefined;
   switch (route.name) {
     case 'Home':
       labelName = '首页';
@@ -22,7 +23,7 @@ const TabOption = route => {
       backgroundColor: Colors.headerBackgroundColor,
     },
     tabBarLabel: labelName,
-    tabBarIcon: ({ focused, color, size }) => (
+    tabBarIcon: ({color, size }: { color:  ColorValue, size: number}) => (
       <Image source={iconName} style={{ width: size, height: size, tintColor: color }} />
     ),
   };

@@ -2,13 +2,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Api from '../constants/Api';
 import Toast from 'react-native-toast-message'
 import AESUtil from './AESUtil';
-// 自定义 fetch，加上了登录参数
-const fetchRequest = async (url, method = 'GET', params) => {
+export type HeadersInit = Headers | string[][] | { [key: string]: string };
+const fetchRequest = async (url: any, method = 'GET', params: any,navigation: any) => {
   const userToken = await AsyncStorage.getItem('userToken');
-  const auth = userToken ? {Token: `${userToken}`} : {};
+  const auth = {Token: `${userToken}`};
   const body = params ? {body: JSON.stringify(params)} : {};
 
-  const header = {
+  const header: HeadersInit = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     ...auth,
@@ -16,17 +16,17 @@ const fetchRequest = async (url, method = 'GET', params) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      let response = await fetch(Api + url, {
+      const response = await fetch(Api + url, {
         method: method,
         headers: header,
         ...body,
       });
-
+      const { status } = response;
       // 认证失败：登录超时，或账号被禁用
-      if (response.status === '201') {
-        throw new Error('unauthorized');
+      if (status && status === 201) {
+        throw new Error('未登录账号');
       }
-
+      // console.log(await response.formData());
       const responseJson = await response.json();
       const { code,data, message } = responseJson;
       if (message){
@@ -36,10 +36,12 @@ const fetchRequest = async (url, method = 'GET', params) => {
             text1: message,
           });
         }else {
-          Toast.show({
-            type: 'error',
-            text1: message,
-          });
+          throw new Error(message);
+        }
+      }
+      if (code === 201){
+        if (navigation){
+          navigation.navigate('login');
         }
       }
       // console.log(data);
@@ -49,11 +51,16 @@ const fetchRequest = async (url, method = 'GET', params) => {
       // }else {
       //   resolve();
       // }
-      resolve(data);
-    } catch (err) {
+      if (data){
+        resolve(data);
+      }
+    } catch (err: any) {
+      console.log(url);
       Toast.show({
+        position: 'bottom',
         type: 'error',
-        text1: 'API接口错误!'
+        text1: '网络请求错误!',
+        text2: err.message || '未知错误！',
       });
       reject(err);
     }

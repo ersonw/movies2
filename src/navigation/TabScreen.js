@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TabOption from './options/TabOption';
+import TabOption from '../components/TabOption';
 import DiscoverStackScreen from './stacks/DiscoverStackScreen';
 import VideoStackScreen from './stacks/VideoStackScreen';
 import UserStackScreen from './stacks/UserStackScreen';

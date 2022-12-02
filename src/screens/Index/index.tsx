@@ -19,19 +19,21 @@ import User from '../../data/User';
 import {IndexSwiper} from '../../components/IndexSwiper';
 import {ConcentrationsBox} from './components/ConcentrationsBox';
 import {MaskLoading} from '../../components/MaskLoading';
+import fetchRequest from "../../utils/fetchRequest";
 const user = new User();
 var {width} = Dimensions.get('window');
-export const IndexScreen = ({navigation}) => {
-    const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(NetWorkUtil.videoConcentrations, {
+export const IndexScreen = ({navigation}:{navigation: any}) => {
+    const url = NetWorkUtil.videoConcentrations;
+    const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(url, {
         list: [],
-    });
+    },navigation);
     // const user1 = User.formatJson({id:1,username:'erson',token:"123",nickname: 'test1'});
     // user1.save();
     // console.log(user.token);
     // FileUtil.test();
     // 网络错误
     if (error) {
-        return <NetworkError onReload={() => onReload(NetWorkUtil.videoConcentrations)}/>;
+        return <NetworkError onReload={() => onReload(url)}/>;
     }
     const { list } = data;
     return (
@@ -43,19 +45,26 @@ export const IndexScreen = ({navigation}) => {
                     titleColor={Colors.white}
                     tintColor={Colors.primary}
                     refreshing={refreshing}
-                    onRefresh={() => onRefresh(NetWorkUtil.videoConcentrations)}
+                    onRefresh={() => onRefresh(url)}
                 />
             }
         >
             <View style={styles.course}>
-                <IndexSwiper navigation={navigation} url={NetWorkUtil.videoPublicity} />
+                <IndexSwiper
+                    navigation={navigation}
+                    url={NetWorkUtil.videoPublicity}
+                    onReport={async (id: any)=>{
+                         // @ts-ignore
+                        await fetchRequest(NetWorkUtil.videoPublicityReport.replace('{id}',id));
+                    }}
+                />
                 <View style={styles.content}>
                     <View style={styles.headButtonBox}>
                         <View style={styles.headButton}>
                             <TouchableWithoutFeedback
                                 onPress={() =>
-                                    navigation.navigate('applets', {
-                                        id: 1,
+                                    navigation.navigate('applet', {
+                                        uri: NetWorkUtil.videoDiamond,
                                         title: '钻石尊享',
                                     })
                                 }>
@@ -66,9 +75,9 @@ export const IndexScreen = ({navigation}) => {
                         <View style={styles.headButton}>
                             <TouchableWithoutFeedback
                                 onPress={() =>
-                                    navigation.navigate('Courses', {
-                                        // id: item.id,
-                                        // title: item.name,
+                                    navigation.navigate('applet', {
+                                        uri: NetWorkUtil.videoDiamond,
+                                        title: '精品专区',
                                     })
                                 }>
                                 <Image source={icons.jingpinIcon} />
@@ -78,9 +87,9 @@ export const IndexScreen = ({navigation}) => {
                         <View style={styles.headButton}>
                             <TouchableWithoutFeedback
                                 onPress={() =>
-                                    navigation.navigate('Courses', {
-                                        // id: item.id,
-                                        // title: item.name,
+                                    navigation.navigate('applet', {
+                                        uri: NetWorkUtil.videoMembership,
+                                        title: 'VIP专区',
                                     })
                                 }>
                                 <Image source={icons.VipIcon} />
@@ -90,7 +99,7 @@ export const IndexScreen = ({navigation}) => {
                         <View style={styles.headButton}>
                             <TouchableWithoutFeedback
                                 onPress={() =>
-                                    navigation.navigate('Courses', {
+                                    navigation.navigate('rank', {
                                         // id: item.id,
                                         // title: item.name,
                                     })
@@ -101,7 +110,7 @@ export const IndexScreen = ({navigation}) => {
                         </View>
                     </View>
                 </View>
-                { list.map((item, index)=>
+                { list.map((item: any, index: React.Key | null | undefined)=>
                     (<ConcentrationsBox navigation={navigation} item={item} key={index} ikey={index} />)
                 )}
                 <MaskLoading refreshing={refreshing || loading} />

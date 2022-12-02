@@ -13,8 +13,13 @@ import {MaskLoading} from './MaskLoading';
 import {CImage} from "./CImage";
 
 var {width} = Dimensions.get('window');
-export const IndexSwiper = ({navigation, url}) => {
-    const {data, loading, error, onReload, refreshing, onRefresh} = useFetchData(url, {
+export type IndexSwiperProps = {
+    navigation: any,
+    url: string,
+    onReport?:(id: any)=> void,
+};
+export const IndexSwiper = ({navigation, url,onReport }: IndexSwiperProps) => {
+    const {data, loading, error, onReload} = useFetchData(url, {
         list: [],
     });
     // 网络错误
@@ -36,15 +41,16 @@ export const IndexSwiper = ({navigation, url}) => {
                     width={width}
                     showsButtons={false}>
 
-                    {list && list.map((l, i) => (
+                    {list && list.map((l: any, i: React.Key | null | undefined) => (
                         <TouchableWithoutFeedback
                             key={i}
                             onPress={() => {
                                 if (l.url && l.url.indexOf('http') > -1) {
-                                    Linking.openURL(l.url).then(() => onRefresh(url));
+                                    Linking.openURL(l.url).then(() => onReport?.(l.id));
                                 } else {
                                     navigation.navigate('JumpView', {
-                                        id: l.type,
+                                        type: l.type,
+                                        url: l.url,
                                     })
                                 }
                             }
@@ -59,7 +65,7 @@ export const IndexSwiper = ({navigation, url}) => {
                     }
                 </Swiper>)
             }
-            <MaskLoading refreshing={refreshing || loading}/>
+            <MaskLoading refreshing={loading}/>
         </>
     );
 }

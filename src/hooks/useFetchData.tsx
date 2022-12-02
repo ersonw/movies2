@@ -10,7 +10,7 @@ let initialState = {
 };
 
 // 定义reducer，统一管理状态
-const reducer = (state, action) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case 'init':
       return {
@@ -46,7 +46,7 @@ const reducer = (state, action) => {
   }
 };
 
-const useFetchData = (url, initData) => {
+const useFetchData = (url: any, initData: any, navigation: any,) => {
   // 如果有传过来的initData，设置到initialState里
   initialState = {
     ...initialState,
@@ -56,9 +56,10 @@ const useFetchData = (url, initData) => {
   // 使用useReducer初始化数据
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchData = async url => {
+  const fetchData = async (url: any, data={}) => {
     try {
-      const responseJson = await fetchRequest(url);
+      // @ts-ignore
+      const responseJson = await fetchRequest(url,'GET',data,navigation);
       dispatch({ type: 'success', payload: responseJson });
     } catch (error) {
       dispatch({ type: 'failure' });
@@ -73,13 +74,13 @@ const useFetchData = (url, initData) => {
   }, [url]);
 
   // 下拉刷新
-  const onRefresh = useCallback(url => {
+  const onRefresh = useCallback((url: any) => {
     dispatch({ type: 'refresh' });
     fetchData(url);
   }, []);
 
   // 重新加载
-  const onReload = useCallback(url => {
+  const onReload = useCallback((url: any) => {
     dispatch({ type: 'init' });
     fetchData(url);
   }, []);

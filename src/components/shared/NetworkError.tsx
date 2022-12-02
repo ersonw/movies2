@@ -3,18 +3,26 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Colors from '../../constants/Colors';
 
-const NetworkError = props => {
+export type NetworkErrorProps = {
+  onReload?: ()=> void,
+  icons?: string,
+  text?: string,
+  buttonTitle?: string,
+};
+const NetworkError = (props: NetworkErrorProps) => {
   const { onReload } = props;
 
   return (
     <View style={styles.notice}>
-      <SimpleLineIcons name={'drawer'} size={160} color={'#ddd'} />
-      <Text style={styles.noticeMsg}>Oops，网络出现故障，请点击</Text>
-      <TouchableOpacity onPress={() => onReload()} style={styles.reload}>
-        <View style={styles.labelWrapper}>
-          <Text style={styles.label}>重新加载</Text>
-        </View>
-      </TouchableOpacity>
+      <SimpleLineIcons name={ props.icons??'drawer'} size={160} color={'#ddd'} />
+      <Text style={styles.noticeMsg}>{ props.text??'Oops，网络出现故障，请点击'}</Text>
+      { onReload && (
+          <TouchableOpacity onPress={() => onReload?.()} style={styles.reload}>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{props.buttonTitle??'重新加载'}</Text>
+            </View>
+          </TouchableOpacity>
+      )}
     </View>
   );
 };

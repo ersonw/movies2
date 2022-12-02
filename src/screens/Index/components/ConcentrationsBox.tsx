@@ -14,7 +14,8 @@ import {MaskLoading} from '../../../components/MaskLoading';
 import {VideoList} from '../../../components/VideoList';
 
 
-export const ConcentrationsBox = ({navigation, item, ikey}) => {
+export const ConcentrationsBox = ({navigation, item, ikey}: { navigation: any, item: any, ikey: any }) => {
+    const url = NetWorkUtil.concentrationsAnytime + item.id;
     const {
         data,
         loading,
@@ -22,20 +23,26 @@ export const ConcentrationsBox = ({navigation, item, ikey}) => {
         onReload,
         refreshing,
         onRefresh,
-    } = useFetchData(NetWorkUtil.concentrationsAnytime + item.id, {
+    } = useFetchData(url, {
         list: [],
-    });
+    },navigation);
     // if (loading) {
     //     return <MaskLoading refreshing={loading} />;
     // }
     if (error) {
-        return <NetworkError onReload={() => onReload(NetWorkUtil.concentrationsAnytime + item.id)}/>;
+        return <NetworkError onReload={() => onReload(url)}/>;
     }
     const {list} = data;
     return (
         <View key={ikey} style={{...(styles.listBox), width: '100%'}}>
             <Text style={styles.heading}>{item.name}</Text>
-            <VideoList  list={list} navigation={navigation} scrollEnabled={false} numColumns={2}/>
+            <VideoList
+                data={list}
+                navigation={navigation}
+                scrollEnabled={false}
+                numColumns={2}
+                renderItem={()=>(<></>)}
+            />
             <View style={[styles.buttonBox, {width: '100%'}]}>
                 <TouchableWithoutFeedback
                     style={{width: '100%'}}
@@ -55,7 +62,7 @@ export const ConcentrationsBox = ({navigation, item, ikey}) => {
                 <TouchableWithoutFeedback
                     style={{width: '100%'}}
                     onPress={() => {
-                        onRefresh(NetWorkUtil.concentrationsAnytime + item.id);
+                        onRefresh(url);
                     }}
                 >
                     <View

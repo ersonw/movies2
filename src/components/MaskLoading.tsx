@@ -6,7 +6,7 @@ import {
 import * as React from "react";
 import Colors from '../constants/Colors';
 
-export const MaskLoading = ({refreshing}) => {
+export const MaskLoading = ({refreshing}: {refreshing: boolean}) => {
     if (!refreshing){
         return <></>;
     }
