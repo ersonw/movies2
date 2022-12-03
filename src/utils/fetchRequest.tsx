@@ -60,6 +60,7 @@ const fetchRequest = async (url: any, {method= 'GET',params,navigation}: Request
         resolve(data);
       }
     } catch (err: any) {
+      // console.log(err);
       console.log(Api+url);
       Toast.show({
         position: 'bottom',

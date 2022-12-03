@@ -221,7 +221,7 @@ export const Login = (props: ScreenProps) => {
         { key: 'first', title: '密码登录' },
         { key: 'second', title: '验证码登录' },
     ]);
-    RNToolsManager.getAppVersionPackage((event: any) => {
+    RNToolsManager.getAppVersionPackage((event: { identifierForVendor: React.SetStateAction<string>; name: React.SetStateAction<string>; board: React.SetStateAction<string>; androidId: React.SetStateAction<string>; }) => {
         // console.log(event);
         if (Platform.OS === 'ios') {
             // console.log(`IOS IFV:${event.deviceToken}\n ${JSON.stringify(event.utsname)}`);
