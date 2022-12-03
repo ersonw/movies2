@@ -8,6 +8,8 @@ export default {
   maintainer: '#ff7f6f',
   admin: '#eac62a',
   yellow: '#eac62a',
+  orange: '#FF7031',
+  red: 'red',
   white: '#fff',
   black: '#404044',
   navbarBottom: '#a7a7aa',

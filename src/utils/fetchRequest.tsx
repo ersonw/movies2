@@ -3,7 +3,12 @@ import Api from '../constants/Api';
 import Toast from 'react-native-toast-message'
 import AESUtil from './AESUtil';
 export type HeadersInit = Headers | string[][] | { [key: string]: string };
-const fetchRequest = async (url: any, method = 'GET', params: any,navigation: any) => {
+export type RequestProps = {
+  method?: string,
+  params: {},
+  navigation?: any,
+};
+const fetchRequest = async (url: any, {method= 'GET',params,navigation}: RequestProps) => {
   const userToken = await AsyncStorage.getItem('userToken');
   const auth = {Token: `${userToken}`};
   const body = params ? {body: JSON.stringify(params)} : {};
@@ -29,6 +34,11 @@ const fetchRequest = async (url: any, method = 'GET', params: any,navigation: an
       // console.log(await response.formData());
       const responseJson = await response.json();
       const { code,data, message } = responseJson;
+      if (code === 201){
+        if (navigation){
+          navigation?.navigate('login');
+        }
+      }
       if (message){
         if (code===200){
           Toast.show({
@@ -37,11 +47,6 @@ const fetchRequest = async (url: any, method = 'GET', params: any,navigation: an
           });
         }else {
           throw new Error(message);
-        }
-      }
-      if (code === 201){
-        if (navigation){
-          navigation.navigate('login');
         }
       }
       // console.log(data);
@@ -55,7 +60,7 @@ const fetchRequest = async (url: any, method = 'GET', params: any,navigation: an
         resolve(data);
       }
     } catch (err: any) {
-      console.log(url);
+      console.log(Api+url);
       Toast.show({
         position: 'bottom',
         type: 'error',
@@ -66,5 +71,16 @@ const fetchRequest = async (url: any, method = 'GET', params: any,navigation: an
     }
   });
 };
-
+export const postRequest =async (url: any,props: RequestProps)=> {
+  let error = false;
+  let data = undefined;
+  try {
+    // @ts-ignore
+    data = await fetchRequest(url,{...props, method: 'POST'});
+    return {error, data};
+  }catch (e) {
+    error = true;
+    return {error, data};
+  }
+};
 export default fetchRequest;

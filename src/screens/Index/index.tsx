@@ -6,13 +6,12 @@ import {
     ScrollView,
     TouchableWithoutFeedback,
     Image,
-    Dimensions,
+    Dimensions, StyleSheet,
 } from 'react-native';
 
 import useFetchData from '../../hooks/useFetchData';
 import NetworkError from '../../components/shared/NetworkError';
 import Colors from '../../constants/Colors';
-import styles from './styles';
 import NetWorkUtil from '../../utils/NetWorkUtil';
 import icons from '../../assets/icons';
 import User from '../../data/User';
@@ -118,7 +117,36 @@ export const IndexScreen = ({navigation}:{navigation: any}) => {
         </ScrollView>
     );
 };
+const styles = StyleSheet.create({
 
+    container: {
+        flex: 1,
+        backgroundColor: Colors.backgroundColor,
+    },
+    course: {
+        marginTop: 10,
+    },
+    content: {
+        paddingLeft: 15,
+        paddingRight: 15,
+    },
+    headButton: {
+        alignItems: 'center',
+    },
+    headButtonText: {
+        marginTop: 6,
+        color: Colors.white,
+    },
+    headButtonBox: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        margin: 15,
+    },
+    // hearButtonImage:{
+    //     width: '100%',
+    // },
+});
 
 export default {
     IndexScreen,

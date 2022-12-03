@@ -13,6 +13,7 @@ import {Applet} from "../screens/Index/Applet";
 import * as React from "react";
 import CardOption from "../components/CardOption";
 import myVideoPlayer from "../screens/Index/myVideoPlayer";
+import {Login} from "../screens/Login";
 
 const RootStack = createNativeStackNavigator();
 
@@ -70,6 +71,14 @@ const RootStackScreen = () => {
                         })}
                         name="myVideoPlayer"
                         component={myVideoPlayer}
+                    />
+                    <RootStack.Screen
+                        // @ts-ignore
+                        options={(props) => ({
+                            ...CardOption(props),
+                        })}
+                        name="login"
+                        component={Login}
                     />
                     <RootStack.Screen name="SearchStack" component={SearchStackScreen}/>
                     <RootStack.Screen name="SettingStack" component={SettingStackScreen}/>

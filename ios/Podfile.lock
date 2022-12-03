@@ -376,8 +376,10 @@ PODS:
   - React-jsinspector (0.70.2)
   - React-logger (0.70.2):
     - glog
-  - react-native-aes-pack (1.0.2):
-    - React
+  - react-native-orientation-locker (1.5.0):
+    - React-Core
+  - react-native-pager-view (6.1.2):
+    - React-Core
   - react-native-rtmp-publisher (0.3.0):
     - HaishinKit (~> 1.2.3)
     - React-Core
@@ -563,7 +565,8 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-aes-pack (from `../node_modules/react-native-aes-pack`)
+  - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-rtmp-publisher (from `../node_modules/react-native-rtmp-publisher`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
@@ -713,8 +716,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-aes-pack:
-    :path: "../node_modules/react-native-aes-pack"
+  react-native-orientation-locker:
+    :path: "../node_modules/react-native-orientation-locker"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-rtmp-publisher:
     :path: "../node_modules/react-native-rtmp-publisher"
   react-native-safe-area-context:
@@ -837,7 +842,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 53bd208e5c27939c6e6365528393445a596a9a2b
   React-jsinspector: 26c42646ab0bb69e29e837e23754fe7121eeaf94
   React-logger: 1bfd109a0ffa4c0989bbfac0c2d8c4abe4637faa
-  react-native-aes-pack: 2e5bd0262c73bc6a4eed8ac2a107342b07514d25
+  react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
+  react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
   react-native-rtmp-publisher: 347fab66825ec479b7b320238b096b3f331b9fd8
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253

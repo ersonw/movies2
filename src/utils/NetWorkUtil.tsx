@@ -7,5 +7,8 @@ const NetWorkUtil = {
   videoDiamond: '/api/video/diamond/{page}',
   videoMembership: '/api/video/membership/{page}',
   videoPlayer: '/api/video/player/{id}',
+  userLoginPhone: '/api/user/login/phone',
+  userLoginSms: '/api/user/login/sms/{phone}',
+  userLogin: '/api/user/login',
 };
 export default NetWorkUtil;
