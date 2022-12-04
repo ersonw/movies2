@@ -28,3 +28,6 @@ pod install --repo-update
 <string>0ElbmQqCMcfi1BouBIDXOu6GNiN14ksvOXqog</string>
 <key>CodePushServerURL</key>
 <string>https://api.obsi.cc</string>
+
+cd node_modules/react-native-webrtc
+node tools/downloadWebRTC.js 

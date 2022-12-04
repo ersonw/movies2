@@ -1,4 +1,5 @@
 import {
+    Dimensions,
     ImageBackground, Platform, StyleProp,
     StyleSheet,
     Text,
@@ -39,33 +40,54 @@ export type TabViewRouteProps = {
     setLoading: any,
     deviceId: string,
     platform: string,
+    phone: string,
+    setPhone: (v: string)=>void,
+    password?: string,
+    setPassword?: (v: string)=>void,
+    codeId?: string,
+    setCodeId?: (v: string)=>void,
+    code?: string,
+    setCode?: (v: string)=>void,
 } & ScreenProps;
+var {width, height} = Dimensions.get('window');
 const FirstRoute = (props: TabViewRouteProps) => {
-    const {callIndex,loading,setLoading,navigation} = props;
-    // const [loading,setLoading,] = useState(false);
-    const [phone,setPhone] = useState("");
-    const [password,setPassword] = useState("");
+    const {callIndex,setLoading,navigation,phone,setPhone,password,setPassword} = props;
+    const [check,setCheck,] = useState(false);
     const [show,setShow] = useState(false);
-    // const {data, loading, error, onReload } = usePostData("/api/test", {},);
-    // console.log(data);
+    const [phoneText,setPhoneText] = useState("");
+    const [passwordText,setPasswordText] = useState("");
     return (
         <>
             <View style={{flex: 1, backgroundColor: Colors.headerBackgroundColor,}}>
                 <View style={{marginTop: 30,}}>
-                    <Text style={{color: Colors.white,marginLeft: 10,}}>手机号</Text>
+                    <Text style={{color: Colors.white,marginLeft: 10,}}>用户名</Text>
                     <Input
-                        keyboardType="phone-pad"
+                        keyboardType="default"
                         autoCompleteType={undefined}
                         returnKeyType="next"
                         underlineColorAndroid="transparent"
-                        placeholder="请输入11位手机号"
+                        placeholder="请输入手机号或者用户名"
                         multiline={false}
-                        value={phone}
-                        onChangeText={setPhone}
+                        value={phoneText||phone}
+                        onChangeText={setPhoneText}
+                        onFocus={()=>{
+                            if (!phoneText){
+                                setPhoneText(phone);
+                            }
+                        }}
+                        onBlur={()=>{
+                            setCheck(false);
+                            if (new RegExp(/^\+?[1-9][0-9]*$/).test(phoneText)){
+                                if (phoneText.length > 10) setCheck(true);
+                            }else {
+                                if (phoneText.length > 5) setCheck(true);
+                            }
+                            setPhone(phoneText);
+                        }}
                         style={{color: Colors.white,}}
                         rightIcon={
                             <View style={{flexDirection: 'row'}}>
-                                {phone.length === 11 ? (<Icon name="check" color={Colors.orange} size={24} />):
+                                { check ? (<Icon name="check" color={Colors.orange} size={24} />):
                                     (<Icon name="clear" color={Colors.red} size={24} />)}
                             </View>
                         }
@@ -80,19 +102,27 @@ const FirstRoute = (props: TabViewRouteProps) => {
                         placeholder="请输入密码"
                         multiline={false}
                         secureTextEntry={!show}
-                        value={password}
-                        onChangeText={setPassword}
+                        value={passwordText || password}
+                        onChangeText={setPasswordText}
+                        onBlur={()=>{
+                            setPassword?.(passwordText);
+                        }}
+                        onFocus={()=>{
+                            if (!passwordText&&password){
+                                setPasswordText(password);
+                            }
+                        }}
                         style={{color: Colors.white,}}
                         rightIcon={
                             <View style={{flexDirection: 'row'}}>
-                                {password.length > 0 && (
+                                {passwordText.length>0 && (
                                     <TouchableOpacity
                                         onPress={()=>setShow(!show)}
                                     >
                                         <Entypo name={show?"eye-with-line":"eye"} color={Colors.white} size={24} />
                                     </TouchableOpacity>
                                 )}
-                                {password.length === 0 && (<Icon name="clear" color={Colors.red} size={24} />)}
+                                {passwordText.length === 0 && (<Icon name="clear" color={Colors.red} size={24} />)}
                             </View>
                         }
                     />
@@ -115,11 +145,24 @@ const FirstRoute = (props: TabViewRouteProps) => {
                 <View style={{margin: 15}}>
                     <TouchableOpacity
                         onPress={()=>{
-                            // onReload(NetWorkUtil.userLogin,{});
                             setLoading(true);
+                            if (!check && password) {
+                                Toast.show({
+                                    type: 'error',
+                                    text1: '账号密码长度不对!',
+                                });
+                                setLoading(false);
+                                return;
+                            }
+                            let username = phone;
+                            if (new RegExp(/^\+?[1-9][0-9]*$/).test(phone)){
+                                if (!phone.startsWith('+')){
+                                    username = `+86${phone}`;
+                                }
+                            }
                             postRequest(NetWorkUtil.userLogin,{
                                 params: {
-                                    username: `+86${phone}`,
+                                    username: username,
                                     password: md5.hex_md5(password),
                                     deviceId: props.deviceId,
                                     platform: props.platform,
@@ -176,11 +219,192 @@ const FirstRoute = (props: TabViewRouteProps) => {
         </>
     );
 };
-
 const SecondRoute = (props: TabViewRouteProps) => {
-    return (<View style={{flex: 1, backgroundColor: '#673ab7'}}/>
+    const {
+        callIndex,
+        setLoading,
+        navigation,
+        phone,
+        setPhone,
+        code,
+        setCode,
+        codeId,
+        setCodeId,
+    } = props;
+    const [phoneText,setPhoneText] = useState("");
+    const [codeText,setCodeText] = useState("");
+    const [codeIdText,setCodeIdText] = useState("");
+    const [check,setCheck,] = useState(false);
+    // const {data, loading, error, onReload } = usePostData("/api/test", {},);
+    // console.log(data);
+    return (
+        <>
+            <View style={{flex: 1, backgroundColor: Colors.headerBackgroundColor,}}>
+                <View style={{marginTop: 30,}}>
+                    <Text style={{color: Colors.white,marginLeft: 10,}}>手机号</Text>
+                    <Input
+                        keyboardType="phone-pad"
+                        autoCompleteType={undefined}
+                        returnKeyType="next"
+                        underlineColorAndroid="transparent"
+                        placeholder="请输入11位手机号"
+                        multiline={false}
+                        value={phoneText||phone}
+                        onChangeText={setPhoneText}
+                        onFocus={()=>{
+                            if (!phoneText&&phone){
+                                setPhoneText(phone);
+                            }
+                        }}
+                        onBlur={()=>{
+                            setCheck(false);
+                            if (phoneText.length > 10){
+                                setCheck(true);
+                            }
+                        }}
+                        style={{color: Colors.white,}}
+                        rightIcon={
+                            <View style={{flexDirection: 'row'}}>
+                                {check ? (<Icon name="check" color={Colors.orange} size={24} />):
+                                    (<Icon name="clear" color={Colors.red} size={24} />)}
+                            </View>
+                        }
+                    />
+                </View>
+                <View style={{marginTop: 30,}}>
+                    <Text style={{color: Colors.white,marginLeft: 10,}}>验证码</Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            width: width - 90,
+                        }}
+                    >
+                        <Input
+                            autoCompleteType={undefined}
+                            returnKeyType="done"
+                            underlineColorAndroid="transparent"
+                            placeholder="请输入短信验证码"
+                            multiline={false}
+                            value={codeText||code}
+                            onChangeText={setCodeText}
+                            onBlur={()=>{
+                                setCode?.(codeText);
+                            }}
+                            onFocus={()=>{
+                                if (code&&!codeText){
+                                    setCodeText(code);
+                                }
+                            }}
+                            style={{
+                                color: Colors.white,
+                            }}
+                            inputContainerStyle={{
+                                // width: '80%',
+                            }}
+                            containerStyle={{
+                                width: '80%',
+                                // backgroundColor: Colors.white,
+                            }}
+                            rightIcon={
+                                <View style={{flexDirection: 'row'}}>
+                                    {code ? (<Icon name="check" color={Colors.orange} size={24} />):
+                                        (<Icon name="clear" color={Colors.red} size={24} />)}
+                                </View>
+                            }
+                        />
+                        <TouchableOpacity
+                            onPress={()=>{}}
+                            style={{
+                                backgroundColor: codeId?Colors.headerBackgroundColor:Colors.yellow,
+                                borderRadius: 30,
+                                marginLeft: 9,
+                            }}
+                        >
+                            <Text style={{color:Colors.white,}}>{"重新发送"}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        width: '100%',
+                        marginBottom: 15,
+                        alignItems: 'flex-end',
+                    }}
+                >
+                    <TouchableOpacity
+                        onPress={()=>{
+                            callIndex(1);
+                        }}
+                    >
+                        <Text style={{color: Colors.date}}>忘记密码?</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{margin: 15}}>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            // onReload(NetWorkUtil.userLogin,{});
+                            setLoading(true);
+                            postRequest(NetWorkUtil.userLogin,{
+                                params: {
+                                    username: `+86${phone}`,
+                                    // password: md5.hex_md5(password),
+                                    deviceId: props.deviceId,
+                                    platform: props.platform,
+                                },
+                            }).then(({error,data}: any)=>{
+                                setLoading(false);
+                                if (!error){
+                                    const {nickname, token} = data;
+                                    Toast.show({
+                                        type: 'success',
+                                        text2: '欢迎回来！',
+                                        text1: nickname,
+                                    });
+                                    AsyncStorage.setItem('userToken',token).then(()=>navigation.goBack());
+                                }
+                            });
+                        }}
+                    >
+                        <View style={{
+                            backgroundColor: '#FF7031',
+                            width: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 30,
+                        }}>
+                            <Text style={{
+                                color: Colors.white,
+                                marginTop: 12,
+                                marginBottom: 12,
+                            }}>登录</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>{}}
+                    >
+                        <View style={{
+                            marginTop: 30,
+                            // backgroundColor: '#FF7031',
+                            width: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 30,
+                        }}>
+                            <Text style={{
+                                color: Colors.date,
+                                marginTop: 12,
+                                marginBottom: 12,
+                            }}>注册</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+        </>
     );
 };
+
 const bottomLine = (props: any) => {
     // props中传入的每个item宽度
     // const {itemWidth} = this.props;
@@ -213,6 +437,10 @@ export const Login = (props: ScreenProps) => {
     const [refreshing,setRefreshing] = useState(false);
     const [platform,setPlatform] = useState("");
     const [deviceId,setDeviceId] = useState("");
+    const [phone,setPhone] = useState("");
+    const [password,setPassword] = useState("");
+    const [code,setCode] = useState("");
+    const [codeId,setCodeId] = useState("");
 
     const layout = useWindowDimensions();
 
@@ -246,8 +474,32 @@ export const Login = (props: ScreenProps) => {
                             style={[styles.tabView,{ width: layout.width - 60 }]}
                             navigationState={{ index, routes }}
                             renderScene={SceneMap({
-                                first: ()=>FirstRoute({...props,callIndex: setIndex,loading,setLoading,deviceId,platform}),
-                                second: ()=>SecondRoute({...props,callIndex: setIndex,loading,setLoading,deviceId,platform}),
+                                first: ()=>FirstRoute({
+                                    ...props,
+                                    callIndex: setIndex,
+                                    loading,
+                                    setLoading,
+                                    deviceId,
+                                    platform,
+                                    phone,
+                                    setPhone,
+                                    password,
+                                    setPassword,
+                                }),
+                                second: ()=>SecondRoute({
+                                    ...props,
+                                    callIndex: setIndex,
+                                    loading,
+                                    setLoading,
+                                    deviceId,
+                                    platform,
+                                    phone,
+                                    setPhone,
+                                    code,
+                                    setCode,
+                                    codeId,
+                                    setCodeId,
+                                }),
                             })}
                             renderTabBar={renderTabBar}
                             onIndexChange={setIndex}

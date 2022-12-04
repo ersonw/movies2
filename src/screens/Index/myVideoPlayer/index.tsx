@@ -3,12 +3,15 @@ import {ActivityIndicator, Animated, Dimensions, ImageBackground, StyleSheet, Te
 import Icon from "react-native-vector-icons/MaterialIcons";
 // @ts-ignore
 import VideoPlayer from 'react-native-video-player';
+// @ts-ignore
+import MoVideoPlayer from 'react-native-mo-video-player';
 import NetworkError from "../../../components/shared/NetworkError";
 import * as React from "react";
 import useFetchData from "../../../hooks/useFetchData";
 import NetWorkUtil from "../../../utils/NetWorkUtil";
 import {MaskLoading} from "../../../components/MaskLoading";
 import {createRef, useState} from "react";
+import Orientation from "react-native-orientation-locker";
 
 const {width, height} = Dimensions.get('window');
 const myVideoPlayer = (props: ScreenProps)=>{
@@ -27,6 +30,7 @@ const myVideoPlayer = (props: ScreenProps)=>{
     }
     const {player} = data;
     // console.log(player.vodPlayUrl);
+    // Orientation.lockToLandscapeLeft()
     return (
         <>
             <View style={styles.body}>
@@ -47,9 +51,10 @@ const myVideoPlayer = (props: ScreenProps)=>{
                         }}
                         onStart={()=>{}}
                     />
+                    {/*<MaskLoading refreshing={load} />*/}
                     {/*<MoVideoPlayer*/}
                     {/*    ref={playerRef}*/}
-                    {/*    autoplay={true}*/}
+                    {/*    autoPlay={true}*/}
                     {/*    source={{uri: player.vodPlayUrl}}*/}
                     {/*    poster={player.picThumb}*/}
                     {/*    playInBackground={false}*/}
@@ -62,7 +67,6 @@ const myVideoPlayer = (props: ScreenProps)=>{
                     {/*    showSettingButton={true}*/}
                     {/*    showMuteButton={true}*/}
                     {/*/>*/}
-                    {/*<MaskLoading refreshing={load} />*/}
                     { load && (
                         <View style={{
                             width: '100%',
@@ -100,7 +104,7 @@ const myVideoPlayer = (props: ScreenProps)=>{
                     />
                 </View>
             </View>
-            <MaskLoading refreshing={loading} />
+            {/*<MaskLoading refreshing={loading} />*/}
         </>
     );
 };

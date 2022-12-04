@@ -5,7 +5,7 @@ import AESUtil from './AESUtil';
 export type HeadersInit = Headers | string[][] | { [key: string]: string };
 export type RequestProps = {
   method?: string,
-  params: {},
+  params?: {},
   navigation?: any,
 };
 const fetchRequest = async (url: any, {method= 'GET',params,navigation}: RequestProps) => {
@@ -35,6 +35,7 @@ const fetchRequest = async (url: any, {method= 'GET',params,navigation}: Request
       const responseJson = await response.json();
       const { code,data, message } = responseJson;
       if (code === 201){
+        await AsyncStorage.removeItem('userToken');
         if (navigation){
           navigation?.navigate('login');
         }

@@ -27,8 +27,8 @@ const RootStackScreen = () => {
                     //   headerStyle: {
                     //       backgroundColor: Colors.backgroundColor,
                     //   },
-                    statusBarStyle: 'light',
-                    statusBarColor: Colors.backgroundColor,
+                    // statusBarStyle: 'light',
+                    // statusBarColor: Colors.backgroundColor,
                     // statusBarHidden: false,
                     // statusBarAnimation: 'none',
                     // statusBarTranslucent: true,
@@ -40,8 +40,8 @@ const RootStackScreen = () => {
                         options={(props) => ({
                             ...CardOption(props),
                             statusBarHidden: false,
-                            statusBarStyle: 'light',
-                            statusBarColor: Colors.backgroundColor,
+                            // statusBarStyle: 'light',
+                            // statusBarColor: Colors.backgroundColor,
                             headerShown: true,
                         })}
                         name="concentrations"
@@ -52,8 +52,8 @@ const RootStackScreen = () => {
                         options={(props) => ({
                             ...CardOption(props),
                             statusBarHidden: false,
-                            statusBarStyle: 'light',
-                            statusBarColor: Colors.backgroundColor,
+                            // statusBarStyle: 'light',
+                            // statusBarColor: Colors.backgroundColor,
                             headerShown: true,
                         })}
                         name="applet"

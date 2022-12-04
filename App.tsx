@@ -9,6 +9,9 @@ import MeiQia from './modal/MeiQia';
 import RNToolsManager from './modal/RNToolsManager';
 import {Component} from "react";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-community/async-storage";
+import fetchRequest from "./src/utils/fetchRequest";
+import NetWorkUtil from "./src/utils/NetWorkUtil";
 
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
@@ -63,15 +66,31 @@ class App extends Component {
             this.codePushDownloadDidProgress.bind(this),
         );
     }
-
+    checkDevice(id: string){
+        fetchRequest(NetWorkUtil.checkDevice.replace('{deviceId}',id),{}).then((data: any)=>{
+            // console.log(data);
+            const { token } = data;
+            AsyncStorage.setItem('userToken',token).then(()=>{});
+        });
+    }
+    checkDeviceToken(token: any){}
     componentDidMount() {
         RNToolsManager.disableIdleTimer();
-        RNToolsManager.getAppVersionPackage((event: { deviceToken: any; utsname: any; }) => {
+        RNToolsManager.getAppVersionPackage(async(event: { deviceToken: any;identifierForVendor: any; androidId: any; }) => {
             // console.log(event);
+            const userToken = await AsyncStorage.getItem('userToken');
             if (Platform.OS === 'ios') {
-                console.log(`IOS IFV:${event.deviceToken}\n ${JSON.stringify(event.utsname)}`);
+                if (userToken){
+                    this.checkDeviceToken(event.deviceToken);
+                }else {
+                    // this.checkDevice(event.identifierForVendor);
+                }
             } else if (Platform.OS === 'android') {
-                // console.log(`androidId:${event.androidId}`);
+                if (userToken){
+                    this.checkDeviceToken(event.androidId);
+                }else {
+                    // this.checkDevice(event.androidId);
+                }
             }
         });
         MeiQia.initSDK({
