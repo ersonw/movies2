@@ -28,12 +28,14 @@ import {
 } from "react-native-tab-view";
 import {Scene, Event} from "react-native-tab-view/lib/typescript/src/types";
 import {Input} from "react-native-elements";
-import {postRequest} from "../../utils/fetchRequest";
+import fetchRequest, {postRequest} from "../../utils/fetchRequest";
 // @ts-ignore
 import md5 from "react-native-md5";
 import RNToolsManager from "../../../modal/RNToolsManager";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-community/async-storage";
+// @ts-ignore
+import moment from "moment/moment";
 export type TabViewRouteProps = {
     callIndex: (index: number)=> void,
     loading: boolean,
@@ -42,20 +44,23 @@ export type TabViewRouteProps = {
     platform: string,
     phone: string,
     setPhone: (v: string)=>void,
-    password?: string,
-    setPassword?: (v: string)=>void,
-    codeId?: string,
-    setCodeId?: (v: string)=>void,
-    code?: string,
-    setCode?: (v: string)=>void,
 } & ScreenProps;
 var {width, height} = Dimensions.get('window');
-const FirstRoute = (props: TabViewRouteProps) => {
+const FirstRoute = (props: {
+    password: string,
+    setPassword: (v: string)=>void,
+}&TabViewRouteProps) => {
     const {callIndex,setLoading,navigation,phone,setPhone,password,setPassword} = props;
     const [check,setCheck,] = useState(false);
     const [show,setShow] = useState(false);
     const [phoneText,setPhoneText] = useState("");
     const [passwordText,setPasswordText] = useState("");
+    if (!phoneText&&phone){
+        setPhoneText(phone);
+    }
+    if (!passwordText&&password){
+        setPasswordText(password);
+    }
     return (
         <>
             <View style={{flex: 1, backgroundColor: Colors.headerBackgroundColor,}}>
@@ -219,7 +224,14 @@ const FirstRoute = (props: TabViewRouteProps) => {
         </>
     );
 };
-const SecondRoute = (props: TabViewRouteProps) => {
+const SecondRoute = (props: {
+    codeId: string,
+    setCodeId: (v: string)=>void,
+    code: string,
+    setCode: (v: string)=>void,
+    countTimeRoot: number,
+    setCountTimeRoot: (v: number)=>void,
+} & TabViewRouteProps) => {
     const {
         callIndex,
         setLoading,
@@ -230,13 +242,26 @@ const SecondRoute = (props: TabViewRouteProps) => {
         setCode,
         codeId,
         setCodeId,
+        countTimeRoot,
+        setCountTimeRoot,
     } = props;
     const [phoneText,setPhoneText] = useState("");
     const [codeText,setCodeText] = useState("");
-    const [codeIdText,setCodeIdText] = useState("");
+    // const [codeIdText,setCodeIdText] = useState("");
     const [check,setCheck,] = useState(false);
-    // const {data, loading, error, onReload } = usePostData("/api/test", {},);
-    // console.log(data);
+    const [countTime,setCountTime] = useState(0);
+    // if (countTime == 0&& countTimeRoot>0){
+    //     setCountTime(countTimeRoot);
+    // }
+    // if (countTimeRoot>0){
+    //     countDown({setCountTime:setCountTimeRoot,countTime:countTimeRoot});
+    // }
+    if (!phoneText&&phone){
+        setPhoneText(phone);
+    }
+    // if (!codeText&&code){
+    //     setCodeText(code);
+    // }
     return (
         <>
             <View style={{flex: 1, backgroundColor: Colors.headerBackgroundColor,}}>
@@ -261,6 +286,7 @@ const SecondRoute = (props: TabViewRouteProps) => {
                             if (phoneText.length > 10){
                                 setCheck(true);
                             }
+                            setPhone(phoneText);
                         }}
                         style={{color: Colors.white,}}
                         rightIcon={
@@ -281,6 +307,7 @@ const SecondRoute = (props: TabViewRouteProps) => {
                         }}
                     >
                         <Input
+                            keyboardType="number-pad"
                             autoCompleteType={undefined}
                             returnKeyType="done"
                             underlineColorAndroid="transparent"
@@ -289,7 +316,7 @@ const SecondRoute = (props: TabViewRouteProps) => {
                             value={codeText||code}
                             onChangeText={setCodeText}
                             onBlur={()=>{
-                                setCode?.(codeText);
+                                setCode(codeText);
                             }}
                             onFocus={()=>{
                                 if (code&&!codeText){
@@ -303,7 +330,7 @@ const SecondRoute = (props: TabViewRouteProps) => {
                                 // width: '80%',
                             }}
                             containerStyle={{
-                                width: '80%',
+                                width: '70%',
                                 // backgroundColor: Colors.white,
                             }}
                             rightIcon={
@@ -313,16 +340,52 @@ const SecondRoute = (props: TabViewRouteProps) => {
                                 </View>
                             }
                         />
-                        <TouchableOpacity
-                            onPress={()=>{}}
+                        <View
                             style={{
-                                backgroundColor: codeId?Colors.headerBackgroundColor:Colors.yellow,
+                                backgroundColor: (countTime&&countTime > 0)?Colors.headerBackgroundColor:Colors.primary,
                                 borderRadius: 30,
                                 marginLeft: 9,
                             }}
                         >
-                            <Text style={{color:Colors.white,}}>{"重新发送"}</Text>
-                        </TouchableOpacity>
+                            {countTime&&countTime > 0?(
+                                <Text
+                                    style={{
+                                        color:Colors.white,
+                                        margin: 6,
+                                    }}
+                                >
+                                    {/*等待中*/}
+                                    {"重新发送"+moment(new Date().setHours(0, 0, 0, 0)).add(countTime, 'second').format('mm:ss')}
+                                </Text>
+                            ):(
+                                <TouchableOpacity
+                                    onPress={()=>{
+                                        setPhone(phoneText);
+                                        if(phoneText.startsWith('+')){
+                                            sendCodeSms({
+                                                phone:phoneText||phone,
+                                                setCountTime,
+                                                setCodeId,
+                                            });
+                                        }else {
+                                            sendCodeSms({
+                                                phone:`+86${phoneText}`,
+                                                setCountTime,
+                                                setCodeId,
+                                            });
+                                        }
+                                    }}
+                                >
+                                    <Text style={{
+                                        color:Colors.white,
+                                        margin: 6,
+                                    }}>{
+                                        codeId ? "重新发送":"获取验证码"
+                                    }</Text>
+                                </TouchableOpacity>
+                            )
+                            }
+                        </View>
                     </View>
                 </View>
                 <View
@@ -334,21 +397,38 @@ const SecondRoute = (props: TabViewRouteProps) => {
                 >
                     <TouchableOpacity
                         onPress={()=>{
-                            callIndex(1);
+                            // const t1 =codeIdText;
+                            // const t2 =countTime;
+                            // setCodeId(codeIdText);
+                            // setCountTimeRoot(t2);
+                            callIndex(0);
                         }}
                     >
-                        <Text style={{color: Colors.date}}>忘记密码?</Text>
+                        <Text style={{color: Colors.date}}>密码登录?</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{margin: 15}}>
                     <TouchableOpacity
                         onPress={()=>{
-                            // onReload(NetWorkUtil.userLogin,{});
+                            if (!codeId){
+                                Toast.show({
+                                    type: 'error',
+                                    text1: '请先发送验证码',
+                                });
+                                return;
+                            }
+                            if (!codeText){
+                                Toast.show({
+                                    type: 'error',
+                                    text1: '请输入验证码',
+                                });
+                                return;
+                            }
                             setLoading(true);
-                            postRequest(NetWorkUtil.userLogin,{
+                            postRequest(NetWorkUtil.userLoginPhone,{
                                 params: {
-                                    username: `+86${phone}`,
-                                    // password: md5.hex_md5(password),
+                                    code: codeText||code,
+                                    codeId: codeId,
                                     deviceId: props.deviceId,
                                     platform: props.platform,
                                 },
@@ -431,16 +511,54 @@ const renderTabBar = (props: JSX.IntrinsicAttributes & SceneRendererProps & { na
         indicatorStyle={bottomLine(props)}
     />
 );
+const countDown = ({setCountTime,countTime=-1}:{setCountTime:(v:number)=>void,countTime?: number})=>{
+    if (countTime===-1){
+        countTime = 120;
+        setCountTime(countTime);
+    }
+    const _timer = setInterval(() => {
+        if (countTime > 0){
+            countTime--;
+        }else {
+            clearInterval(_timer);
+        }
+        setCountTime(countTime);
+    },1000);
+};
+const sendCodeSms = ({phone,setCountTime, setCodeId,}: {
+    phone: string,
+    setCountTime: (v: number) => void,
+    setCodeId: (v: string) => void,
+}) => {
+    if (phone.length == 0) {
+        Toast.show({
+            type: 'error',
+            text1: '手机号码不能为空!',
+        });
+        return;
+    }
+    fetchRequest(NetWorkUtil.userLoginSms.replace('{phone}',phone),{}).then((data: any) => {
+        // console.log(data);
+        const { id } = data;
+        setCodeId(id);
+        countDown({setCountTime});
+        Toast.show({
+            type: 'success',
+            text2: '发送验证码！',
+            text1: '验证码已成功发送',
+        });
+    });
+}
 export const Login = (props: ScreenProps) => {
     const {navigation} = props;
     const [loading,setLoading,] = useState(false);
-    const [refreshing,setRefreshing] = useState(false);
     const [platform,setPlatform] = useState("");
     const [deviceId,setDeviceId] = useState("");
     const [phone,setPhone] = useState("");
     const [password,setPassword] = useState("");
     const [code,setCode] = useState("");
     const [codeId,setCodeId] = useState("");
+    const [countTime,setCountTime] = useState(0);
 
     const layout = useWindowDimensions();
 
@@ -499,6 +617,8 @@ export const Login = (props: ScreenProps) => {
                                     setCode,
                                     codeId,
                                     setCodeId,
+                                    countTimeRoot: countTime,
+                                    setCountTimeRoot: setCountTime,
                                 }),
                             })}
                             renderTabBar={renderTabBar}
