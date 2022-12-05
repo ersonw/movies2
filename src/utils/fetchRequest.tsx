@@ -37,7 +37,7 @@ const fetchRequest = async (url: any, {method= 'GET',params,navigation}: Request
       if (code === 201){
         await AsyncStorage.removeItem('userToken');
         if (navigation){
-          navigation?.navigate('login');
+          navigation?.navigate('login',{login: true});
         }
       }
       if (message){
@@ -64,7 +64,8 @@ const fetchRequest = async (url: any, {method= 'GET',params,navigation}: Request
       // console.log(err);
       console.log(Api+url);
       Toast.show({
-        position: 'bottom',
+        // position: 'bottom',
+        topOffset: 150,
         type: 'error',
         text1: '网络请求错误!',
         text2: err.message || '未知错误！',

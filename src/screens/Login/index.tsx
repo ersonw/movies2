@@ -34,457 +34,11 @@ import md5 from "react-native-md5";
 import RNToolsManager from "../../../modal/RNToolsManager";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-community/async-storage";
+import {FirstRoute, SecondRoute} from "./tools";
+import moment from "moment";
 // @ts-ignore
-import moment from "moment/moment";
-export type TabViewRouteProps = {
-    callIndex: (index: number)=> void,
-    loading: boolean,
-    setLoading: any,
-    deviceId: string,
-    platform: string,
-    phone: string,
-    setPhone: (v: string)=>void,
-} & ScreenProps;
+
 var {width, height} = Dimensions.get('window');
-const FirstRoute = (props: {
-    password: string,
-    setPassword: (v: string)=>void,
-}&TabViewRouteProps) => {
-    const {callIndex,setLoading,navigation,phone,setPhone,password,setPassword} = props;
-    const [check,setCheck,] = useState(false);
-    const [show,setShow] = useState(false);
-    const [phoneText,setPhoneText] = useState("");
-    const [passwordText,setPasswordText] = useState("");
-    if (!phoneText&&phone){
-        setPhoneText(phone);
-    }
-    if (!passwordText&&password){
-        setPasswordText(password);
-    }
-    return (
-        <>
-            <View style={{flex: 1, backgroundColor: Colors.headerBackgroundColor,}}>
-                <View style={{marginTop: 30,}}>
-                    <Text style={{color: Colors.white,marginLeft: 10,}}>用户名</Text>
-                    <Input
-                        keyboardType="default"
-                        autoCompleteType={undefined}
-                        returnKeyType="next"
-                        underlineColorAndroid="transparent"
-                        placeholder="请输入手机号或者用户名"
-                        multiline={false}
-                        value={phoneText||phone}
-                        onChangeText={setPhoneText}
-                        onFocus={()=>{
-                            if (!phoneText){
-                                setPhoneText(phone);
-                            }
-                        }}
-                        onBlur={()=>{
-                            setCheck(false);
-                            if (new RegExp(/^\+?[1-9][0-9]*$/).test(phoneText)){
-                                if (phoneText.length > 10) setCheck(true);
-                            }else {
-                                if (phoneText.length > 5) setCheck(true);
-                            }
-                            setPhone(phoneText);
-                        }}
-                        style={{color: Colors.white,}}
-                        rightIcon={
-                            <View style={{flexDirection: 'row'}}>
-                                { check ? (<Icon name="check" color={Colors.orange} size={24} />):
-                                    (<Icon name="clear" color={Colors.red} size={24} />)}
-                            </View>
-                        }
-                    />
-                </View>
-                <View style={{marginTop: 30,}}>
-                    <Text style={{color: Colors.white,marginLeft: 10,}}>密码</Text>
-                    <Input
-                        autoCompleteType={undefined}
-                        returnKeyType="done"
-                        underlineColorAndroid="transparent"
-                        placeholder="请输入密码"
-                        multiline={false}
-                        secureTextEntry={!show}
-                        value={passwordText || password}
-                        onChangeText={setPasswordText}
-                        onBlur={()=>{
-                            setPassword?.(passwordText);
-                        }}
-                        onFocus={()=>{
-                            if (!passwordText&&password){
-                                setPasswordText(password);
-                            }
-                        }}
-                        style={{color: Colors.white,}}
-                        rightIcon={
-                            <View style={{flexDirection: 'row'}}>
-                                {passwordText.length>0 && (
-                                    <TouchableOpacity
-                                        onPress={()=>setShow(!show)}
-                                    >
-                                        <Entypo name={show?"eye-with-line":"eye"} color={Colors.white} size={24} />
-                                    </TouchableOpacity>
-                                )}
-                                {passwordText.length === 0 && (<Icon name="clear" color={Colors.red} size={24} />)}
-                            </View>
-                        }
-                    />
-                </View>
-                <View
-                    style={{
-                        width: '100%',
-                        marginBottom: 15,
-                        alignItems: 'flex-end',
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={()=>{
-                            callIndex(1);
-                        }}
-                    >
-                        <Text style={{color: Colors.date}}>忘记密码?</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{margin: 15}}>
-                    <TouchableOpacity
-                        onPress={()=>{
-                            setLoading(true);
-                            if (!check && password) {
-                                Toast.show({
-                                    type: 'error',
-                                    text1: '账号密码长度不对!',
-                                });
-                                setLoading(false);
-                                return;
-                            }
-                            let username = phone;
-                            if (new RegExp(/^\+?[1-9][0-9]*$/).test(phone)){
-                                if (!phone.startsWith('+')){
-                                    username = `+86${phone}`;
-                                }
-                            }
-                            postRequest(NetWorkUtil.userLogin,{
-                                params: {
-                                    username: username,
-                                    password: md5.hex_md5(password),
-                                    deviceId: props.deviceId,
-                                    platform: props.platform,
-                                },
-                            }).then(({error,data}: any)=>{
-                                setLoading(false);
-                                if (!error){
-                                    const {nickname, token} = data;
-                                    Toast.show({
-                                        type: 'success',
-                                        text2: '欢迎回来！',
-                                        text1: nickname,
-                                    });
-                                    AsyncStorage.setItem('userToken',token).then(()=>navigation.goBack());
-                                }
-                            });
-                        }}
-                    >
-                        <View style={{
-                            backgroundColor: '#FF7031',
-                            width: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 30,
-                        }}>
-                            <Text style={{
-                                color: Colors.white,
-                                marginTop: 12,
-                                marginBottom: 12,
-                            }}>登录</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={()=>{}}
-                    >
-                        <View style={{
-                            marginTop: 30,
-                            // backgroundColor: '#FF7031',
-                            width: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 30,
-                        }}>
-                            <Text style={{
-                                color: Colors.date,
-                                marginTop: 12,
-                                marginBottom: 12,
-                            }}>注册</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-        </>
-    );
-};
-const SecondRoute = (props: {
-    codeId: string,
-    setCodeId: (v: string)=>void,
-    code: string,
-    setCode: (v: string)=>void,
-    countTimeRoot: number,
-    setCountTimeRoot: (v: number)=>void,
-} & TabViewRouteProps) => {
-    const {
-        callIndex,
-        setLoading,
-        navigation,
-        phone,
-        setPhone,
-        code,
-        setCode,
-        codeId,
-        setCodeId,
-        countTimeRoot,
-        setCountTimeRoot,
-    } = props;
-    const [phoneText,setPhoneText] = useState("");
-    const [codeText,setCodeText] = useState("");
-    // const [codeIdText,setCodeIdText] = useState("");
-    const [check,setCheck,] = useState(false);
-    const [countTime,setCountTime] = useState(0);
-    // if (countTime == 0&& countTimeRoot>0){
-    //     setCountTime(countTimeRoot);
-    // }
-    // if (countTimeRoot>0){
-    //     countDown({setCountTime:setCountTimeRoot,countTime:countTimeRoot});
-    // }
-    if (!phoneText&&phone){
-        setPhoneText(phone);
-    }
-    // if (!codeText&&code){
-    //     setCodeText(code);
-    // }
-    return (
-        <>
-            <View style={{flex: 1, backgroundColor: Colors.headerBackgroundColor,}}>
-                <View style={{marginTop: 30,}}>
-                    <Text style={{color: Colors.white,marginLeft: 10,}}>手机号</Text>
-                    <Input
-                        keyboardType="phone-pad"
-                        autoCompleteType={undefined}
-                        returnKeyType="next"
-                        underlineColorAndroid="transparent"
-                        placeholder="请输入11位手机号"
-                        multiline={false}
-                        value={phoneText||phone}
-                        onChangeText={setPhoneText}
-                        onFocus={()=>{
-                            if (!phoneText&&phone){
-                                setPhoneText(phone);
-                            }
-                        }}
-                        onBlur={()=>{
-                            setCheck(false);
-                            if (phoneText.length > 10){
-                                setCheck(true);
-                            }
-                            setPhone(phoneText);
-                        }}
-                        style={{color: Colors.white,}}
-                        rightIcon={
-                            <View style={{flexDirection: 'row'}}>
-                                {check ? (<Icon name="check" color={Colors.orange} size={24} />):
-                                    (<Icon name="clear" color={Colors.red} size={24} />)}
-                            </View>
-                        }
-                    />
-                </View>
-                <View style={{marginTop: 30,}}>
-                    <Text style={{color: Colors.white,marginLeft: 10,}}>验证码</Text>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            width: width - 90,
-                        }}
-                    >
-                        <Input
-                            keyboardType="number-pad"
-                            autoCompleteType={undefined}
-                            returnKeyType="done"
-                            underlineColorAndroid="transparent"
-                            placeholder="请输入短信验证码"
-                            multiline={false}
-                            value={codeText||code}
-                            onChangeText={setCodeText}
-                            onBlur={()=>{
-                                setCode(codeText);
-                            }}
-                            onFocus={()=>{
-                                if (code&&!codeText){
-                                    setCodeText(code);
-                                }
-                            }}
-                            style={{
-                                color: Colors.white,
-                            }}
-                            inputContainerStyle={{
-                                // width: '80%',
-                            }}
-                            containerStyle={{
-                                width: '70%',
-                                // backgroundColor: Colors.white,
-                            }}
-                            rightIcon={
-                                <View style={{flexDirection: 'row'}}>
-                                    {code ? (<Icon name="check" color={Colors.orange} size={24} />):
-                                        (<Icon name="clear" color={Colors.red} size={24} />)}
-                                </View>
-                            }
-                        />
-                        <View
-                            style={{
-                                backgroundColor: (countTime&&countTime > 0)?Colors.headerBackgroundColor:Colors.primary,
-                                borderRadius: 30,
-                                marginLeft: 9,
-                            }}
-                        >
-                            {countTime&&countTime > 0?(
-                                <Text
-                                    style={{
-                                        color:Colors.white,
-                                        margin: 6,
-                                    }}
-                                >
-                                    {/*等待中*/}
-                                    {"重新发送"+moment(new Date().setHours(0, 0, 0, 0)).add(countTime, 'second').format('mm:ss')}
-                                </Text>
-                            ):(
-                                <TouchableOpacity
-                                    onPress={()=>{
-                                        setPhone(phoneText);
-                                        if(phoneText.startsWith('+')){
-                                            sendCodeSms({
-                                                phone:phoneText||phone,
-                                                setCountTime,
-                                                setCodeId,
-                                            });
-                                        }else {
-                                            sendCodeSms({
-                                                phone:`+86${phoneText}`,
-                                                setCountTime,
-                                                setCodeId,
-                                            });
-                                        }
-                                    }}
-                                >
-                                    <Text style={{
-                                        color:Colors.white,
-                                        margin: 6,
-                                    }}>{
-                                        codeId ? "重新发送":"获取验证码"
-                                    }</Text>
-                                </TouchableOpacity>
-                            )
-                            }
-                        </View>
-                    </View>
-                </View>
-                <View
-                    style={{
-                        width: '100%',
-                        marginBottom: 15,
-                        alignItems: 'flex-end',
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={()=>{
-                            // const t1 =codeIdText;
-                            // const t2 =countTime;
-                            // setCodeId(codeIdText);
-                            // setCountTimeRoot(t2);
-                            callIndex(0);
-                        }}
-                    >
-                        <Text style={{color: Colors.date}}>密码登录?</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{margin: 15}}>
-                    <TouchableOpacity
-                        onPress={()=>{
-                            if (!codeId){
-                                Toast.show({
-                                    type: 'error',
-                                    text1: '请先发送验证码',
-                                });
-                                return;
-                            }
-                            if (!codeText){
-                                Toast.show({
-                                    type: 'error',
-                                    text1: '请输入验证码',
-                                });
-                                return;
-                            }
-                            setLoading(true);
-                            postRequest(NetWorkUtil.userLoginPhone,{
-                                params: {
-                                    code: codeText||code,
-                                    codeId: codeId,
-                                    deviceId: props.deviceId,
-                                    platform: props.platform,
-                                },
-                            }).then(({error,data}: any)=>{
-                                setLoading(false);
-                                if (!error){
-                                    const {nickname, token} = data;
-                                    Toast.show({
-                                        type: 'success',
-                                        text2: '欢迎回来！',
-                                        text1: nickname,
-                                    });
-                                    AsyncStorage.setItem('userToken',token).then(()=>navigation.goBack());
-                                }
-                            });
-                        }}
-                    >
-                        <View style={{
-                            backgroundColor: '#FF7031',
-                            width: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 30,
-                        }}>
-                            <Text style={{
-                                color: Colors.white,
-                                marginTop: 12,
-                                marginBottom: 12,
-                            }}>登录</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={()=>{}}
-                    >
-                        <View style={{
-                            marginTop: 30,
-                            // backgroundColor: '#FF7031',
-                            width: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 30,
-                        }}>
-                            <Text style={{
-                                color: Colors.date,
-                                marginTop: 12,
-                                marginBottom: 12,
-                            }}>注册</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-        </>
-    );
-};
-
 const bottomLine = (props: any) => {
     // props中传入的每个item宽度
     // const {itemWidth} = this.props;
@@ -511,6 +65,360 @@ const renderTabBar = (props: JSX.IntrinsicAttributes & SceneRendererProps & { na
         indicatorStyle={bottomLine(props)}
     />
 );
+export const Login = (props: ScreenProps) => {
+    const {navigation,route} = props;
+    const {params} = route;
+    const {login} = (params as any);
+    const [loading,setLoading,] = useState(false);
+    const [register,setRegister,] = useState(!login);
+    const [platform,setPlatform] = useState("");
+    const [deviceId,setDeviceId] = useState("");
+
+    const layout = useWindowDimensions();
+
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+        { key: 'first', title: '密码登录' },
+        { key: 'second', title: '验证码登录' },
+    ]);
+    RNToolsManager.getAppVersionPackage((event: { identifierForVendor: React.SetStateAction<string>; name: React.SetStateAction<string>; board: React.SetStateAction<string>; androidId: React.SetStateAction<string>; }) => {
+        // console.log(event);
+        if (Platform.OS === 'ios') {
+            // console.log(`IOS IFV:${event.deviceToken}\n ${JSON.stringify(event.utsname)}`);
+            setDeviceId(event.identifierForVendor);
+            setPlatform(event.name);
+        } else if (Platform.OS === 'android') {
+            // console.log(`androidId:${event.androidId}`);
+            setPlatform(event.board);
+            setDeviceId(event.androidId);
+        }
+    });
+    const [count,setCount] = useState(false);
+    const [checkPhone,setCheckPhone] = useState(false);
+    const [showPasswd,setShowPasswd] = useState(false);
+    const [showPasswd1,setShowPasswd1] = useState(false);
+    const [countTime,setCountTime] = useState(0);
+    const [phone,setPhone] = useState('');
+    const [password,setPassword] = useState('');
+    const [password1,setPassword1] = useState('');
+    const [code,setCode] = useState('');
+    const [codeId,setCodeId] = useState('');
+    if (countTime>0&&!count){
+        countDown({setCountTime,countTime});
+    }
+    return (
+        <View>
+            <ImageBackground source={require('../../assets/background/login.png')} imageStyle={styles.bkImage} >
+                <View style={styles.headerBox}>
+                    <Text style={[styles.headerText,{marginBottom: 35}]}>欢迎来到23AV！</Text>
+                    <Text style={[styles.headerText,{marginBottom: 9}]}>Hi</Text>
+                </View>
+                <View style={[styles.bodyBox,{height: layout.height - 200}]}>
+                    <View style={styles.container}>
+                        {register?(
+                            <View
+                                style={{
+                                    flex: 1,
+                                    width: '87%',
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        width: '100%',
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            color:Colors.white,
+                                            fontWeight: 'bold',
+                                            fontSize: 18,
+                                        }}
+                                    >注册</Text>
+                                </View>
+                                <View style={{marginTop: 15,}}>
+                                    <Text style={{color: Colors.white,marginLeft: 10,}}>手机号</Text>
+                                    <Input
+                                        keyboardType="phone-pad"
+                                        autoCompleteType={undefined}
+                                        returnKeyType="next"
+                                        underlineColorAndroid="transparent"
+                                        placeholder="请输入11位手机号"
+                                        multiline={false}
+                                        value={phone}
+                                        onChangeText={setPhone}
+                                        onFocus={()=>{}}
+                                        onBlur={()=>{
+                                            setCheckPhone(false);
+                                            if (phone.length > 10){
+                                                setCheckPhone(true);
+                                            }
+                                        }}
+                                        style={{color: Colors.white,}}
+                                        rightIcon={
+                                            <View style={{flexDirection: 'row'}}>
+                                                {checkPhone ? (<Icon name="check" color={Colors.orange} size={24} />):
+                                                    (<Icon name="clear" color={Colors.red} size={24} />)}
+                                            </View>
+                                        }
+                                    />
+                                </View>
+                                <View style={{marginTop: 15,}}>
+                                    <Text style={{color: Colors.white,marginLeft: 10,}}>验证码</Text>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            width: width - 90,
+                                        }}
+                                    >
+                                        <Input
+                                            keyboardType="number-pad"
+                                            autoCompleteType={undefined}
+                                            returnKeyType="done"
+                                            underlineColorAndroid="transparent"
+                                            placeholder="请输入短信验证码"
+                                            multiline={false}
+                                            value={code}
+                                            onChangeText={setCode}
+                                            onBlur={()=>{}}
+                                            onFocus={()=>{}}
+                                            style={{
+                                                color: Colors.white,
+                                            }}
+                                            inputContainerStyle={{
+                                                // width: '80%',
+                                            }}
+                                            containerStyle={{
+                                                width: '70%',
+                                                // backgroundColor: Colors.white,
+                                            }}
+                                            rightIcon={
+                                                <View style={{flexDirection: 'row'}}>
+                                                    {code.length===6 ? (<Icon name="check" color={Colors.orange} size={24} />):
+                                                        (<Icon name="clear" color={Colors.red} size={24} />)}
+                                                </View>
+                                            }
+                                        />
+                                        <View
+                                            style={{
+                                                backgroundColor: (countTime > 0)?Colors.headerBackgroundColor:Colors.primary,
+                                                borderRadius: 30,
+                                                marginLeft: 9,
+                                            }}
+                                        >
+                                            {countTime > 0?(
+                                                <Text
+                                                    style={{
+                                                        color:Colors.white,
+                                                        margin: 6,
+                                                    }}
+                                                >
+                                                    {"重新发送"+moment(new Date().setHours(0, 0, 0, 0)).add(countTime, 'second').format('mm:ss')}
+                                                </Text>
+                                            ):(
+                                                <TouchableOpacity
+                                                    onPress={()=>{
+                                                        let phoneNumber = phone;
+                                                        if(!phone.startsWith('+')){
+                                                            phoneNumber=`+86${phone}`;
+                                                        }
+                                                        sendCodeSms({
+                                                            phone: phoneNumber,
+                                                            setCountTime,
+                                                            setCodeId,
+                                                        });
+                                                        setCount(true);
+                                                    }}
+                                                >
+                                                    <Text style={{
+                                                        color:Colors.white,
+                                                        margin: 6,
+                                                    }}>{
+                                                        codeId ? "重新发送":"获取验证码"
+                                                    }</Text>
+                                                </TouchableOpacity>
+                                            )
+                                            }
+                                        </View>
+                                    </View>
+                                </View>
+                                <View style={{marginTop: 15,}}>
+                                    <Text style={{color: Colors.white,marginLeft: 10,}}>密码</Text>
+                                    <Input
+                                        autoCompleteType={undefined}
+                                        returnKeyType="done"
+                                        underlineColorAndroid="transparent"
+                                        placeholder="请输入密码"
+                                        multiline={false}
+                                        secureTextEntry={!showPasswd}
+                                        value={password}
+                                        onChangeText={setPassword}
+                                        onBlur={()=>{}}
+                                        onFocus={()=>{}}
+                                        style={{color: Colors.white,}}
+                                        rightIcon={
+                                            <View style={{flexDirection: 'row'}}>
+                                                {password.length>0 && (
+                                                    <TouchableOpacity
+                                                        onPress={()=>setShowPasswd(!showPasswd)}
+                                                    >
+                                                        <Entypo name={showPasswd?"eye-with-line":"eye"} color={Colors.white} size={24} />
+                                                    </TouchableOpacity>
+                                                )}
+                                                {password.length < 6 && (<Icon name="clear" color={Colors.red} size={24} />)}
+                                            </View>
+                                        }
+                                    />
+                                </View>
+                                <View style={{marginTop: 15,}}>
+                                    <Text style={{color: Colors.white,marginLeft: 10,}}>确认密码</Text>
+                                    <Input
+                                        autoCompleteType={undefined}
+                                        returnKeyType="done"
+                                        underlineColorAndroid="transparent"
+                                        placeholder="请再次确认密码"
+                                        multiline={false}
+                                        secureTextEntry={!showPasswd1}
+                                        value={password1}
+                                        onChangeText={setPassword1}
+                                        onBlur={()=>{}}
+                                        onFocus={()=>{}}
+                                        style={{color: Colors.white,}}
+                                        rightIcon={
+                                            <View style={{flexDirection: 'row'}}>
+                                                {password.length>0 && (
+                                                    <TouchableOpacity
+                                                        onPress={()=>setShowPasswd1(!showPasswd1)}
+                                                    >
+                                                        <Entypo name={showPasswd1?"eye-with-line":"eye"} color={Colors.white} size={24} />
+                                                    </TouchableOpacity>
+                                                )}
+                                                {password1 !== password && (<Icon name="clear" color={Colors.red} size={24} />)}
+                                            </View>
+                                        }
+                                    />
+                                </View>
+                                <View style={{margin: 15}}>
+                                    <TouchableOpacity
+                                        onPress={()=>{
+                                            if (!codeId){
+                                                Toast.show({
+                                                    type: 'error',
+                                                    text1: '请先发送验证码',
+                                                });
+                                                return;
+                                            }
+                                            if (!code){
+                                                Toast.show({
+                                                    type: 'error',
+                                                    text1: '请输入验证码',
+                                                });
+                                                return;
+                                            }
+                                            setLoading(true);
+                                            postRequest(NetWorkUtil.register,{
+                                                params: {
+                                                    code: code,
+                                                    codeId: codeId,
+                                                    password: md5.hex_md5(password),
+                                                },
+                                            }).then(({error,data}: any)=>{
+                                                setLoading(false);
+                                                if (!error){
+                                                    console.log(data);
+                                                    const {nickname, token} = data;
+                                                    Toast.show({
+                                                        type: 'success',
+                                                        text1: `${nickname} 注册成功！`,
+                                                        text2: `欢迎新用户【${phone}】加入春潮视频社区`,
+                                                    });
+                                                    AsyncStorage.setItem('userToken',token).then(()=>navigation.goBack());
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        <View style={{
+                                            backgroundColor: '#FF7031',
+                                            width: '100%',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: 30,
+                                        }}>
+                                            <Text style={{
+                                                color: Colors.white,
+                                                marginTop: 12,
+                                                marginBottom: 12,
+                                            }}>注册并登录</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={()=>{
+                                            setRegister(false);
+                                        }}
+                                    >
+                                        <View style={{
+                                            marginTop: 30,
+                                            // backgroundColor: '#FF7031',
+                                            width: '100%',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: 30,
+                                        }}>
+                                            <Text style={{
+                                                color: Colors.date,
+                                                marginTop: 12,
+                                                marginBottom: 12,
+                                            }}>已有账号?</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        ):(
+                            <TabView
+                                style={[styles.tabView,{ width: layout.width - 60 }]}
+                                navigationState={{ index, routes }}
+                                renderScene={SceneMap({
+                                    first: ()=>FirstRoute({
+                                        ...props,
+                                        setIndex,
+                                        setLoading,
+                                        deviceId,
+                                        platform,
+                                        setRegister:()=>setRegister(true),
+                                    }),
+                                    second: ()=>SecondRoute({
+                                        ...props,
+                                        setIndex,
+                                        setLoading,
+                                        deviceId,
+                                        platform,
+                                        setRegister:()=>setRegister(true),
+                                    }),
+                                })}
+                                renderTabBar={renderTabBar}
+                                onIndexChange={setIndex}
+                                // initialLayout={{ width: layout.width - 65, height: layout.height-333 }}
+                                // tabBarPosition='bottom'
+                            />
+                        )}
+                    </View>
+                </View>
+            </ImageBackground>
+            <View style={styles.maskBox}>
+                <Icon
+                    name="arrow-back"
+                    size={25}
+                    color={Colors.white}
+                    style={styles.maskBack}
+                    onPress={() => navigation.goBack()}
+                />
+            </View>
+            <MaskLoading refreshing={loading} />
+        </View>
+    );
+};
 const countDown = ({setCountTime,countTime=-1}:{setCountTime:(v:number)=>void,countTime?: number})=>{
     if (countTime===-1){
         countTime = 120;
@@ -537,111 +445,18 @@ const sendCodeSms = ({phone,setCountTime, setCodeId,}: {
         });
         return;
     }
-    fetchRequest(NetWorkUtil.userLoginSms.replace('{phone}',phone),{}).then((data: any) => {
+    fetchRequest(NetWorkUtil.registerSms.replace('{phone}',phone),{}).then((data: any) => {
         // console.log(data);
         const { id } = data;
         setCodeId(id);
         countDown({setCountTime});
         Toast.show({
             type: 'success',
-            text2: '发送验证码！',
+            text2: '注册验证码！',
             text1: '验证码已成功发送',
         });
     });
 }
-export const Login = (props: ScreenProps) => {
-    const {navigation} = props;
-    const [loading,setLoading,] = useState(false);
-    const [platform,setPlatform] = useState("");
-    const [deviceId,setDeviceId] = useState("");
-    const [phone,setPhone] = useState("");
-    const [password,setPassword] = useState("");
-    const [code,setCode] = useState("");
-    const [codeId,setCodeId] = useState("");
-    const [countTime,setCountTime] = useState(0);
-
-    const layout = useWindowDimensions();
-
-    const [index, setIndex] = React.useState(0);
-    const [routes] = React.useState([
-        { key: 'first', title: '密码登录' },
-        { key: 'second', title: '验证码登录' },
-    ]);
-    RNToolsManager.getAppVersionPackage((event: { identifierForVendor: React.SetStateAction<string>; name: React.SetStateAction<string>; board: React.SetStateAction<string>; androidId: React.SetStateAction<string>; }) => {
-        // console.log(event);
-        if (Platform.OS === 'ios') {
-            // console.log(`IOS IFV:${event.deviceToken}\n ${JSON.stringify(event.utsname)}`);
-            setDeviceId(event.identifierForVendor);
-            setPlatform(event.name);
-        } else if (Platform.OS === 'android') {
-            // console.log(`androidId:${event.androidId}`);
-            setPlatform(event.board);
-            setDeviceId(event.androidId);
-        }
-    });
-    return (
-        <View>
-            <ImageBackground source={require('../../assets/background/login.png')} imageStyle={styles.bkImage} >
-                <View style={styles.headerBox}>
-                    <Text style={[styles.headerText,{marginBottom: 35}]}>欢迎来到23AV！</Text>
-                    <Text style={[styles.headerText,{marginBottom: 9}]}>Hi</Text>
-                </View>
-                <View style={[styles.bodyBox,{height: layout.height - 200}]}>
-                    <View style={styles.container}>
-                        <TabView
-                            style={[styles.tabView,{ width: layout.width - 60 }]}
-                            navigationState={{ index, routes }}
-                            renderScene={SceneMap({
-                                first: ()=>FirstRoute({
-                                    ...props,
-                                    callIndex: setIndex,
-                                    loading,
-                                    setLoading,
-                                    deviceId,
-                                    platform,
-                                    phone,
-                                    setPhone,
-                                    password,
-                                    setPassword,
-                                }),
-                                second: ()=>SecondRoute({
-                                    ...props,
-                                    callIndex: setIndex,
-                                    loading,
-                                    setLoading,
-                                    deviceId,
-                                    platform,
-                                    phone,
-                                    setPhone,
-                                    code,
-                                    setCode,
-                                    codeId,
-                                    setCodeId,
-                                    countTimeRoot: countTime,
-                                    setCountTimeRoot: setCountTime,
-                                }),
-                            })}
-                            renderTabBar={renderTabBar}
-                            onIndexChange={setIndex}
-                            // initialLayout={{ width: layout.width - 65, height: layout.height-333 }}
-                            // tabBarPosition='bottom'
-                        />
-                    </View>
-                </View>
-            </ImageBackground>
-            <View style={styles.maskBox}>
-                <Icon
-                    name="arrow-back"
-                    size={25}
-                    color={Colors.white}
-                    style={styles.maskBack}
-                    onPress={() => navigation.goBack()}
-                />
-            </View>
-            <MaskLoading refreshing={loading} />
-        </View>
-    );
-};
 const styles = StyleSheet.create({
     bkImage: {
         width: '100%',

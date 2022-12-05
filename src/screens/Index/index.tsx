@@ -14,12 +14,10 @@ import NetworkError from '../../components/shared/NetworkError';
 import Colors from '../../constants/Colors';
 import NetWorkUtil from '../../utils/NetWorkUtil';
 import icons from '../../assets/icons';
-import User from '../../data/User';
 import {IndexSwiper} from '../../components/IndexSwiper';
 import {ConcentrationsBox} from './components/ConcentrationsBox';
 import {MaskLoading} from '../../components/MaskLoading';
 import fetchRequest from "../../utils/fetchRequest";
-const user = new User();
 var {width} = Dimensions.get('window');
 export const IndexScreen = ({navigation}:{navigation: any}) => {
     const url = NetWorkUtil.videoConcentrations;

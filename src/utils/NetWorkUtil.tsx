@@ -11,5 +11,7 @@ const NetWorkUtil = {
   userLoginSms: '/api/user/login/sms/{phone}',
   userLogin: '/api/user/login',
   checkDevice: '/api/device/check/{deviceId}',
+  registerSms: '/api/user/register/sms/{phone}',
+  register: '/api/user/register',
 };
 export default NetWorkUtil;
