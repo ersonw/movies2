@@ -374,8 +374,8 @@ PODS:
   - React-jsinspector (0.70.2)
   - React-logger (0.70.2):
     - glog
-  - react-native-orientation (3.1.3):
-    - React
+  - react-native-orientation-locker (1.5.0):
+    - React-Core
   - react-native-pager-view (6.1.2):
     - React-Core
   - react-native-rtmp-publisher (0.3.0):
@@ -392,10 +392,10 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-webrtc (106.0.0-beta.7):
+  - react-native-webrtc (106.0.0-beta.6):
     - JitsiWebRTC (~> 106.0.0)
     - React-Core
-  - react-native-webview (11.25.0):
+  - react-native-webview (11.23.1):
     - React-Core
   - React-perflogger (0.70.2)
   - React-RCTActionSheet (0.70.2):
@@ -474,7 +474,7 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.6.0):
+  - RNSVG (13.5.0):
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
@@ -562,7 +562,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-orientation (from `../node_modules/react-native-orientation`)
+  - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-rtmp-publisher (from `../node_modules/react-native-rtmp-publisher`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -711,8 +711,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-orientation:
-    :path: "../node_modules/react-native-orientation"
+  react-native-orientation-locker:
+    :path: "../node_modules/react-native-orientation-locker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-rtmp-publisher:
@@ -836,13 +836,13 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 53bd208e5c27939c6e6365528393445a596a9a2b
   React-jsinspector: 26c42646ab0bb69e29e837e23754fe7121eeaf94
   React-logger: 1bfd109a0ffa4c0989bbfac0c2d8c4abe4637faa
-  react-native-orientation: f1caf84d65f1a4fd4511a18f2b924e634ad7a628
+  react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
   react-native-rtmp-publisher: 347fab66825ec479b7b320238b096b3f331b9fd8
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-webrtc: f73459325441d15812f86071bdbd0bf3376235d1
-  react-native-webview: a71da846ed2e9085440e1d6659c04e285528834b
+  react-native-webrtc: 7fa7ce024a684215693fddc880ad3983dd824f93
+  react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
   React-perflogger: 6009895616a455781293950bbd63d53cfc7ffbc5
   React-RCTActionSheet: 5e90aa5712af18bfc86c2c6d97d4dbe0e5451c1d
   React-RCTAnimation: 50c44d6501f8bfb2fe885e544501f8798b4ff3d6
@@ -860,7 +860,7 @@ SPEC CHECKSUMS:
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSVG: 3a79c0c4992213e4f06c08e62730c5e7b9e4dc17
+  RNSVG: 38ca962c970dbce1ca38991a5aebf26d163f9efb
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNVideoEditorSDK: 9c2192037fe78b4d6f865f3f517260e27aebdf5a
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
@@ -871,4 +871,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 030015de6179d74d75a9c84dd2c81ce02d06cd74
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

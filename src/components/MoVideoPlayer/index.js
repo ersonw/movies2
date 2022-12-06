@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import Video from 'react-native-video';
 import Slider from 'react-native-sliders';
-import Orientation from 'react-native-orientation';
+import Orientation from 'react-native-orientation-locker';
 import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Toast from 'react-native-toast-message';
@@ -1066,7 +1066,7 @@ const MoVideoPlayer = (props) => {
                         }}
                         // fullscreenOrientation='all'
                       //  {...(Platform.OS === 'android') && {fullscreen:isVideoFullScreen}}
-                        fullscreen={isVideoFullScreen}
+                      //   fullscreen={isVideoFullScreen}
                         onFullscreenPlayerWillPresent={()=>{
                             // console.log(`onFullscreenPlayerWillPresent`);
                             // setIsVideoFullScreen(true);
