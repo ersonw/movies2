@@ -45,6 +45,7 @@ export const IndexScreen = ({navigation}:{navigation: any}) => {
                     onRefresh={() => onRefresh(url)}
                 />
             }
+            // scrollEnabled={false}
         >
             <View style={styles.course}>
                 <IndexSwiper

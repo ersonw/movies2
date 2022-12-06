@@ -12,7 +12,7 @@ import {Concentrations} from "../screens/Index/Concentrations";
 import {Applet} from "../screens/Index/Applet";
 import * as React from "react";
 import CardOption from "../components/CardOption";
-import myVideoPlayer from "../screens/Index/myVideoPlayer";
+import MyVideoPlayer from "../screens/Index/MyVideoPlayer";
 import {Login} from "../screens/Login";
 
 const RootStack = createNativeStackNavigator();
@@ -27,9 +27,9 @@ const RootStackScreen = () => {
                     //   headerStyle: {
                     //       backgroundColor: Colors.backgroundColor,
                     //   },
-                    statusBarStyle: 'light',
-                    statusBarColor: Colors.backgroundColor,
-                    statusBarHidden: false,
+                    // statusBarStyle: 'light',
+                    // statusBarColor: Colors.backgroundColor,
+                    // statusBarHidden: false,
                     // statusBarAnimation: 'none',
                     // statusBarTranslucent: true,
                 }}>
@@ -39,9 +39,9 @@ const RootStackScreen = () => {
                         // @ts-ignore
                         options={(props) => ({
                             ...CardOption(props),
-                            statusBarHidden: false,
-                            statusBarStyle: 'light',
-                            statusBarColor: Colors.backgroundColor,
+                            // statusBarHidden: false,
+                            // statusBarStyle: 'light',
+                            // statusBarColor: Colors.backgroundColor,
                             headerShown: true,
                         })}
                         name="concentrations"
@@ -51,9 +51,9 @@ const RootStackScreen = () => {
                         // @ts-ignore
                         options={(props) => ({
                             ...CardOption(props),
-                            statusBarHidden: false,
-                            statusBarStyle: 'light',
-                            statusBarColor: Colors.backgroundColor,
+                            // statusBarHidden: false,
+                            // statusBarStyle: 'light',
+                            // statusBarColor: Colors.backgroundColor,
                             headerShown: true,
                         })}
                         name="applet"
@@ -65,7 +65,7 @@ const RootStackScreen = () => {
                             ...CardOption(props),
                         })}
                         name="myVideoPlayer"
-                        component={myVideoPlayer}
+                        component={MyVideoPlayer}
                     />
                     <RootStack.Screen
                         // @ts-ignore

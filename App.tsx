@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet, Text, View, ImageBackground, Platform} from 'react-native';
+import {Dimensions, StyleSheet, Text, View, ImageBackground, Platform, StatusBar} from 'react-native';
 import CodePush from 'react-native-code-push';
 import RootStackScreen from './src/navigation/RootStackScreen';
 // @ts-ignore
@@ -12,7 +12,7 @@ import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-community/async-storage";
 import fetchRequest from "./src/utils/fetchRequest";
 import NetWorkUtil from "./src/utils/NetWorkUtil";
-
+import Colors from "./src/constants/Colors";
 //定义全局的变量,进行更好的适配
 // var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
@@ -75,6 +75,8 @@ class App extends Component {
     }
     checkDeviceToken(token: any){}
     componentDidMount() {
+        StatusBar.setBarStyle('light-content');
+        StatusBar.setBackgroundColor(Colors.headerBackgroundColor);
         RNToolsManager.disableIdleTimer();
         RNToolsManager.getAppVersionPackage(async(event: { deviceToken: any;identifierForVendor: any; androidId: any; }) => {
             // console.log(event);

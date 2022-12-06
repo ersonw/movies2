@@ -3,6 +3,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "Orientation.h"
 
 #import <React/RCTAppSetupUtils.h>
 #import <CodePush/CodePush.h>
@@ -28,7 +29,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #endif
 
 @implementation AppDelegate
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   RCTAppSetupPrepareApp(application);
@@ -62,6 +62,9 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [self.window makeKeyAndVisible];
   [self registerRemoteNotifications: application];
   return YES;
+}
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
 }
 - (void)registerRemoteNotifications:(UIApplication *)application {
     

@@ -6,18 +6,20 @@ import {
     ActivityIndicator,
     TouchableWithoutFeedback,
     Platform,
-    ViewPropTypes,
     AppState,
     Dimensions,
     StatusBar,
     BackHandler,
     Image,
     FlatList,
-    ImageBackground,
+    ImageBackground, Alert,
 } from 'react-native';
 import Video from 'react-native-video';
 import Slider from 'react-native-sliders';
 import Orientation from 'react-native-orientation';
+import Colors from '../../constants/Colors';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Toast from 'react-native-toast-message';
 
 
 const MoVideoPlayer = (props) => {
@@ -36,11 +38,16 @@ const MoVideoPlayer = (props) => {
         showFullScreenButton = true,
         showSettingButton = true,
         showMuteButton = true,
+        children,
+        callback,
+        change,
     } = props;
-
+    props.children = undefined;
+    // props.style = undefined;
     const videoRef = useRef(null);
     const [isPaused, setIsPaused] = useState(!autoPlay);
     const [isMuted, setIsMuted] = useState(false);
+    const [isLoad, setIsLoad] = useState(false);
     const [isVideoSeeked, setIsVideoSeeked] = useState(false);
     const [isVideoFocused, setIsVideoFocused] = useState(true);
     const [isShowVideoCurrentDuration, setIsShowVideoCurrentDuration] = useState(false);
@@ -61,15 +68,24 @@ const MoVideoPlayer = (props) => {
     const [playlistSelectedVideo, setPlaylistSelectedVideo] = useState(null);
     const [dimension, setDimension] = useState(Dimensions.get('window'));
 
-    const portraitStyle = {alignSelf: 'center', height: 200, width: 330, ...style};
-    const landScapeStyle = {alignSelf: 'center', height: dimension.height, width: dimension.width};
+    let portraitStyle = {alignSelf: 'center', height: 200, width: 330, ...style,};
+    if (Platform.OS==='ios'){
+        portraitStyle = {...portraitStyle,marginTop: 45,};
+    }
+    let landScapeStyle = {alignSelf: 'center', height: dimension.height, width: dimension.width};
+    if (Platform.OS==='ios'){
+        landScapeStyle = {
+            ...landScapeStyle,
+            width: dimension.width-30,
+            height: dimension.height-15,
+        };
+    }
     const videoStyle = isVideoFullScreen ? landScapeStyle : portraitStyle;
-
 
     useEffect(() => {
         const dimensionSubscriber = Dimensions.addEventListener('change', ({window, screen}) => {
             setDimension(window);
-            setIsVideoFullScreen(window.width > window.height);
+            // setIsVideoFullScreen(window.width > window.height);
         });
 
         const backHandlerSubscriber = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -81,7 +97,19 @@ const MoVideoPlayer = (props) => {
                 return false;
             }
         });
-
+        console.log(`isVideoFullScreen: ${isVideoFullScreen}`);
+        Orientation.unlockAllOrientations();
+        if (!isVideoFullScreen) {
+            Orientation.lockToPortrait();
+        } else {
+            Orientation.lockToLandscapeLeft();
+        }
+        StatusBar.setHidden(isVideoFullScreen);
+        // Platform.OS === 'android' && StatusBar.setHidden(isVideoFullScreen);
+        // Platform.OS === 'ios' && StatusBar.setBarStyle();
+        // setIsVideoFullScreen(isVideoFullScreen);
+        // setIsPaused(true);
+        // setIsPaused(false);
         return () => {
             dimensionSubscriber.remove();
             backHandlerSubscriber.remove();
@@ -90,20 +118,30 @@ const MoVideoPlayer = (props) => {
 
     useEffect(() => {
         const appStateSubscriber = AppState.addEventListener('change', (state) => {
-            console.log('APP STATE CHANGE IS ', state);
-            if (playInBackground && isPaused === false) {
+            // console.log('APP STATE CHANGE IS ', state);
+            if(state === 'background' || state === 'inactive'){
+                if (playInBackground && isPaused === false) {
+                    setIsPaused(false);
+                } else {
+                    setIsPaused(true);
+                }
+            }else {
                 setIsPaused(false);
-            } else {
-                setIsPaused(true);
             }
         });
-
+        console.log(`isPaused: ${isPaused}`);
         return () => {
             appStateSubscriber.remove();
         };
     }, [isPaused]);
-
-
+    Orientation.addOrientationListener(orientation => {
+        // console.log(orientation);
+        if (orientation === 'LANDSCAPE') {
+            setIsVideoFullScreen(true);
+        } else {
+            setIsVideoFullScreen(false);
+        }
+    });
     const videoHeaders = () => (
         <View style={{
             paddingHorizontal: 10,
@@ -118,6 +156,18 @@ const MoVideoPlayer = (props) => {
             justifyContent: 'space-between',
             zIndex: 100000,
         }}>
+            <Icon
+                name="arrow-back"
+                size={25}
+                color={Colors.white}
+                onPress={() => {
+                    if (isVideoFullScreen){
+                        setIsVideoFullScreen(false);
+                    }else {
+                        callback?.();
+                    }
+                }}
+            />
             <Text numberOfLines={1} style={{
                 color: 'white',
                 fontSize: 12,
@@ -128,13 +178,15 @@ const MoVideoPlayer = (props) => {
                 {showFullScreenButton &&
                     <TouchableOpacity
                         onPress={() => {
-                            if (isVideoFullScreen) {
-                                Platform.OS === 'android' && StatusBar.setHidden(false);
-                                Orientation.lockToPortrait();
-                            } else {
-                                Platform.OS === 'android' && StatusBar.setHidden(true);
-                                Orientation.lockToLandscapeLeft();
-                            }
+                            // Orientation.unlockAllOrientations();
+                            // if (isVideoFullScreen) {
+                            //     Platform.OS === 'android' && StatusBar.setHidden(false);
+                            //     Orientation.lockToPortrait();
+                            // } else {
+                            //     Platform.OS === 'android' && StatusBar.setHidden(true);
+                            //     Orientation.lockToLandscapeLeft();
+                            // }
+                            setIsVideoFullScreen(!isVideoFullScreen);
                         }}
                     >
                         <Image
@@ -196,7 +248,6 @@ const MoVideoPlayer = (props) => {
             </View>
         </View>
     );
-
     const videoFooter = () => (
         <View style={{
             paddingHorizontal: 10,
@@ -947,77 +998,115 @@ const MoVideoPlayer = (props) => {
 
 
     return (
-        <TouchableWithoutFeedback
-            onPress={() => {
-                // console.log('TOUCH')
-                setIsVideoFocused(!isVideoFocused);
-            }}
-        >
-            <View style={videoStyle}>
-                <Video
-                    {...props}
-                    style={{flex: 1}}
-                    posterResizeMode="cover"
-                    resizeMode="cover"
-                    bufferConfig={{
-                        minBufferMs: 1000 * 60,
-                        bufferForPlaybackMs: 1000 * 60,
-                        bufferForPlaybackAfterRebufferMs: 1000 * 60,
-                    }}
-                    ref={videoRef}
-                    source={playlistSelectedVideo ? {uri: playlistSelectedVideo.url} : source}
-                    paused={isPaused}
-                    muted={isMuted}
-                    rate={videoRate}
-                    selectedVideoTrack={{
-                        type: 'resolution',
-                        value: videoQuality,
-                    }}
-                    volume={videoSound}
-                    playInBackground={playInBackground}
-                    onLoad={videoData => {
-                        setVideoDuration(videoData.duration);
-                        setIsVErrorInLoadVideo(false);
-                    }}
-                    onProgress={(videoData) => {
-                        setCurrentVideoDuration(videoData.currentTime);
-                        props.onProgress && props.onProgress(videoData.currentTime);
-                    }}
-                    /*onSeek={()=>{
-                      if(Platform.OS=='android'){
-                        setIsVideoSeeked(true)
-                      }
-                    }}
-                    onReadyForDisplay={()=>{
-                      console.log("onReadyForDisplay")
-                      setIsVideoSeeked(false)
-                      setIsVErrorInLoadVideo(false)
-                    }}*/
-                    onError={(videoData) => setIsVErrorInLoadVideo(true)}
-                    onEnd={() => {
-                        console.log('on end');
-                        setIsVideoEnd(true);
-                        setIsPaused(true);
-                        if (playList.length > 0) {
-                            setIsShowVideoPlaylist(true);
-                        }
-                    }}
-                />
-                {(currentVideoDuration === 0 && poster) && videoPosterView()}
-                {(isVideoFocused && showHeader) && videoHeaders()}
-                {(isVideoFocused && showSeeking10SecondsButton && !isErrorInLoadVideo) && videoSeekingIncreaseButton()}
-                {(isVideoFocused && showSeeking10SecondsButton && !isErrorInLoadVideo) && videoSeekingDecreaseButton()}
-                {isVideoFocused && videoFooter()}
-                {isShowSettingsBottomSheet && videoSettingsView()}
-                {isShowVideoRateSettings && videoRateSettingView()}
-                {isShowVideoSoundSettings && videoSoundView()}
-                {isShowVideoQualitiesSettings && videoQualitiesSettingView()}
-                {isVideoSeeked && videoSeekedLoader()}
-                {isErrorInLoadVideo && videoErrorView()}
-                {(playList.length > 0 && isShowVideoPlaylist) && videoPlaylistView()}
-                {isVideoCovered && videoCoverView()}
-            </View>
-        </TouchableWithoutFeedback>
+        <>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    // console.log('TOUCH')
+                    setIsVideoFocused(!isVideoFocused);
+                }}
+            >
+                <View
+                    style={[
+                        videoStyle,
+                        // {...(Platform.OS==='ios'&&isVideoFullScreen)&&{
+                        //         width: '100%',
+                        //         height: '100%',
+                        //     }}
+                    ]}
+                >
+                    <Video
+                        {...props}
+                        style={{
+                            flex: 1,
+                        }}
+                        posterResizeMode="cover"
+                        resizeMode="cover"
+                        bufferConfig={{
+                            minBufferMs: 1000 * 60,
+                            bufferForPlaybackMs: 1000 * 60,
+                            bufferForPlaybackAfterRebufferMs: 1000 * 60,
+                        }}
+                        ref={videoRef}
+                        source={playlistSelectedVideo ? {uri: playlistSelectedVideo.url} : source}
+                        paused={isPaused}
+                        muted={isMuted}
+                        rate={videoRate}
+                        selectedVideoTrack={{
+                            type: 'resolution',
+                            value: videoQuality,
+                        }}
+                        volume={videoSound}
+                        playInBackground={playInBackground}
+                        onLoad={videoData => {
+                            setVideoDuration(videoData.duration);
+                            setIsVErrorInLoadVideo(false);
+                        }}
+                        onProgress={(videoData) => {
+                            setCurrentVideoDuration(videoData.currentTime);
+                            props.onProgress && props.onProgress(videoData.currentTime);
+                        }}
+                        /*onSeek={()=>{
+                          if(Platform.OS=='android'){
+                            setIsVideoSeeked(true)
+                          }
+                        }}*/
+                        onVideoLoadStart={()=>{
+                            console.log('onVideoLoadStart');
+                            // setIsLoad(true);
+                        }}
+                        onVideoLoad={()=>{
+                            console.log('onVideoLoad');
+                            // setIsLoad(true);
+                        }}
+                        onReadyForDisplay={() => {
+                            // console.log('onReadyForDisplay');
+                            // setIsVideoSeeked(false);
+                            // setIsVErrorInLoadVideo(false);
+                            setIsLoad(false);
+                        }}
+                        // fullscreenOrientation='all'
+                      //  {...(Platform.OS === 'android') && {fullscreen:isVideoFullScreen}}
+                        fullscreen={isVideoFullScreen}
+                        onFullscreenPlayerWillPresent={()=>{
+                            // console.log(`onFullscreenPlayerWillPresent`);
+                            // setIsVideoFullScreen(true);
+                        }}
+                        onFullscreenPlayerWillDismiss={()=>{
+                            console.log(`onFullscreenPlayerWillDismiss`);
+                            setIsPaused(false);
+                            setIsVideoFullScreen(false);
+                            // setIsVideoFullScreen(false);
+                        }}
+                      //   fullscreenAutorotate={isVideoFullScreen}
+                        onError={(videoData) => setIsVErrorInLoadVideo(true)}
+                        onEnd={() => {
+                            console.log('on end');
+                            setIsVideoEnd(true);
+                            setIsPaused(true);
+                            if (playList.length > 0) {
+                                setIsShowVideoPlaylist(true);
+                            }
+                        }}
+                    />
+                    {(currentVideoDuration === 0 && poster) && videoPosterView()}
+                    {isLoad && videoPosterView()}
+                    {(isVideoFocused && showHeader) && videoHeaders()}
+                    {(isVideoFocused && showSeeking10SecondsButton && !isErrorInLoadVideo) && videoSeekingIncreaseButton()}
+                    {(isVideoFocused && showSeeking10SecondsButton && !isErrorInLoadVideo) && videoSeekingDecreaseButton()}
+                    {isVideoFocused && videoFooter()}
+                    {isShowSettingsBottomSheet && videoSettingsView()}
+                    {isShowVideoRateSettings && videoRateSettingView()}
+                    {isShowVideoSoundSettings && videoSoundView()}
+                    {isShowVideoQualitiesSettings && videoQualitiesSettingView()}
+                    {isVideoSeeked && videoSeekedLoader()}
+                    {isErrorInLoadVideo && videoErrorView()}
+                    {(playList.length > 0 && isShowVideoPlaylist) && videoPlaylistView()}
+                    {isVideoCovered && videoCoverView()}
+
+                </View>
+            </TouchableWithoutFeedback>
+            {(!isVideoFullScreen && children) && children}
+        </>
     );
 };
 

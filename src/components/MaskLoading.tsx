@@ -6,12 +6,12 @@ import {
 import * as React from "react";
 import Colors from '../constants/Colors';
 
-export const MaskLoading = ({refreshing}: {refreshing: boolean}) => {
+export const MaskLoading = ({refreshing,backgroundColor='rgba(26,26,26,0.15)'}: {refreshing: boolean,backgroundColor?: string}) => {
     if (!refreshing){
         return <></>;
     }
     return (
-        <View style={styles.loadingBox}>
+        <View style={[styles.loadingBox,{backgroundColor}]}>
             <ActivityIndicator size="large" color={Colors.white} style={styles.ActivityIndicatorStyle}/>
         </View>
     );
