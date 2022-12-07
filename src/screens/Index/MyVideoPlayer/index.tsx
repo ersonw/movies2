@@ -23,9 +23,9 @@ const MyVideoPlayer = (props: ScreenProps)=>{
     if (error) {
         return <NetworkError onReload={() => onReload(url)} text='网络错误，请点击' buttonTitle='重新加载'/>;
     }
-    if (loading){
-        return <MaskLoading refreshing={loading} backgroundColor={Colors.headerBackgroundColor} />
-    }
+    // if (loading){
+    //     return <MaskLoading refreshing={loading} backgroundColor={Colors.headerBackgroundColor} />
+    // }
     const {player} = data;
     // console.log(player);
     return (
@@ -36,45 +36,36 @@ const MyVideoPlayer = (props: ScreenProps)=>{
                    // {...((Platform.OS) === 'android'&&{marginTop: 0})}
                 ]}
             >
-                <MoVideoPlayer
-                    autoPlay={true}
-                    source={{uri: player.vodPlayUrl}}
-                    poster={player.picThumb}
-                    playInBackground={false}
-                    title={player.title}
-                    style={{width: width,height: height / 3}}
-                    showHeader={true}
-                    showSeeking10SecondsButton={true}
-                    showCoverButton={true}
-                    showFullScreenButton={true}
-                    showSettingButton={true}
-                    showMuteButton={true}
-                    onReadyForDisplay={()=>{
-                    }}
-                    onProgress={(e:number)=>{
-                        // if (player.trial > 0 && e > player.trial){
-                        //     setPlay(false);
-                        // }
-                    }}
-                    callback={()=>{
-                        navigation.goBack();
-                    }}
-                >
-                    <Text style={{color: Colors.white}}>TEST</Text>
-                </MoVideoPlayer>
+                { !loading && (
+                    <MoVideoPlayer
+                        autoPlay={true}
+                        source={{uri: player.vodPlayUrl}}
+                        poster={player.picThumb}
+                        playInBackground={false}
+                        title={player.title}
+                        style={{width: width,height: height / 3}}
+                        showHeader={true}
+                        showSeeking10SecondsButton={true}
+                        showCoverButton={true}
+                        showFullScreenButton={true}
+                        showSettingButton={true}
+                        showMuteButton={true}
+                        onReadyForDisplay={()=>{
+                        }}
+                        onProgress={(e:number)=>{
+                            // if (player.trial > 0 && e > player.trial){
+                            //     setPlay(false);
+                            // }
+                        }}
+                        callback={()=>{
+                            navigation.goBack();
+                        }}
+                    >
+                        <Text style={{color: Colors.white}}>TEST</Text>
+                    </MoVideoPlayer>
+                )}
             </View>
-            {/*<View style={styles.maskBox}>*/}
-            {/*    <Icon*/}
-            {/*        name="arrow-back"*/}
-            {/*        size={25}*/}
-            {/*        color={Colors.white}*/}
-            {/*        style={[*/}
-            {/*            styles.maskBack,*/}
-            {/*            {...((Platform.OS) === 'android'&&{marginTop: 0})}*/}
-            {/*        ]}*/}
-            {/*        onPress={() => navigation.goBack()}*/}
-            {/*    />*/}
-            {/*</View>*/}
+            <MaskLoading refreshing={loading} />
         </View>
     );
 };

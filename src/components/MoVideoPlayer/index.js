@@ -90,14 +90,15 @@ const MoVideoPlayer = (props) => {
 
         const backHandlerSubscriber = BackHandler.addEventListener('hardwareBackPress', () => {
             if (isVideoFullScreen) {
-                Orientation.lockToPortrait();
-                Platform.OS === 'android' && StatusBar.setHidden(false);
+                setIsVideoFullScreen(false);
+                // Orientation.lockToPortrait();
+                // Platform.OS === 'android' && StatusBar.setHidden(false);
                 return true;
             } else {
                 return false;
             }
         });
-        console.log(`isVideoFullScreen: ${isVideoFullScreen}`);
+        // console.log(`isVideoFullScreen: ${isVideoFullScreen}`);
         Orientation.unlockAllOrientations();
         if (!isVideoFullScreen) {
             Orientation.lockToPortrait();
@@ -105,11 +106,6 @@ const MoVideoPlayer = (props) => {
             Orientation.lockToLandscapeLeft();
         }
         StatusBar.setHidden(isVideoFullScreen);
-        // Platform.OS === 'android' && StatusBar.setHidden(isVideoFullScreen);
-        // Platform.OS === 'ios' && StatusBar.setBarStyle();
-        // setIsVideoFullScreen(isVideoFullScreen);
-        // setIsPaused(true);
-        // setIsPaused(false);
         return () => {
             dimensionSubscriber.remove();
             backHandlerSubscriber.remove();
@@ -129,18 +125,18 @@ const MoVideoPlayer = (props) => {
                 setIsPaused(false);
             }
         });
-        console.log(`isPaused: ${isPaused}`);
+        // console.log(`isPaused: ${isPaused}`);
         return () => {
             appStateSubscriber.remove();
         };
     }, [isPaused]);
     Orientation.addOrientationListener(orientation => {
         // console.log(orientation);
-        if (orientation === 'LANDSCAPE') {
-            setIsVideoFullScreen(true);
-        } else {
-            setIsVideoFullScreen(false);
-        }
+        // if (orientation === 'LANDSCAPE') {
+        //     setIsVideoFullScreen(true);
+        // } else {
+        //     setIsVideoFullScreen(false);
+        // }
     });
     const videoHeaders = () => (
         <View style={{
@@ -178,14 +174,6 @@ const MoVideoPlayer = (props) => {
                 {showFullScreenButton &&
                     <TouchableOpacity
                         onPress={() => {
-                            // Orientation.unlockAllOrientations();
-                            // if (isVideoFullScreen) {
-                            //     Platform.OS === 'android' && StatusBar.setHidden(false);
-                            //     Orientation.lockToPortrait();
-                            // } else {
-                            //     Platform.OS === 'android' && StatusBar.setHidden(true);
-                            //     Orientation.lockToLandscapeLeft();
-                            // }
                             setIsVideoFullScreen(!isVideoFullScreen);
                         }}
                     >
@@ -1008,10 +996,6 @@ const MoVideoPlayer = (props) => {
                 <View
                     style={[
                         videoStyle,
-                        // {...(Platform.OS==='ios'&&isVideoFullScreen)&&{
-                        //         width: '100%',
-                        //         height: '100%',
-                        //     }}
                     ]}
                 >
                     <Video
@@ -1064,20 +1048,15 @@ const MoVideoPlayer = (props) => {
                             // setIsVErrorInLoadVideo(false);
                             setIsLoad(false);
                         }}
-                        // fullscreenOrientation='all'
-                      //  {...(Platform.OS === 'android') && {fullscreen:isVideoFullScreen}}
-                      //   fullscreen={isVideoFullScreen}
+                        {...(Platform.OS==='android')&&{fullScreen: isVideoFullScreen}}
                         onFullscreenPlayerWillPresent={()=>{
-                            // console.log(`onFullscreenPlayerWillPresent`);
+                            console.log(`onFullscreenPlayerWillPresent`);
                             // setIsVideoFullScreen(true);
                         }}
                         onFullscreenPlayerWillDismiss={()=>{
                             console.log(`onFullscreenPlayerWillDismiss`);
                             setIsPaused(false);
-                            setIsVideoFullScreen(false);
-                            // setIsVideoFullScreen(false);
                         }}
-                      //   fullscreenAutorotate={isVideoFullScreen}
                         onError={(videoData) => setIsVErrorInLoadVideo(true)}
                         onEnd={() => {
                             console.log('on end');

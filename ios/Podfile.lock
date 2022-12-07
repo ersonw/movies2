@@ -392,10 +392,10 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
-  - react-native-webrtc (106.0.0-beta.6):
+  - react-native-webrtc (106.0.0-beta.7):
     - JitsiWebRTC (~> 106.0.0)
     - React-Core
-  - react-native-webview (11.23.1):
+  - react-native-webview (11.25.0):
     - React-Core
   - React-perflogger (0.70.2)
   - React-RCTActionSheet (0.70.2):
@@ -474,7 +474,7 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.5.0):
+  - RNSVG (13.6.0):
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
@@ -841,8 +841,8 @@ SPEC CHECKSUMS:
   react-native-rtmp-publisher: 347fab66825ec479b7b320238b096b3f331b9fd8
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
-  react-native-webrtc: 7fa7ce024a684215693fddc880ad3983dd824f93
-  react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
+  react-native-webrtc: f73459325441d15812f86071bdbd0bf3376235d1
+  react-native-webview: a71da846ed2e9085440e1d6659c04e285528834b
   React-perflogger: 6009895616a455781293950bbd63d53cfc7ffbc5
   React-RCTActionSheet: 5e90aa5712af18bfc86c2c6d97d4dbe0e5451c1d
   React-RCTAnimation: 50c44d6501f8bfb2fe885e544501f8798b4ff3d6
@@ -860,7 +860,7 @@ SPEC CHECKSUMS:
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSVG: 38ca962c970dbce1ca38991a5aebf26d163f9efb
+  RNSVG: 3a79c0c4992213e4f06c08e62730c5e7b9e4dc17
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   RNVideoEditorSDK: 9c2192037fe78b4d6f865f3f517260e27aebdf5a
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
@@ -871,4 +871,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 030015de6179d74d75a9c84dd2c81ce02d06cd74
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

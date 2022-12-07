@@ -75,6 +75,7 @@ class App extends Component {
     }
     checkDeviceToken(token: any){}
     componentDidMount() {
+        // StatusBar.setHidden(true);
         StatusBar.setBarStyle('light-content');
         StatusBar.setBackgroundColor(Colors.headerBackgroundColor);
         RNToolsManager.disableIdleTimer();
