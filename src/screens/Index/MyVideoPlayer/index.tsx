@@ -1,14 +1,14 @@
-import Colors, {ScreenProps} from "../../../constants/Colors";
+import Colors, {ScreenProps} from "@/constants/Colors";
 import { Dimensions, StyleSheet, Text, View} from "react-native";
 // @ts-ignore
 import VideoPlayer from 'react-native-video-player';
 // @ts-ignore
-import MoVideoPlayer from '../../../components/MoVideoPlayer';
-import NetworkError from "../../../components/shared/NetworkError";
+import MoVideoPlayer from '@/components/MoVideoPlayer';
+import NetworkError from "@/components/shared/NetworkError";
 import * as React from "react";
-import useFetchData from "../../../hooks/useFetchData";
-import NetWorkUtil from "../../../utils/NetWorkUtil";
-import {MaskLoading} from "../../../components/MaskLoading";
+import useFetchData from "@/hooks/useFetchData";
+import NetWorkUtil from "@/utils/NetWorkUtil";
+import {MaskLoading} from "@/components/MaskLoading";
 
 const {width, height} = Dimensions.get('window');
 const MyVideoPlayer = (props: ScreenProps)=>{

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import * as React from "react";
 import {PicThumb} from "./PicThumb";
-import Colors from '../constants/Colors';
+import Colors from '@/constants/Colors';
 import Loading, {LoadingProps} from "./shared/Loading";
 export type VideoListProp<ItemT> = {
     navigation: any,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Colors from '../../constants/Colors';
+import Colors from '@/constants/Colors';
 
 export type NetworkErrorProps = {
   onReload?: ()=> void,

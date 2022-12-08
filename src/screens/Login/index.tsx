@@ -31,7 +31,7 @@ import {Input} from "react-native-elements";
 import fetchRequest, {postRequest} from "../../utils/fetchRequest";
 // @ts-ignore
 import md5 from "react-native-md5";
-import RNToolsManager from "../../../modal/RNToolsManager";
+import RNToolsManager from "@/../modal/RNToolsManager";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-community/async-storage";
 import {FirstRoute, SecondRoute} from "./tools";

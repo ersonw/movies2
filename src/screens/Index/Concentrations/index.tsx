@@ -1,12 +1,11 @@
 import { StyleSheet,} from "react-native";
-import Colors, {ScreenProps} from '../../../constants/Colors';
+import Colors, {ScreenProps} from '@/constants/Colors';
 import * as React from 'react';
-import NetWorkUtil from "../../../utils/NetWorkUtil";
-import useFetchData from "../../../hooks/useFetchData";
+import NetWorkUtil from "@/utils/NetWorkUtil";
+import useFetchData from "@/hooks/useFetchData";
 import {useState} from "react";
-import NetworkError from "../../../components/shared/NetworkError";
-import {VideoList} from "../../../components/VideoList";
-import {ParamListBase, RouteProp} from "@react-navigation/native";
+import NetworkError from "@/components/shared/NetworkError";
+import {VideoList} from "@/components/VideoList";
 
 let listData: any [] = [];
 export const Concentrations = ({route,navigation}: ScreenProps)=>{

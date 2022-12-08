@@ -5,13 +5,13 @@ import {
     View,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Colors from '../../../constants/Colors';
+import Colors from '@/constants/Colors';
 import * as React from 'react';
-import useFetchData from '../../../hooks/useFetchData';
-import NetWorkUtil from '../../../utils/NetWorkUtil';
-import NetworkError from '../../../components/shared/NetworkError';
-import {MaskLoading} from '../../../components/MaskLoading';
-import {VideoList} from '../../../components/VideoList';
+import useFetchData from '@/hooks/useFetchData';
+import NetWorkUtil from '@/utils/NetWorkUtil';
+import NetworkError from '@/components/shared/NetworkError';
+import {MaskLoading} from '@/components/MaskLoading';
+import {VideoList} from '@/components/VideoList';
 
 
 export const ConcentrationsBox = ({navigation, item, ikey}: { navigation: any, item: any, ikey: any }) => {

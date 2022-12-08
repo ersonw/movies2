@@ -14,9 +14,9 @@ import App from './App';
 // AppRegistry.registerComponent(appName, () => RootStackScreen);
 AppRegistry.registerComponent(appName, () => App);
 
-Entypo.loadFont();
-SimpleLineIcons.loadFont();
-Ionicons.loadFont();
-EvilIcons.loadFont();
-MaterialIcons.loadFont();
-AntDesign.loadFont();
+Entypo.loadFont().then(() => {});
+SimpleLineIcons.loadFont().then(() => {});
+Ionicons.loadFont().then(() => {});
+EvilIcons.loadFont().then(() => {});
+MaterialIcons.loadFont().then(() => {});
+AntDesign.loadFont().then(() => {});

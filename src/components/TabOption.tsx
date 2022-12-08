@@ -1,8 +1,8 @@
 import { RouteProp, ParamListBase } from '@react-navigation/native';
 import * as React from 'react';
 import {ColorValue, Image, ImageSourcePropType} from 'react-native';
-import icons from '../assets/icons';
-import Colors from '../constants/Colors';
+import icons from '@/assets/icons';
+import Colors from '@/constants/Colors';
 // TabOption 配置
 const TabOption = (route: RouteProp<ParamListBase, string>) => {
   let labelName;
