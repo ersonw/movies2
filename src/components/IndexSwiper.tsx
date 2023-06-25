@@ -1,7 +1,7 @@
 import useFetchData from '../hooks/useFetchData';
 import NetworkError from './shared/NetworkError';
 import * as React from 'react';
-import Colors from '../constants/Colors';
+import Colors from '@/constants/Colors';
 import {
     Dimensions,
     Linking,

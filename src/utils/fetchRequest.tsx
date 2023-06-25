@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import Api from '../constants/Api';
+import Api from '@/constants/Api';
 import Toast from 'react-native-toast-message'
 import AESUtil from './AESUtil';
 export type HeadersInit = Headers | string[][] | { [key: string]: string };

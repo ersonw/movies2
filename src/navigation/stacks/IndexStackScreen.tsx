@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {IndexScreen} from '../../screens/Index';
-import HeaderSearchOption from '../../components/HeaderSearchOption';
-import CardOption from '../../components/CardOption';
+import {IndexScreen} from '@/screens/Index';
+import HeaderSearchOption from '@/components/HeaderSearchOption';
+import CardOption from '@/components/CardOption';
 
 const IndexStack = createNativeStackNavigator();
 

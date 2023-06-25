@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, ActivityIndicator, View, Text,} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '@/constants/Colors';
 
 export type LoadingProps = {
     loading: boolean | undefined,

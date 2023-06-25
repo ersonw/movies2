@@ -77,7 +77,7 @@ class App extends Component {
     componentDidMount() {
         // StatusBar.setHidden(true);
         StatusBar.setBarStyle('light-content');
-        StatusBar.setBackgroundColor(Colors.headerBackgroundColor);
+        Platform.OS==='android'&& StatusBar.setBackgroundColor(Colors.headerBackgroundColor);
         RNToolsManager.disableIdleTimer();
         RNToolsManager.getAppVersionPackage(async(event: { deviceToken: any;identifierForVendor: any; androidId: any; }) => {
             // console.log(event);

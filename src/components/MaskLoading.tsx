@@ -4,7 +4,7 @@ import {
     View,
 } from "react-native";
 import * as React from "react";
-import Colors from '../constants/Colors';
+import Colors from '@/constants/Colors';
 
 export const MaskLoading = ({refreshing,backgroundColor='rgba(26,26,26,0.15)'}: {refreshing: boolean,backgroundColor?: string}) => {
     if (!refreshing){

@@ -8,12 +8,12 @@ import ChapterStackScreen from './stacks/ChapterStackScreen';
 import TabScreen from './TabScreen';
 import ModalOption from './options/ModalOption';
 import Colors from '../constants/Colors';
-import {Concentrations} from "../screens/Index/Concentrations";
-import {Applet} from "../screens/Index/Applet";
+import {Concentrations} from "@/screens/Index/Concentrations";
+import {Applet} from "@/screens/Index/Applet";
 import * as React from "react";
-import CardOption from "../components/CardOption";
-import MyVideoPlayer from "../screens/Index/MyVideoPlayer";
-import {Login} from "../screens/Login";
+import CardOption from "@/components/CardOption";
+import MyVideoPlayer from "@/screens/Index/MyVideoPlayer";
+import {Login} from "@/screens/Login";
 
 const RootStack = createNativeStackNavigator();
 

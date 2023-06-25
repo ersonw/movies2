@@ -1,12 +1,12 @@
 import {Dimensions, Text, TouchableOpacity, View} from "react-native";
 import {useState} from "react";
-import Colors, {ScreenProps} from "../../constants/Colors";
+import Colors, {ScreenProps} from "@/constants/Colors";
 import {Input} from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 import Toast from "react-native-toast-message";
-import fetchRequest, {postRequest} from "../../utils/fetchRequest";
-import NetWorkUtil from "../../utils/NetWorkUtil";
+import fetchRequest, {postRequest} from "@/utils/fetchRequest";
+import NetWorkUtil from "@/utils/NetWorkUtil";
 import AsyncStorage from "@react-native-community/async-storage";
 import * as React from "react";
 // @ts-ignore

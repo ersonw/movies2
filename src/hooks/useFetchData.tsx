@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer } from 'react';
-import fetchRequest from '../utils/fetchRequest';
+import fetchRequest from '@/utils/fetchRequest';
 
 // 初始状态
 let initialState = {

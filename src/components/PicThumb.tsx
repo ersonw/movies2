@@ -1,9 +1,9 @@
 import {Image, ImageBackground, StyleSheet, Text, View} from "react-native";
 import {CImage} from "./CImage";
-import Icons from '../assets/icons'
+import Icons from '@/assets/icons'
 // @ts-ignore
 import moment from "moment/moment";
-import Colors from '../constants/Colors';
+import Colors from '@/constants/Colors';
 import * as React from "react";
 
 export const PicThumb = ({
